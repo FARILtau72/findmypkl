@@ -17,6 +17,7 @@ Buka `dist/index.html`, atau jalankan `python -m http.server 8080 --directory di
 
 ## Fitur
 
+- Homepage publik dengan pencarian utama, kategori cepat, rekomendasi marketplace, mitra, panduan proses, dan statistik.
 - Beranda siswa, pencarian, filter jurusan/lokasi/sistem kerja, urutan, pagination, simpan lowongan, detail perusahaan.
 - Pendaftaran demo, verifikasi HUBIN, pengajuan dengan motivasi, status dan alasan keputusan.
 - Dashboard HUBIN, pengelolaan lowongan dan mitra, monitoring dan riwayat penempatan.
