@@ -525,6 +525,20 @@ button, input, select, textarea {
   width: 95%;
 }
 
+.modal-dialog.modal-loker {
+  max-width: 760px;
+  width: 95%;
+  border-radius: 20px;
+  max-height: 92vh;
+}
+
+.modal-dialog.modal-loker .modal-body {
+  padding: 0;
+  max-height: 92vh;
+  display: flex;
+  flex-direction: column;
+}
+
 .modal-backdrop.active .modal-dialog {
   transform: translateY(0);
 }

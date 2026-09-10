@@ -51,33 +51,46 @@ const Modal = {
     this.backdrop = document.getElementById('global-modal-backdrop');
   },
 
-  open(contentHtml, title = '', size = '') {
+  open(contentHtml, title = '', size = '', options = {}) {
     this.init();
     if (!this.backdrop) return;
 
     const dialog = this.backdrop.querySelector('.modal-dialog');
-    dialog.classList.remove('modal-lg', 'modal-md');
+    dialog.classList.remove('modal-lg', 'modal-md', 'modal-loker');
     if (size === 'lg') {
       dialog.classList.add('modal-lg');
     } else if (size === 'md') {
       dialog.classList.add('modal-md');
+    } else if (size === 'loker') {
+      dialog.classList.add('modal-loker');
     }
 
+    const headerEl = this.backdrop.querySelector('.modal-header');
     const titleEl = this.backdrop.querySelector('#modal-title');
     const bodyEl = this.backdrop.querySelector('#modal-body-content');
 
-    titleEl.textContent = title;
+    if (options.hideHeader || size === 'loker') {
+      if (headerEl) headerEl.style.display = 'none';
+    } else {
+      if (headerEl) headerEl.style.display = '';
+    }
+
+    if (titleEl) titleEl.textContent = title || '';
     bodyEl.innerHTML = contentHtml;
     bodyEl.scrollTop = 0;
 
     this.backdrop.classList.add('active');
-    document.body.style.overflow = 'hidden';
+    if (document.body) document.body.style.overflow = 'hidden';
   },
 
   close() {
     this.init();
     if (!this.backdrop) return;
     this.backdrop.classList.remove('active');
+
+    const headerEl = this.backdrop.querySelector('.modal-header');
+    if (headerEl) headerEl.style.display = '';
+
     if (document.body) document.body.style.overflow = '';
     if (document.documentElement) document.documentElement.style.overflow = '';
     if (typeof window !== 'undefined' && window.lenis) {

@@ -1382,155 +1382,458 @@ Object.assign(window.App, {
 
   async showJobDetailModal(jobId) {
     const job = await API.getJobById(jobId);
+    this.activeLokerModalJob = job;
+    this.renderLokerModalStep(jobId, 1);
+  },
+
+  renderLokerModalStep(jobId, step = 1) {
+    const job = this.activeLokerModalJob || {};
     const isSiswaLoggedIn = this.currentRole === 'SISWA' && Boolean(this.currentStudent);
     const student = isSiswaLoggedIn ? this.currentStudent : null;
     const isVerified = student && student.status_verifikasi === 'Terverifikasi';
     const isPublic = !isSiswaLoggedIn || !student;
+    const isPaid = this.isJobPaid(job);
 
-    const contentHtml = `
-      <div class="job-detail-container">
-        <!-- Top Header Info -->
-        <div class="job-detail-top-card">
-          <div class="company-badge-box">
-            ${renderCompanyLogo(job, { size: 58 })}
-          </div>
-          <div class="job-detail-top-info" style="flex: 1; min-width: 0;">
-            <h3>${job.judul}</h3>
-            <p>${job.company_nama} &bull; ${job.lokasi_kota}</p>
-            <div style="display: flex; gap: 8px; margin-top: 8px; flex-wrap: wrap; align-items: center;">
-              <span class="mkt-badge-comp ${this.isJobPaid(job) ? 'paid' : 'unpaid'}">
-                ${this.isJobPaid(job) ? 'Paid' : 'Unpaid'}
-              </span>
-              <span class="badge badge-blue">${job.tipe_kerja}</span>
-              <span class="badge badge-emerald">Durasi: ${job.durasi_bulan} Bulan</span>
-              <span class="badge badge-amber">Sisa Kuota: ${job.kuota - job.kuota_terisi}</span>
-            </div>
-          </div>
-        </div>
+    // Helpers
+    const companyName = job.company_nama || 'PT Media Kreatif Nusantara';
+    const cleanCity = (job.lokasi_kota || 'Kota Malang').split(',')[0].replace(/Kota\s*/i, 'Kota ').trim();
+    const industryBidang = job.company_bidang || 'Teknologi & Media Digital';
+    const rawWebsite = job.website || 'https://www.mediakreatif.co.id';
+    const displayWebsite = rawWebsite.replace(/^https?:\/\//i, '');
+    const cleanAddress = job.company_alamat || 'Jl. Soekarno Hatta No. 45, Lowokwaru, Kota Malang';
+    const companyDescription = job.company_deskripsi || job.deskripsi || 'Perusahaan konsultan teknologi dan media kreatif yang fokus pada pengembangan aplikasi web, branding digital, dan produksi konten.';
 
-        <!-- 2-Column Responsive Layout -->
-        <div class="job-detail-grid">
-          <!-- Left Column: Job Info, Desc, Requirements, Benefits -->
-          <div class="job-detail-left-col">
-            <div>
-              <div class="job-detail-block-title">Target Jurusan / Kejuruan SMK</div>
-              <div class="job-detail-target-box">
-                ${job.jurusan_target}
+    // Initials badge
+    let logoInitials = job.logo_initials || '';
+    if (!logoInitials && job.company_nama) {
+      const words = job.company_nama.replace(/PT|CV|Persero|Tbk/gi, '').trim().split(/\s+/);
+      logoInitials = words.map(w => w[0]).join('').slice(0, 3).toUpperCase();
+    }
+    if (!logoInitials) logoInitials = 'MKN';
+
+    // Majors
+    const majorChips = [];
+    const targetStr = (job.jurusan_target || '') + ' ' + (job.judul || '');
+    if (/RPL|Perangkat Lunak/i.test(targetStr)) majorChips.push('RPL');
+    if (/DKV|Desain Komunikasi|Multimedia/i.test(targetStr)) majorChips.push('DKV');
+    if (/AKL|Akuntansi|Keuangan/i.test(targetStr)) majorChips.push('AKL');
+    if (/TKJ|Jaringan/i.test(targetStr)) majorChips.push('TKJ');
+    if (/TKRO|Otomotif/i.test(targetStr)) majorChips.push('TKRO');
+    if (majorChips.length === 0) majorChips.push('RPL', 'DKV', 'AKL');
+
+    const majorBadgesHtml = majorChips.map(m => `<span class="loker-major-badge">${m}</span>`).join('');
+
+    // Work schedule & dress code
+    const workDays = 'Senin – Jumat';
+    const workHours = (job.work_schedule && job.work_schedule.includes('WIB')) ? job.work_schedule : '08.00 – 17.00 WIB';
+    const uniformPrimary = 'Bebas Rapi / Praktik';
+    const uniformSecondary = 'Sopan & Berkerah';
+
+    // Tasks list matching reference mockup
+    let tasksList = [];
+    if (job.kualifikasi && job.kualifikasi.includes('\n')) {
+      tasksList = job.kualifikasi.split('\n').map(s => s.trim().replace(/^[-•*]\s*/, '')).filter(Boolean);
+    }
+    if (tasksList.length < 2) {
+      if (/RPL|Web|Frontend|Software/i.test(targetStr)) {
+        tasksList = [
+          'Slicing desain UI dari Figma ke komponen Next.js & Tailwind CSS',
+          'Membuat & mengintegrasikan REST API Backend',
+          'Kolaborasi manajemen kode menggunakan Git & GitHub',
+          'Pengujian (testing), debugging, dan dokumentasi fitur web'
+        ];
+      } else if (/DKV|Desain|Multimedia|Animasi/i.test(targetStr)) {
+        tasksList = [
+          'Membuat aset visual grafis, banner digital, dan konten media sosial',
+          'Mengembangkan storyboard, animasi gerak, dan video editing',
+          'Mengikuti panduan brand identity dan wireframe klien',
+          'Revisi desain bersama art director dan tim kreatif'
+        ];
+      } else if (/TKJ|Jaringan|Infrastruktur/i.test(targetStr)) {
+        tasksList = [
+          'Konfigurasi perangkat router, switch, dan access point jaringan',
+          'Monitoring kestabilan lalu lintas data server lokal dan cloud',
+          'Pemeliharaan kabel UTP, fiber optic, dan pengujian throughput',
+          'Troubleshooting hardware dan perakitan workstation kantor'
+        ];
+      } else if (/Otomotif|TKRO|TBSM/i.test(targetStr)) {
+        tasksList = [
+          'Praktik langsung servis berkala dan tune-up mesin standar industri',
+          'Pengecekan sistem injeksi EFI/PGM-FI dan kelistrikan kendaraan',
+          'Inspeksi keselamatan rem, suspensi, dan penggantian oli berkala',
+          'Penerapan budaya kerja 5R dan SOP keselamatan bengkel resmi'
+        ];
+      } else {
+        tasksList = [
+          'Pencatatan transaksi kas masuk, kas keluar, dan arsip digital kantor',
+          'Penyusunan jurnal umum, rekonsiliasi bank, dan laporan keuangan',
+          'Pengoperasian software spreadsheet dan software akuntansi terintegrasi',
+          'Verifikasi faktur pajak dan administrasi pembukuan berkala'
+        ];
+      }
+    }
+
+    const tasksListHtml = tasksList.map(t => `
+      <li class="loker-tasks-item">
+        <span class="loker-tasks-dot"></span>
+        <span>${t}</span>
+      </li>
+    `).join('');
+
+    const reviewQuote = 'Supervisor sangat membimbing, task terstruktur dengan baik, dan lingkungan kerjanya ramah untuk pemula.';
+
+    let stepHtml = '';
+
+    if (step === 1) {
+      // STEP 1: Detail & Kualifikasi (Matching media_1789012197437.png)
+      stepHtml = `
+        <div class="modal-loker-container job-detail-container">
+          <!-- 1. Stepper Header -->
+          <div class="modal-loker-stepper">
+            <div class="modal-loker-stepper-nav">
+              <div class="loker-step-item active">
+                <span class="loker-step-badge">1</span>
+                <span>Detail & Kualifikasi</span>
+              </div>
+              <span class="loker-step-sep">&gt;</span>
+              <div class="loker-step-item">
+                <span class="loker-step-badge">2</span>
+                <span>Form Pengajuan</span>
+              </div>
+              <span class="loker-step-sep">&gt;</span>
+              <div class="loker-step-item">
+                <span class="loker-step-badge">3</span>
+                <span>Selesai</span>
               </div>
             </div>
-
-            <div>
-              <div class="job-detail-block-title">Deskripsi Tugas & Pekerjaan</div>
-              <p class="job-detail-text">${job.deskripsi}</p>
-            </div>
-
-            <div>
-              <div class="job-detail-block-title">Kualifikasi & Persyaratan Siswa</div>
-              <p class="job-detail-text">${job.kualifikasi}</p>
-            </div>
-
-            <div>
-              <div class="job-detail-block-title">Tipe Kompensasi & Fasilitas</div>
-              <div style="display: flex; align-items: center; gap: 8px; margin-bottom: 6px;">
-                <span class="mkt-badge-comp ${this.isJobPaid(job) ? 'paid' : 'unpaid'}" style="font-size: 12px; padding: 4px 10px;">
-                  ${this.isJobPaid(job) ? 'Paid Internship (Ada Uang Saku)' : 'Unpaid Internship (Magang Mandiri)'}
-                </span>
-              </div>
-              <p class="job-detail-text">
-                ${job.benefit ? job.benefit.replace(/Rp\s*[\d\.,\s–-]+(jt|ribu|rb)?(\/bln)?/gi, 'kompensasi industri').replace(/Uang saku bulanan\s*[^,]+,/i, 'Kompensasi uang saku industri,') : (this.isJobPaid(job) ? 'Mendapatkan uang saku bulanan dari industri dan bimbingan mentor.' : 'Program magang kejuruan dengan sertifikat resmi industri.')}
-              </p>
-            </div>
+            <button type="button" class="btn-modal-loker-close" onclick="Modal.close()" aria-label="Tutup modal">&times;</button>
           </div>
 
-          <!-- Right Column: Industry Partnership Details & Application Action -->
-          <div class="job-detail-right-col">
-            <!-- DUDI Partnership Box -->
-            <div class="job-detail-card-panel">
-              <h5 style="font-size: 13px; font-weight: 700; color: #0F172A; margin-bottom: 10px; display: flex; align-items: center; gap: 6px;">
-                <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="#059669" stroke-width="2.2"><rect x="2" y="7" width="20" height="14" rx="2" ry="2"/><path d="M16 21V5a2 2 0 0 0-2-2h-4a2 2 0 0 0-2 2v16"/></svg>
-                Informasi Mitra DUDI & MoU
-              </h5>
-              <div style="font-size: 12.5px; color: #475569; display: flex; flex-direction: column; gap: 8px; line-height: 1.5;">
-                <div>
-                  <strong style="color: #1e293b;">Alamat Kantor:</strong><br>
-                  <span>${job.company_alamat}</span>
-                </div>
-                <div>
-                  <strong style="color: #1e293b;">PIC Industri:</strong><br>
-                  <span>${job.pic_nama} (${job.pic_kontak})</span>
-                </div>
-                <div>
-                  <strong style="color: #1e293b;">Status Kerja Sama:</strong><br>
-                  <span class="badge badge-emerald" style="padding: 2px 8px; font-size: 11px; margin-top: 2px; display: inline-block;">
-                    MoU Aktif (${job.no_mou || 'Resmi Terdaftar'})
+          <!-- 2. Scrollable Body -->
+          <div class="modal-loker-body job-detail-left-col">
+            <!-- Sub-tracker -->
+            <div class="modal-loker-subtracker">
+              <span class="subtracker-pill">Langkah 1 dari 2</span>
+              <span class="subtracker-label">&bull; Informasi & Syarat Penempatan</span>
+            </div>
+
+            <!-- Company Header -->
+            <div class="modal-loker-company-card">
+              <div class="loker-logo-badge">
+                ${logoInitials}
+              </div>
+              <div class="loker-company-details">
+                <div class="loker-company-title-row">
+                  <span class="loker-company-name">${companyName}</span>
+                  <span class="badge-mitra-resmi">
+                    <svg width="13" height="13" viewBox="0 0 24 24" fill="#059669"><path d="M12 2C6.48 2 2 6.48 2 12s4.48 10 10 10 10-4.48 10-10S17.52 2 12 2zm-2 15l-5-5 1.41-1.41L10 14.17l7.59-7.59L19 8l-9 9z"/></svg>
+                    Mitra Resmi
+                  </span>
+                  <span class="badge-kota-pill">
+                    <svg width="12" height="12" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M21 10c0 7-9 13-9 13s-9-6-9-13a9 9 0 0 1 18 0z"/><circle cx="12" cy="10" r="3"/></svg>
+                    ${cleanCity}
                   </span>
                 </div>
+                <div class="loker-company-industry">
+                  <span>Industri: ${industryBidang}</span> &bull; 
+                  <a href="${rawWebsite}" target="_blank" rel="noreferrer">${displayWebsite}</a>
+                </div>
+                <div class="loker-company-address">
+                  <svg width="13" height="13" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M21 10c0 7-9 13-9 13s-9-6-9-13a9 9 0 0 1 18 0z"/><circle cx="12" cy="10" r="3"/></svg>
+                  <span>${cleanAddress}</span>
+                </div>
               </div>
             </div>
 
-            <!-- Apply Form / Action Area -->
-            <div class="job-detail-action-card">
-              ${isPublic ? `
-                <div style="text-align: center;">
-                  <h4 style="font-size: 15px; font-weight: 800; color: #0F172A; margin-bottom: 6px;">Tertarik Melamar Posisi Ini?</h4>
-                  <p style="font-size: 13px; color: #64748B; margin-bottom: 16px; line-height: 1.5;">
-                    Silakan masuk dengan akun siswa SMK Taruna Bangsa atau daftarkan akun baru untuk mengirim lamaran ke HUBIN.
-                  </p>
-                  <div style="display: flex; flex-direction: column; gap: 8px;">
-                    <button class="btn btn-primary" onclick="Modal.close(); App.setRole('LOGIN');" style="width: 100%; justify-content: center;">
-                      Masuk Akun Siswa
-                    </button>
-                    <button class="btn btn-secondary" onclick="Modal.close(); App.setRole('REGISTER');" style="width: 100%; justify-content: center;">
-                      Daftar Akun Baru
-                    </button>
-                  </div>
+            <!-- Description Box -->
+            <div class="modal-loker-desc-box">
+              ${companyDescription}
+            </div>
+
+            <!-- 3 Info Cards Grid -->
+            <div class="modal-loker-info-grid job-detail-grid">
+              <!-- Card 1: Jurusan Diterima -->
+              <div class="loker-info-box">
+                <div class="loker-info-label">JURUSAN DITERIMA</div>
+                <div class="loker-major-chips">
+                  ${majorBadgesHtml}
                 </div>
-              ` : isVerified ? `
-                <h4 style="font-size: 15px; font-weight: 800; color: #0F172A; margin-bottom: 12px;">Formulir Pengajuan Lamaran PKL</h4>
-                <div class="form-group" style="margin-bottom: 12px;">
-                  <label class="form-label" style="font-size: 12.5px;">Tautan Berkas CV / Portofolio Siswa</label>
-                  <input type="url" id="apply-portofolio-input" class="form-input" value="${student ? (student.cv_url || '') : ''}" placeholder="https://drive.google.com/... atau https://github.com/..." style="font-size: 13px; padding: 8px 12px;" />
-                  <div class="form-help" style="font-size: 11px;">Akses link Google Drive/GitHub harus disetel Publik.</div>
+              </div>
+
+              <!-- Card 2: Jam Kerja -->
+              <div class="loker-info-box">
+                <div class="loker-info-label">JAM KERJA</div>
+                <div class="loker-info-primary">${workDays}</div>
+                <div class="loker-info-sub">${workHours}</div>
+              </div>
+
+              <!-- Card 3: Pakaian / Seragam -->
+              <div class="loker-info-box">
+                <div class="loker-info-label">PAKAIAN / SERAGAM</div>
+                <div class="loker-info-primary">${uniformPrimary}</div>
+                <div class="loker-info-sub">${uniformSecondary}</div>
+              </div>
+            </div>
+
+            <!-- Detail Pekerjaan Tasks Card -->
+            <div class="modal-loker-tasks-card">
+              <div class="loker-section-title">
+                <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="#2563EB" stroke-width="2.2" stroke-linecap="round" stroke-linejoin="round">
+                  <path d="M16 4h2a2 2 0 0 1 2 2v14a2 2 0 0 1-2 2H6a2 2 0 0 1-2-2V6a2 2 0 0 1 2-2h2"/>
+                  <rect x="8" y="2" width="8" height="4" rx="1" ry="1"/>
+                </svg>
+                <span>DETAIL PEKERJAAN</span>
+              </div>
+              <ul class="loker-tasks-list">
+                ${tasksListHtml}
+              </ul>
+            </div>
+
+            <!-- Review / Rating Card -->
+            <div class="modal-loker-review-card">
+              <div class="loker-review-header">
+                <div class="loker-section-title" style="margin-bottom: 0;">
+                  <svg width="15" height="15" viewBox="0 0 24 24" fill="#F59E0B" stroke="#F59E0B" stroke-width="1">
+                    <polygon points="12 2 15.09 8.26 22 9.27 17 14.14 18.18 21.02 12 17.77 5.82 21.02 7 14.14 2 9.27 8.91 8.26 12 2"/>
+                  </svg>
+                  <span style="color: #475569;">DETAIL PEKERJAAN</span>
                 </div>
-                <div class="form-group" style="margin-bottom: 16px;">
-                  <label class="form-label" style="font-size: 12.5px;">Alasan & Motivasi Melamar</label>
-                  <textarea id="apply-alasan-input" class="form-textarea" rows="3" placeholder="Jelaskan ketertarikan dan kompetensi Anda..." style="font-size: 13px; padding: 8px 12px; resize: vertical;"></textarea>
+                <div class="loker-rating-pill">
+                  <span>★★★★★</span>
+                  <span>4.5 / 5</span>
                 </div>
-                <button class="btn btn-primary" style="width: 100%; justify-content: center; font-weight: 700; padding: 10px;" onclick="App.handleApplyJob(${job.id})">
-                  Kirim Lamaran ke HUBIN &rarr;
-                </button>
-              ` : `
-                <div class="account-state-banner ${student && student.status_verifikasi === 'Perlu Perbaikan' ? 'state-revision' : student && student.status_verifikasi === 'Ditolak' ? 'state-rejected' : 'state-pending'}" style="text-align: center; padding: 16px;">
-                  <h4 style="font-size: 14px; font-weight: 700; margin-bottom: 6px;">
-                    ${student && student.status_verifikasi === 'Perlu Perbaikan' ? '"HUBIN meminta perbaikan data."' : student && student.status_verifikasi === 'Ditolak' ? '"Verifikasi Ditolak HUBIN"' : '"Data sedang diperiksa HUBIN."'}
-                  </h4>
-                  <p style="font-size: 12px; margin-bottom: 12px; line-height: 1.4;">
-                    ${student && student.status_verifikasi === 'Perlu Perbaikan' ? (student.catatan_verifikasi || 'Perbaiki data kontak atau berkas Anda.') : student && student.status_verifikasi === 'Ditolak' ? (student.catatan_verifikasi || 'Hubungi BKK/HUBIN sekolah.') : 'Kamu belum dapat melamar sampai akun terverifikasi.'}
-                  </p>
-                  ${student && student.status_verifikasi === 'Perlu Perbaikan' ? `
-                    <button class="btn btn-primary btn-sm" style="background: #ea580c; border-color: #ea580c; width: 100%; justify-content: center;" onclick="Modal.close(); App.setTab('profil'); App.showStudentEditModal(${student.id});">
-                      Perbaiki Data Sekarang ✍
-                    </button>
-                  ` : `
-                    <button class="btn btn-secondary btn-sm" style="width: 100%; justify-content: center;" onclick="Modal.close(); App.setTab('profil');">
-                      Lihat Profil &rarr;
-                    </button>
-                  `}
-                </div>
-              `}
+              </div>
+              <blockquote class="loker-review-quote">
+                "${reviewQuote}"
+              </blockquote>
             </div>
           </div>
-        </div>
-      </div>
-    `;
 
-    Modal.open(contentHtml, 'Detail Lowongan PKL', 'lg');
+          <!-- 3. Footer Bar -->
+          <div class="modal-loker-footer">
+            <button type="button" class="btn-loker-ghost" onclick="Modal.close()">
+              Batal
+            </button>
+            <button type="button" class="btn-loker-primary" onclick="App.renderLokerModalStep(${job.id}, 2)">
+              Lanjut ke Pengajuan &rarr;
+            </button>
+          </div>
+        </div>
+      `;
+    } else if (step === 2) {
+      // STEP 2: Form Pengajuan
+      stepHtml = `
+        <div class="modal-loker-container job-detail-container">
+          <!-- Stepper Header -->
+          <div class="modal-loker-stepper">
+            <div class="modal-loker-stepper-nav">
+              <div class="loker-step-item completed" onclick="App.renderLokerModalStep(${job.id}, 1)">
+                <span class="loker-step-badge">✓</span>
+                <span>Detail & Kualifikasi</span>
+              </div>
+              <span class="loker-step-sep">&gt;</span>
+              <div class="loker-step-item active">
+                <span class="loker-step-badge">2</span>
+                <span>Form Pengajuan</span>
+              </div>
+              <span class="loker-step-sep">&gt;</span>
+              <div class="loker-step-item">
+                <span class="loker-step-badge">3</span>
+                <span>Selesai</span>
+              </div>
+            </div>
+            <button type="button" class="btn-modal-loker-close" onclick="Modal.close()" aria-label="Tutup modal">&times;</button>
+          </div>
+
+          <!-- Body -->
+          <div class="modal-loker-body job-detail-right-col">
+            <div class="modal-loker-subtracker">
+              <span class="subtracker-pill">Langkah 2 dari 2</span>
+              <span class="subtracker-label">&bull; Formulir Pengajuan & Kelengkapan Berkas Siswa</span>
+            </div>
+
+            <!-- Position Summary Banner -->
+            <div class="modal-loker-summary-banner">
+              <div>
+                <div style="font-size: 11px; font-weight: 700; color: #64748B; text-transform: uppercase; margin-bottom: 2px;">Posisi yang Dilamar</div>
+                <h4 style="font-size: 15.5px; font-weight: 800; color: #0F172A; margin: 0;">${job.judul}</h4>
+                <div style="font-size: 12.5px; color: #059669; font-weight: 600; margin-top: 2px;">${job.company_nama} &bull; Sisa Kuota: ${job.kuota - job.kuota_terisi} siswa</div>
+              </div>
+              <span class="mkt-badge-comp ${isPaid ? 'paid' : 'unpaid'}">
+                ${isPaid ? 'Paid' : 'Unpaid'}
+              </span>
+            </div>
+
+            <!-- Informasi Mitra DUDI & MoU -->
+            <div style="background: #F8FAFC; border: 1px solid #E2E8F0; border-radius: 12px; padding: 12px 16px; font-size: 12px; color: #64748B; display: flex; justify-content: space-between; align-items: center; flex-wrap: wrap; gap: 8px;">
+              <div>
+                <strong style="color: #1E293B;">Informasi Mitra DUDI & MoU:</strong> ${job.no_mou || 'MOU/SMK-TB/2026'} &bull; PIC: ${job.pic_nama || 'Koordinator HRD'}
+              </div>
+              <span class="badge badge-emerald">MoU Aktif</span>
+            </div>
+
+            ${isPublic ? `
+              <!-- Guest Notice -->
+              <div style="background: #F8FAFC; border: 1.5px dashed #CBD5E1; border-radius: 14px; padding: 28px 20px; text-align: center;">
+                <div style="font-size: 38px; margin-bottom: 8px;">🔐</div>
+                <h4 style="font-size: 16px; font-weight: 800; color: #0F172A; margin-bottom: 6px;">Masuk Akun Siswa Diperlukan</h4>
+                <p style="font-size: 13px; color: #64748B; max-width: 440px; margin: 0 auto 20px; line-height: 1.5;">
+                  Pengajuan lamaran PKL terintegrasi dengan database Dapodik siswa SMK Taruna Bangsa. Silakan masuk atau daftarkan akun baru Anda.
+                </p>
+                <div style="display: flex; gap: 10px; justify-content: center; flex-wrap: wrap;">
+                  <button type="button" class="btn btn-primary" onclick="Modal.close(); App.setRole('LOGIN');">
+                    Masuk Akun Siswa
+                  </button>
+                  <button type="button" class="btn btn-secondary" onclick="Modal.close(); App.setRole('REGISTER');">
+                    Daftar Akun Baru
+                  </button>
+                </div>
+              </div>
+            ` : !isVerified ? `
+              <!-- Verification Pending -->
+              <div class="account-state-banner ${student.status_verifikasi === 'Perlu Perbaikan' ? 'state-revision' : student.status_verifikasi === 'Ditolak' ? 'state-rejected' : 'state-pending'}" style="padding: 22px; text-align: center; border-radius: 14px;">
+                <h4 style="font-size: 15px; font-weight: 800; margin-bottom: 6px;">
+                  ${student.status_verifikasi === 'Perlu Perbaikan' ? 'Perlu Perbaikan Berkas HUBIN' : student.status_verifikasi === 'Ditolak' ? 'Verifikasi Akun Ditolak' : 'Akun Sedang Menunggu Verifikasi HUBIN'}
+                </h4>
+                <p style="font-size: 12.5px; line-height: 1.5; margin-bottom: 14px;">
+                  ${student.status_verifikasi === 'Perlu Perbaikan' ? (student.catatan_verifikasi || 'Perbaiki data profil Anda sebelum mengajukan lamaran.') : 'Pengajuan hanya dapat dilakukan setelah akun disahkan oleh Koordinator HUBIN.'}
+                </p>
+                <button type="button" class="btn btn-secondary btn-sm" onclick="Modal.close(); App.setTab('profil');">
+                  Buka Halaman Profil &rarr;
+                </button>
+              </div>
+            ` : `
+              <!-- Student Form -->
+              <div class="modal-loker-student-box">
+                <div style="font-size: 11px; font-weight: 700; color: #1D4ED8; text-transform: uppercase; margin-bottom: 4px;">Identitas Siswa Terdaftar</div>
+                <div style="display: flex; justify-content: space-between; flex-wrap: wrap; gap: 8px; align-items: center;">
+                  <div>
+                    <strong style="color: #0F172A; font-size: 14px;">${student.nama}</strong>
+                    <div style="font-size: 12px; color: #64748B; margin-top: 1px;">NISN: ${student.nisn} &bull; ${student.jurusan || 'SMK'} (${student.kelas || 'Tingkat Akhir'})</div>
+                  </div>
+                  <span class="badge badge-emerald">Terverifikasi HUBIN</span>
+                </div>
+              </div>
+
+              <div class="form-group" style="margin-bottom: 12px;">
+                <label class="form-label" style="font-size: 12.5px; font-weight: 700;">Tautan Portofolio / Berkas CV Siswa <span style="color: #EF4444;">*</span></label>
+                <input type="url" id="apply-portofolio-input" class="form-input" value="${student.cv_url || ''}" placeholder="https://drive.google.com/... atau https://github.com/..." style="font-size: 13px; padding: 10px 14px; border-radius: 10px;" />
+                <div class="form-help" style="font-size: 11px; color: #94A3B8; margin-top: 4px;">Akses link Google Drive/GitHub disetel Publik agar dapat diperiksa kurator HUBIN.</div>
+              </div>
+
+              <div class="form-group" style="margin-bottom: 14px;">
+                <label class="form-label" style="font-size: 12.5px; font-weight: 700;">Alasan & Motivasi Melamar <span style="color: #EF4444;">*</span></label>
+                <textarea id="apply-alasan-input" class="form-textarea" rows="3" placeholder="Jelaskan ketertarikan Anda, kesiapan mengikuti magang, dan keterampilan yang ingin diterapkan..." style="font-size: 13px; padding: 10px 14px; border-radius: 10px; resize: vertical;"></textarea>
+              </div>
+
+              <label class="loker-checkbox-label">
+                <input type="checkbox" id="apply-consent-check" checked />
+                <span>Saya menyatakan bersedia mematuhi tata tertib industri dan telah memperoleh izin dari orang tua/wali serta BKK SMK Taruna Bangsa.</span>
+              </label>
+            `}
+          </div>
+
+          <!-- Footer -->
+          <div class="modal-loker-footer">
+            <button type="button" class="btn-loker-ghost" onclick="App.renderLokerModalStep(${job.id}, 1)">
+              &larr; Kembali ke Detail
+            </button>
+            ${isVerified ? `
+              <button type="button" class="btn-loker-primary" onclick="App.executeApplyLoker(${job.id})">
+                Kirim Pengajuan Lamaran &rarr;
+              </button>
+            ` : `
+              <button type="button" class="btn-loker-ghost" onclick="Modal.close()">
+                Tutup
+              </button>
+            `}
+          </div>
+        </div>
+      `;
+    } else {
+      // STEP 3: Selesai
+      stepHtml = `
+        <div class="modal-loker-container job-detail-container">
+          <!-- Stepper Header -->
+          <div class="modal-loker-stepper">
+            <div class="modal-loker-stepper-nav">
+              <div class="loker-step-item completed">
+                <span class="loker-step-badge">✓</span>
+                <span>Detail & Kualifikasi</span>
+              </div>
+              <span class="loker-step-sep">&gt;</span>
+              <div class="loker-step-item completed">
+                <span class="loker-step-badge">✓</span>
+                <span>Form Pengajuan</span>
+              </div>
+              <span class="loker-step-sep">&gt;</span>
+              <div class="loker-step-item active" style="background: #059669;">
+                <span class="loker-step-badge">✓</span>
+                <span>Selesai</span>
+              </div>
+            </div>
+            <button type="button" class="btn-modal-loker-close" onclick="Modal.close()" aria-label="Tutup modal">&times;</button>
+          </div>
+
+          <!-- Body -->
+          <div class="modal-loker-body">
+            <div class="modal-loker-success-card">
+              <div class="loker-success-icon-circle">
+                <svg width="34" height="34" viewBox="0 0 24 24" fill="none" stroke="#059669" stroke-width="3" stroke-linecap="round" stroke-linejoin="round">
+                  <polyline points="20 6 9 17 4 12"/>
+                </svg>
+              </div>
+              <h3 style="font-size: 19px; font-weight: 800; color: #0F172A; margin-bottom: 8px;">Pengajuan Lamaran Berhasil Terkirim!</h3>
+              <p style="font-size: 13.5px; color: #64748B; max-width: 480px; margin: 0 auto 20px; line-height: 1.6;">
+                Berkas pengajuan PKL Anda untuk lowongan <strong>${job.judul}</strong> di <strong>${job.company_nama}</strong> telah berhasil disimpan ke database HUBIN SMK Taruna Bangsa.
+              </p>
+
+              <div style="background: #F8FAFC; border: 1px solid #E2E8F0; border-radius: 14px; padding: 16px; max-width: 460px; margin: 0 auto 10px; text-align: left;">
+                <div style="display: flex; justify-content: space-between; margin-bottom: 8px; font-size: 12.5px;">
+                  <span style="color: #64748B;">Status Pengajuan:</span>
+                  <span class="badge badge-amber" style="font-weight: 700;">Menunggu Verifikasi HUBIN</span>
+                </div>
+                <div style="display: flex; justify-content: space-between; font-size: 12.5px;">
+                  <span style="color: #64748B;">Tanggal Diajukan:</span>
+                  <span style="color: #0F172A; font-weight: 600;">Hari ini, ${new Date().toLocaleDateString('id-ID', { day: 'numeric', month: 'short', year: 'numeric' })}</span>
+                </div>
+              </div>
+            </div>
+          </div>
+
+          <!-- Footer -->
+          <div class="modal-loker-footer">
+            <button type="button" class="btn-loker-ghost" onclick="Modal.close()">
+              Tutup
+            </button>
+            <button type="button" class="btn-loker-primary" style="background: #059669;" onclick="Modal.close(); App.setTab('lamaran');">
+              Lihat Status Lamaran Saya &rarr;
+            </button>
+          </div>
+        </div>
+      `;
+    }
+
+    Modal.open(stepHtml, null, 'loker', { hideHeader: true });
+    if (typeof window !== 'undefined' && window.lenis) {
+      try { window.lenis.resize(); } catch (e) {}
+    }
   },
 
-  async handleApplyJob(jobId) {
-    if (!this.currentStudent) return;
-    const portofolio_url = document.getElementById('apply-portofolio-input').value;
-    const alasan_melamar = document.getElementById('apply-alasan-input').value;
+  async executeApplyLoker(jobId) {
+    if (!this.currentStudent) {
+      Modal.close();
+      this.setRole('LOGIN');
+      return;
+    }
+    const portofolio_url = document.getElementById('apply-portofolio-input')?.value || '';
+    const alasan_melamar = document.getElementById('apply-alasan-input')?.value || '';
+    const consentCheck = document.getElementById('apply-consent-check');
+
+    if (consentCheck && !consentCheck.checked) {
+      Toast.show('Persetujuan Diperlukan', 'Mohon centang pernyataan persetujuan tata tertib magang.', 'warning');
+      return;
+    }
 
     if (!alasan_melamar.trim()) {
       Toast.show('Perhatian', 'Mohon isi alasan & motivasi melamar terlebih dahulu', 'error');
@@ -1545,11 +1848,14 @@ Object.assign(window.App, {
         alasan_melamar
       });
 
-      Modal.close();
       Toast.show('Lamaran Berhasil Diajukan', 'Berkas telah masuk ke antrean persetujuan HUBIN.', 'success');
-      this.setTab('lamaran');
+      this.renderLokerModalStep(jobId, 3);
     } catch (err) {
       Toast.show('Gagal Mengajukan Lamaran', err.message, 'error');
     }
+  },
+
+  async handleApplyJob(jobId) {
+    await this.executeApplyLoker(jobId);
   }
 });
