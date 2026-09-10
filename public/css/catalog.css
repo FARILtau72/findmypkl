@@ -1251,24 +1251,56 @@
   gap: 8px;
   font-size: 13px;
   font-weight: 600;
-  color: #64748B;
+  color: #475569;
   transition: all 0.2s ease;
-  padding: 6px 12px;
+  padding: 6px 14px;
   border-radius: 9999px;
   user-select: none;
+  line-height: 1;
+}
+
+.loker-step-item .loker-step-text {
+  margin: 0 !important;
+  padding: 0 !important;
+  color: inherit !important;
+  font-size: 13px !important;
+  font-weight: 600 !important;
+  line-height: 1 !important;
+  display: inline-block !important;
+  vertical-align: middle !important;
 }
 
 .loker-step-item.active {
-  background: #059669;
-  color: #ffffff;
+  background: #059669 !important;
+  color: #ffffff !important;
   padding: 6px 16px;
-  box-shadow: 0 2px 8px rgba(5, 150, 105, 0.25);
+  box-shadow: 0 2px 8px rgba(5, 150, 105, 0.28);
+}
+
+.loker-step-item.active .loker-step-text {
+  color: #ffffff !important;
+  font-weight: 700 !important;
+}
+
+.loker-step-item.active .loker-step-badge {
+  background: rgba(255, 255, 255, 0.25) !important;
+  color: #ffffff !important;
 }
 
 .loker-step-item.completed {
-  background: #ECFDF5;
-  color: #059669;
+  background: #ECFDF5 !important;
+  color: #059669 !important;
   cursor: pointer;
+}
+
+.loker-step-item.completed .loker-step-text {
+  color: #059669 !important;
+  font-weight: 600 !important;
+}
+
+.loker-step-item.completed .loker-step-badge {
+  background: #059669 !important;
+  color: #ffffff !important;
 }
 
 .loker-step-badge {
@@ -1283,23 +1315,17 @@
   background: #E2E8F0;
   color: #64748B;
   flex-shrink: 0;
-}
-
-.loker-step-item.active .loker-step-badge {
-  background: rgba(255, 255, 255, 0.25);
-  color: #ffffff;
-}
-
-.loker-step-item.completed .loker-step-badge {
-  background: #059669;
-  color: #ffffff;
+  line-height: 1;
 }
 
 .loker-step-sep {
-  color: #CBD5E1;
-  font-size: 13px;
+  color: #94A3B8;
   margin: 0 2px;
   user-select: none;
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  line-height: 1;
 }
 
 .btn-modal-loker-close {
@@ -1860,12 +1886,12 @@
 }
 
 @media (max-width: 440px) {
-  .loker-step-item:not(.active) .step-label {
-    display: none;
+  .loker-step-item:not(.active) .loker-step-text {
+    display: none !important;
   }
 
-  .loker-step-item.active .step-label {
-    font-size: 11px;
+  .loker-step-item.active .loker-step-text {
+    font-size: 11px !important;
   }
 
   .loker-company-name {

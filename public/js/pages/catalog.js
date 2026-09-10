@@ -1472,17 +1472,17 @@ Object.assign(window.App, {
             <div class="modal-loker-stepper-nav">
               <div class="loker-step-item active">
                 <span class="loker-step-badge">1</span>
-                <span class="step-label">Detail &amp; Kualifikasi</span>
+                <span class="loker-step-text">Detail &amp; Kualifikasi</span>
               </div>
-              <span class="loker-step-sep">&gt;</span>
+              <span class="loker-step-sep"><svg width="10" height="10" viewBox="0 0 24 24" fill="none" stroke="#94A3B8" stroke-width="2.8" stroke-linecap="round" stroke-linejoin="round"><polyline points="9 18 15 12 9 6"/></svg></span>
               <div class="loker-step-item">
                 <span class="loker-step-badge">2</span>
-                <span class="step-label">Form Pengajuan</span>
+                <span class="loker-step-text">Form Pengajuan</span>
               </div>
-              <span class="loker-step-sep">&gt;</span>
+              <span class="loker-step-sep"><svg width="10" height="10" viewBox="0 0 24 24" fill="none" stroke="#94A3B8" stroke-width="2.8" stroke-linecap="round" stroke-linejoin="round"><polyline points="9 18 15 12 9 6"/></svg></span>
               <div class="loker-step-item">
                 <span class="loker-step-badge">3</span>
-                <span class="step-label">Selesai</span>
+                <span class="loker-step-text">Selesai</span>
               </div>
             </div>
             <button type="button" class="btn-modal-loker-close" onclick="Modal.close()" aria-label="Tutup modal">&times;</button>
@@ -1611,17 +1611,17 @@ Object.assign(window.App, {
             <div class="modal-loker-stepper-nav">
               <div class="loker-step-item completed" onclick="App.renderLokerModalStep(${job.id}, 1)">
                 <span class="loker-step-badge">✓</span>
-                <span class="step-label">Detail &amp; Kualifikasi</span>
+                <span class="loker-step-text">Detail &amp; Kualifikasi</span>
               </div>
-              <span class="loker-step-sep">&gt;</span>
+              <span class="loker-step-sep"><svg width="10" height="10" viewBox="0 0 24 24" fill="none" stroke="#94A3B8" stroke-width="2.8" stroke-linecap="round" stroke-linejoin="round"><polyline points="9 18 15 12 9 6"/></svg></span>
               <div class="loker-step-item active">
                 <span class="loker-step-badge">2</span>
-                <span class="step-label">Form Pengajuan</span>
+                <span class="loker-step-text">Form Pengajuan</span>
               </div>
-              <span class="loker-step-sep">&gt;</span>
+              <span class="loker-step-sep"><svg width="10" height="10" viewBox="0 0 24 24" fill="none" stroke="#94A3B8" stroke-width="2.8" stroke-linecap="round" stroke-linejoin="round"><polyline points="9 18 15 12 9 6"/></svg></span>
               <div class="loker-step-item">
                 <span class="loker-step-badge">3</span>
-                <span class="step-label">Selesai</span>
+                <span class="loker-step-text">Selesai</span>
               </div>
             </div>
             <button type="button" class="btn-modal-loker-close" onclick="Modal.close()" aria-label="Tutup modal">&times;</button>
@@ -1741,17 +1741,17 @@ Object.assign(window.App, {
             <div class="modal-loker-stepper-nav">
               <div class="loker-step-item completed">
                 <span class="loker-step-badge">✓</span>
-                <span class="step-label">Detail &amp; Kualifikasi</span>
+                <span class="loker-step-text">Detail &amp; Kualifikasi</span>
               </div>
-              <span class="loker-step-sep">&gt;</span>
+              <span class="loker-step-sep"><svg width="10" height="10" viewBox="0 0 24 24" fill="none" stroke="#94A3B8" stroke-width="2.8" stroke-linecap="round" stroke-linejoin="round"><polyline points="9 18 15 12 9 6"/></svg></span>
               <div class="loker-step-item completed">
                 <span class="loker-step-badge">✓</span>
-                <span class="step-label">Form Pengajuan</span>
+                <span class="loker-step-text">Form Pengajuan</span>
               </div>
-              <span class="loker-step-sep">&gt;</span>
+              <span class="loker-step-sep"><svg width="10" height="10" viewBox="0 0 24 24" fill="none" stroke="#94A3B8" stroke-width="2.8" stroke-linecap="round" stroke-linejoin="round"><polyline points="9 18 15 12 9 6"/></svg></span>
               <div class="loker-step-item active">
                 <span class="loker-step-badge">✓</span>
-                <span class="step-label">Selesai</span>
+                <span class="loker-step-text">Selesai</span>
               </div>
             </div>
             <button type="button" class="btn-modal-loker-close" onclick="Modal.close()" aria-label="Tutup modal">&times;</button>
