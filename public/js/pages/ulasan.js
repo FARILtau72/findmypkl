@@ -154,7 +154,7 @@ Object.assign(window.App, {
         return;
       }
 
-      grid.innerHTML = filtered.map(r => renderModernReviewCard(r, { showUpvote: true, showProsCons: true })).join('');
+      grid.innerHTML = filtered.map(r => renderModernReviewCard(r, { showUpvote: false, showProsCons: false })).join('');
     };
 
     // Event listeners

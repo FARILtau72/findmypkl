@@ -411,7 +411,8 @@ function renderModernReviewCard(r, options = {}) {
   const companyName = r.company_nama || 'Mitra Industri DUDI';
 
   // Optional footer elements
-  const showUpvote = options.showUpvote !== false;
+  const showUpvote = Boolean(options.showUpvote);
+  const showProsCons = Boolean(options.showProsCons);
   const cardId = options.id ? `id="${options.id}"` : '';
   const extraClass = options.className || '';
 
@@ -447,11 +448,11 @@ function renderModernReviewCard(r, options = {}) {
       <!-- Quote Box -->
       <div class="review-modern-quote-box">
         <p class="review-modern-quote-text">
-          ${r.review_text || 'Pengalaman magang yang sangat berharga dalam mengasah keterampilan teknis kejuruan dan etos kerja industri.'}
+          ${r.review_text || 'Supervisor ramah dan aktif memberi arahan harian. Suasana kantor kondusif untuk siswa PKL, serta tugas yang diberikan terstruktur.'}
         </p>
       </div>
 
-      ${(options.showProsCons && (r.pros || r.cons)) ? `
+      ${(showProsCons && (r.pros || r.cons)) ? `
         <div class="review-modern-pros-cons">
           ${r.pros ? `<div class="review-pill-pro"><strong>👍 Kelebihan:</strong> ${r.pros}</div>` : ''}
           ${r.cons ? `<div class="review-pill-con"><strong>💡 Catatan:</strong> ${r.cons}</div>` : ''}

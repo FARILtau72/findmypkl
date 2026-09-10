@@ -470,10 +470,11 @@
 
 .testimonials-grid {
   display: grid;
-  grid-template-columns: repeat(3, 1fr);
+  grid-template-columns: repeat(3, minmax(0, 1fr));
   gap: 24px;
   max-width: 1140px;
   margin: 0 auto;
+  align-items: stretch;
 }
 
 .testimonial-card-modern {

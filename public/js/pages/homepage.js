@@ -220,57 +220,49 @@ Object.assign(window.App, {
       <section class="testimonials-section">
         <div class="section-modern-title">
           <h2>Apa Yang <span class="text-green">Mereka</span> Katakan?</h2>
-          <p>Kisah sukses dan pengalaman nyata dari alumni SMK Taruna Bangsa Kota Bekasi</p>
+          <p>Kisah sukses dan ulasan nyata dari siswa &amp; alumni SMK Taruna Bangsa Kota Bekasi</p>
         </div>
 
         <div class="testimonials-grid">
-          <div class="testimonial-card-modern">
-            <div>
-              <div class="testi-stars">★★★★★</div>
-              <p class="testi-text">
-                "FindMyPKL sangat memudahkan saya mencari tempat magang resmi ber-MoU. Sistem pelacakan lamarannya sangat jelas dan Surat Pengantar dari BKK Taruna Bangsa terbit cepat!"
-              </p>
-            </div>
-            <div class="testi-author-row">
-              <div class="testi-avatar" style="background: #e0e7ff; color: #3730a3;">BP</div>
-              <div class="testi-author-info">
-                <h5>Bagas Pratama</h5>
-                <p>SMK Taruna Bangsa Bekasi (XII RPL 1) &bull; PKL di PT Telkom Indonesia</p>
-              </div>
-            </div>
-          </div>
+          ${renderModernReviewCard({
+            student_nama: 'Arga Kurniawan',
+            alumni_label: 'Alumni RPL 2025',
+            company_nama: 'PT Media Kreatif Nusantara',
+            posisi: 'Frontend Web Developer',
+            completion_period: 'Selesai Nov 2025',
+            rating: 4.0,
+            review_text: 'Supervisor ramah dan aktif memberi arahan harian. Suasana kantor kondusif untuk siswa PKL, serta tugas yang diberikan terstruktur.',
+            avatar_url: '/images/avatars/arga-kurniawan.png'
+          }, { showUpvote: false, showProsCons: false })}
 
-          <div class="testimonial-card-modern">
-            <div>
-              <div class="testi-stars">★★★★★</div>
-              <p class="testi-text">
-                "Proses verifikasi dari tim HUBIN Taruna Bangsa sangat cepat, dan saya bisa langsung mengajukan portofolio jaringan ke GoTo secara terpadu tanpa ribet."
-              </p>
-            </div>
-            <div class="testi-author-row">
-              <div class="testi-avatar" style="background: #ecfdf5; color: #047857;">SR</div>
-              <div class="testi-author-info">
-                <h5>Siti Rahma Azzahra</h5>
-                <p>SMK Taruna Bangsa Bekasi (XII TAV 1) &bull; PKL di GoTo Gojek Tokopedia</p>
-              </div>
-            </div>
-          </div>
+          ${renderModernReviewCard({
+            student_nama: 'Bayu Nugroho',
+            alumni_label: 'Alumni TKRO 2025',
+            company_nama: 'PT Telkom Indonesia (Persero) Tbk',
+            posisi: 'Frontend Web Developer',
+            completion_period: 'Selesai Agu 2025',
+            rating: 5.0,
+            review_text: 'Pengalaman magang yang sangat berharga. Senior engineer ramah membimbing arsitektur jaringan dan web portal modern, serta uang saku tepat waktu.',
+            avatar_url: '/images/avatars/student-2.svg'
+          }, { showUpvote: false, showProsCons: false })}
 
-          <div class="testimonial-card-modern">
-            <div>
-              <div class="testi-stars">★★★★★</div>
-              <p class="testi-text">
-                "Sangat direkomendasikan untuk seluruh siswa SMK Taruna Bangsa! Informasi kuota, uang saku, dan bimbingan guru pembimbing ditampilkan sangat lengkap."
-              </p>
-            </div>
-            <div class="testi-author-row">
-              <div class="testi-avatar" style="background: #fef3c7; color: #92400e;">FP</div>
-              <div class="testi-author-info">
-                <h5>Farhan Pratama</h5>
-                <p>SMK Taruna Bangsa Bekasi (XII TITL 1) &bull; PKL di PT Len Industri</p>
-              </div>
-            </div>
-          </div>
+          ${renderModernReviewCard({
+            student_nama: 'Siti Rahma Azzahra',
+            alumni_label: 'Alumni TAV 2025',
+            company_nama: 'CV Kreatif Digital',
+            posisi: 'UI/UX & Creative Designer',
+            completion_period: 'Selesai Jul 2025',
+            rating: 4.8,
+            review_text: 'Sangat menyenangkan untuk siswa yang mendalami desain antarmuka digital. Klien berskala nasional sehingga portofolio langsung dilirik industri.',
+            avatar_url: '/images/avatars/student-3.svg'
+          }, { showUpvote: false, showProsCons: false })}
+        </div>
+
+        <div style="text-align: center; margin-top: 36px;">
+          <button type="button" class="btn btn-secondary" onclick="App.goToPortalTab('ulasan')" style="padding: 12px 28px; font-weight: 700; border-radius: 9999px; font-size: 14px; border: 1.5px solid #CBD5E1; background: #ffffff; color: #0F172A; cursor: pointer; display: inline-flex; align-items: center; gap: 8px; box-shadow: 0 1px 3px rgba(0,0,0,0.05); transition: all 0.2s ease;">
+            <span>Lihat Semua Ulasan Alumni</span>
+            <svg width="15" height="15" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5"><line x1="5" y1="12" x2="19" y2="12"/><polyline points="12 5 19 12 12 19"/></svg>
+          </button>
         </div>
       </section>
 
