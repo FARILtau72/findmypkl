@@ -6,22 +6,37 @@
 /* 2. Hero Section */
 .hero-modern-section {
   position: relative;
-  min-height: 100vh;
-  min-height: 100dvh;
+  min-height: 82vh;
   display: flex;
   flex-direction: column;
   justify-content: center;
   align-items: center;
+  background-color: #0b1329;
   background-image: 
-    linear-gradient(180deg, rgba(15, 23, 42, 0.70) 0%, rgba(15, 23, 42, 0.76) 45%, rgba(15, 23, 42, 0.90) 100%),
-    url('/images/smk-taruna-bangsa-hero.jpg');
-  background-position: center 30%;
-  background-size: cover;
-  background-repeat: no-repeat;
-  padding: 88px 24px 64px;
+    radial-gradient(ellipse 90% 60% at 50% -10%, rgba(16, 185, 129, 0.28) 0%, transparent 70%),
+    radial-gradient(ellipse 60% 45% at 85% 65%, rgba(14, 165, 233, 0.12) 0%, transparent 60%),
+    radial-gradient(ellipse 50% 35% at 15% 75%, rgba(16, 185, 129, 0.10) 0%, transparent 50%),
+    linear-gradient(180deg, #0b1329 0%, #0f172a 65%, #0f172a 100%);
+  padding: 100px 24px 64px;
   text-align: center;
   overflow: hidden;
   box-sizing: border-box;
+}
+
+.hero-modern-section::before {
+  content: '';
+  position: absolute;
+  top: 0;
+  left: 0;
+  right: 0;
+  bottom: 0;
+  background-image: url('/images/smk-taruna-bangsa-hero.jpg');
+  background-position: center 30%;
+  background-size: cover;
+  background-repeat: no-repeat;
+  opacity: 0.12;
+  mix-blend-mode: overlay;
+  pointer-events: none;
 }
 
 .hero-modern-content {
@@ -39,35 +54,49 @@
   display: inline-flex;
   align-items: center;
   gap: 8px;
-  background: rgba(255, 255, 255, 0.15);
-  color: #ffffff;
-  border: 1px solid rgba(255, 255, 255, 0.28);
+  background: rgba(16, 185, 129, 0.12);
+  color: #a7f3d0;
+  border: 1px solid rgba(16, 185, 129, 0.35);
   backdrop-filter: blur(10px);
   -webkit-backdrop-filter: blur(10px);
-  padding: 7px 20px;
+  padding: 6px 18px;
   border-radius: 9999px;
-  font-size: 13.5px;
+  font-size: 13px;
   font-weight: 700;
-  margin-bottom: 22px;
-  box-shadow: 0 4px 14px rgba(0, 0, 0, 0.25);
+  margin-bottom: 20px;
   letter-spacing: 0.2px;
-  text-shadow: 0 1px 3px rgba(0, 0, 0, 0.4);
+  box-shadow: 0 4px 14px rgba(0, 0, 0, 0.15);
+}
+
+.hero-badge-dot {
+  width: 7px;
+  height: 7px;
+  border-radius: 50%;
+  background: #34d399;
+  box-shadow: 0 0 8px #34d399;
+  display: inline-block;
+  flex-shrink: 0;
 }
 
 .hero-headline-modern {
-  font-size: 52px;
+  font-size: 48px;
   font-weight: 800;
   color: #ffffff !important;
-  line-height: 1.16;
-  letter-spacing: -1.2px;
-  margin-bottom: 18px;
-  text-shadow: 0 3px 18px rgba(0, 0, 0, 0.75), 0 1px 4px rgba(0, 0, 0, 0.5);
+  line-height: 1.18;
+  letter-spacing: -1px;
+  margin-bottom: 16px;
+  text-shadow: 0 2px 10px rgba(0, 0, 0, 0.4);
 }
 
 .hero-headline-modern span {
-  color: #ffffff !important;
   display: block;
-  text-shadow: 0 3px 18px rgba(0, 0, 0, 0.75), 0 1px 4px rgba(0, 0, 0, 0.5);
+}
+
+.hero-highlight-word {
+  background: linear-gradient(135deg, #34d399 0%, #10b981 100%);
+  -webkit-background-clip: text;
+  -webkit-text-fill-color: transparent;
+  display: inline-block;
 }
 
 .hero-headline-modern .text-green {
@@ -77,18 +106,54 @@
 }
 
 .hero-subtitle-modern {
-  font-size: 17px;
-  color: rgba(255, 255, 255, 0.94) !important;
-  line-height: 1.65;
-  max-width: 720px;
-  margin: 0 auto 36px;
-  text-shadow: 0 1px 8px rgba(0, 0, 0, 0.65);
+  font-size: 16.5px;
+  color: #cbd5e1 !important;
+  line-height: 1.6;
+  max-width: 680px;
+  margin: 0 auto 30px;
+  text-shadow: 0 1px 4px rgba(0, 0, 0, 0.3);
 }
 
 .hero-subtitle-modern strong {
   color: #ffffff !important;
   font-weight: 700;
-  text-shadow: 0 1px 8px rgba(0, 0, 0, 0.7);
+}
+
+/* Quick Filter Tags */
+.hero-quick-tags {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  gap: 8px;
+  margin-top: 18px;
+  flex-wrap: wrap;
+}
+
+.quick-tags-label {
+  font-size: 12.5px;
+  color: #94a3b8;
+  font-weight: 600;
+  margin-right: 2px;
+}
+
+.quick-tag-pill {
+  background: rgba(255, 255, 255, 0.08);
+  border: 1px solid rgba(255, 255, 255, 0.18);
+  color: #e2e8f0;
+  padding: 4px 12px;
+  border-radius: 9999px;
+  font-size: 12px;
+  font-weight: 700;
+  cursor: pointer;
+  transition: all 0.2s ease;
+  font-family: inherit;
+}
+
+.quick-tag-pill:hover {
+  background: rgba(16, 185, 129, 0.2);
+  border-color: #10b981;
+  color: #34d399;
+  transform: translateY(-1px);
 }
 
 /* 3. Floating Unified Search Bar */
@@ -171,14 +236,22 @@
   transform: translateY(-1px);
 }
 
-/* 4. 3 Highlight Feature Cards */
+/* 4. 3 Highlight Feature Cards (Bridge between Hero and Content) */
+.hero-stats-bridge-section {
+  position: relative;
+  z-index: 10;
+  max-width: 1120px;
+  margin: -36px auto 0;
+  padding: 0 24px;
+  box-sizing: border-box;
+}
+
 .hero-highlights-grid {
   display: grid;
   grid-template-columns: repeat(3, minmax(0, 1fr));
   gap: 16px;
-  max-width: 1080px;
   width: 100%;
-  margin: 40px auto 0;
+  margin: 0 auto;
   text-align: left;
 }
 
@@ -983,70 +1056,123 @@
 
 @media (max-width: 768px) {
   .hero-modern-section {
-    min-height: 100vh;
-    min-height: 100dvh;
-    padding: 82px 16px 88px !important;
+    min-height: auto !important;
+    padding: 86px 16px 28px !important;
+    display: block !important;
+    text-align: center;
     background-position: center 25%;
-    display: flex;
-    flex-direction: column;
-    justify-content: center;
-    align-items: center;
+  }
+  .hero-modern-content {
+    max-width: 100%;
+    padding: 0;
   }
   .hero-pill-badge {
     font-size: 11.5px;
-    padding: 6px 14px;
-    margin-bottom: 16px;
+    padding: 5px 14px;
+    margin-bottom: 14px;
     line-height: 1.35;
-    max-width: 95%;
+    max-width: 100%;
+    box-sizing: border-box;
   }
   .hero-headline-modern {
-    font-size: 30px;
+    font-size: 28px;
     letter-spacing: -0.6px;
     line-height: 1.22;
-    margin-bottom: 14px;
+    margin-bottom: 12px;
   }
   .hero-subtitle-modern {
-    font-size: 14px;
+    font-size: 13.5px;
     line-height: 1.55;
-    margin-bottom: 24px;
+    margin-bottom: 20px;
     padding: 0 4px;
+    color: #94a3b8 !important;
   }
+
+  /* Mobile Search Bar Card: Clean, modern, native app feel */
   .search-bar-unified {
     flex-direction: column;
-    border-radius: 20px;
-    padding: 14px 14px 12px;
+    border-radius: 18px;
+    padding: 12px;
     gap: 8px;
     width: 100%;
     max-width: 100%;
-    box-shadow: 0 14px 34px rgba(0, 0, 0, 0.45);
+    background: #ffffff;
+    box-shadow: 0 16px 36px -8px rgba(0, 0, 0, 0.45), 0 0 0 1px rgba(255, 255, 255, 0.12);
+    border: none;
+    box-sizing: border-box;
   }
   .search-divider {
     display: none;
   }
   .search-seg {
     width: 100%;
-    padding: 8px 4px;
-    border-bottom: 1px solid #f1f5f9;
+    padding: 10px 12px;
+    background: #f8fafc;
+    border: 1.5px solid #e2e8f0;
+    border-radius: 12px;
+    box-sizing: border-box;
+    transition: all 0.2s ease;
+  }
+  .search-seg:focus-within {
+    border-color: #10b981;
+    background: #ffffff;
+    box-shadow: 0 0 0 3px rgba(16, 185, 129, 0.12);
+  }
+  .search-seg-icon {
+    color: #059669;
+  }
+  .search-seg input, .search-seg select {
+    font-size: 13.5px;
+    font-weight: 600;
+    color: #0f172a;
+    width: 100%;
   }
   .btn-search-green {
     width: 100%;
     justify-content: center;
-    margin-top: 6px;
+    margin-top: 4px;
     padding: 12px;
     border-radius: 12px;
-    font-size: 15px;
+    font-size: 14.5px;
     font-weight: 700;
+    background: linear-gradient(135deg, #10b981 0%, #059669 100%);
+    box-shadow: 0 4px 14px rgba(16, 185, 129, 0.35);
+  }
+
+  /* Quick Filter Tags in Mobile */
+  .hero-quick-tags {
+    margin-top: 14px;
+    gap: 6px;
+  }
+  .quick-tags-label {
+    font-size: 11.5px;
+  }
+  .quick-tag-pill {
+    padding: 4px 10px;
+    font-size: 11.5px;
+  }
+
+  /* Highlights Section in Mobile: Clean, dedicated strip below hero, never cut off! */
+  .hero-stats-bridge-section {
+    position: relative;
+    margin: 0 auto;
+    padding: 20px 16px 14px;
+    background: #f8fafc;
+    border-bottom: 1px solid #e2e8f0;
   }
   .hero-highlights-grid {
     grid-template-columns: 1fr;
     gap: 10px;
-    margin-top: 24px;
+    margin-top: 0;
     width: 100%;
   }
   .highlight-item-card {
     padding: 12px 14px;
-    border-radius: 14px;
+    border-radius: 12px;
     gap: 12px;
+    background: #ffffff;
+    border: 1px solid #e2e8f0;
+    box-shadow: 0 2px 6px rgba(15, 23, 42, 0.04);
   }
   .highlight-icon-box {
     width: 38px;
@@ -1056,10 +1182,12 @@
   .highlight-item-card h4 {
     font-size: 13.5px;
     margin-bottom: 2px;
+    color: #0f172a;
   }
   .highlight-item-card p {
     font-size: 11.5px;
     line-height: 1.4;
+    color: #64748b;
   }
   .public-navbar.navbar-solid {
     position: sticky;
