@@ -1,0 +1,20 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 120 120" width="120" height="120">
+  <rect width="120" height="120" rx="26" fill="#FAF5FF" stroke="#E9D5FF" stroke-width="2"/>
+  <defs>
+    <linearGradient id="kumataGrad" x1="0%" y1="0%" x2="100%" y2="100%">
+      <stop offset="0%" stop-color="#8B5CF6"/>
+      <stop offset="100%" stop-color="#6D28D9"/>
+    </linearGradient>
+  </defs>
+  <!-- Kumata Bear Silhouette Head -->
+  <circle cx="42" cy="38" r="11" fill="url(#kumataGrad)"/>
+  <circle cx="78" cy="38" r="11" fill="url(#kumataGrad)"/>
+  <ellipse cx="60" cy="58" rx="28" ry="24" fill="url(#kumataGrad)"/>
+  <ellipse cx="60" cy="62" rx="14" ry="10" fill="#FAF5FF"/>
+  <ellipse cx="60" cy="58" rx="5" ry="3.5" fill="#4C1D95"/>
+  <circle cx="50" cy="50" r="3.5" fill="#FFFFFF"/>
+  <circle cx="70" cy="50" r="3.5" fill="#FFFFFF"/>
+  <!-- Animation Clapper / Play Frame -->
+  <rect x="36" y="86" width="48" height="12" rx="4" fill="#6D28D9"/>
+  <text x="60" y="95" fill="#FFFFFF" font-family="Arial, Helvetica, sans-serif" font-weight="900" font-size="8" text-anchor="middle" letter-spacing="1">STUDIO</text>
+</svg>

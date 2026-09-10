@@ -1,0 +1,19 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 120 120" width="120" height="120">
+  <rect width="120" height="120" rx="26" fill="#EFF6FF" stroke="#BFDBFE" stroke-width="2"/>
+  <defs>
+    <linearGradient id="mandiriBlue" x1="0%" y1="0%" x2="100%" y2="100%">
+      <stop offset="0%" stop-color="#002D62"/>
+      <stop offset="100%" stop-color="#001A3A"/>
+    </linearGradient>
+    <linearGradient id="mandiriGold" x1="0%" y1="0%" x2="100%" y2="100%">
+      <stop offset="0%" stop-color="#FBBF24"/>
+      <stop offset="50%" stop-color="#F59E0B"/>
+      <stop offset="100%" stop-color="#D97706"/>
+    </linearGradient>
+  </defs>
+  <!-- Mandiri Blue Arc -->
+  <path d="M24 64 C24 44 38 34 58 34 C76 34 88 44 92 56 C86 48 76 42 60 42 C44 42 34 50 34 64 C34 76 44 84 60 84 C76 84 86 78 92 70 C88 82 76 92 58 92 C38 92 24 82 24 64 Z" fill="url(#mandiriBlue)"/>
+  <!-- Mandiri Golden Wave Ribbon -->
+  <path d="M42 64 C56 50 78 50 96 66 C86 58 72 58 58 68 C48 74 42 70 42 64 Z" fill="url(#mandiriGold)"/>
+  <circle cx="86" cy="48" r="7" fill="url(#mandiriGold)"/>
+</svg>

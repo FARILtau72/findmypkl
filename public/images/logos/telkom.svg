@@ -1,0 +1,23 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 120 120" width="120" height="120">
+  <rect width="120" height="120" rx="26" fill="#FFF5F5" stroke="#FECDD3" stroke-width="2"/>
+  <defs>
+    <radialGradient id="telkomRed" cx="35%" cy="35%" r="65%">
+      <stop offset="0%" stop-color="#FF334B"/>
+      <stop offset="60%" stop-color="#E11D48"/>
+      <stop offset="100%" stop-color="#9F1239"/>
+    </radialGradient>
+    <linearGradient id="telkomGray" x1="0%" y1="0%" x2="100%" y2="100%">
+      <stop offset="0%" stop-color="#CBD5E1"/>
+      <stop offset="50%" stop-color="#94A3B8"/>
+      <stop offset="100%" stop-color="#64748B"/>
+    </linearGradient>
+  </defs>
+  <!-- Telkom Red Sphere -->
+  <circle cx="56" cy="56" r="32" fill="url(#telkomRed)"/>
+  <!-- Gray Digital Hand Swoosh -->
+  <path d="M30 64 C35 78 52 86 68 82 C82 78 90 64 88 50 C86 58 78 70 66 73 C54 76 42 72 36 62 Z" fill="url(#telkomGray)"/>
+  <path d="M46 32 C62 30 76 40 80 54 C78 44 68 36 56 36 C46 36 38 42 34 50 C36 42 40 34 46 32 Z" fill="#FFFFFF" opacity="0.85"/>
+  <!-- Center Dot -->
+  <circle cx="54" cy="54" r="10" fill="#FFFFFF"/>
+  <circle cx="54" cy="54" r="6" fill="#E11D48"/>
+</svg>

@@ -1,0 +1,823 @@
+/* ==========================================================================
+   FIND MY PKL - GLOBAL RESPONSIVENESS & BREAKPOINTS
+   Responsive adjustments for Mobile, Tablet, and Desktop
+   ========================================================================== */
+
+/* ==========================================================================
+   ADVANCED RESPONSIVENESS (MOBILE, TABLET, DESKTOP)
+   ========================================================================== */
+
+@media (max-width: 1024px) {
+  .page-body-container {
+    padding: 24px 16px 48px;
+  }
+  .ulasan-hero-card {
+    flex-direction: column;
+    align-items: flex-start;
+    gap: 18px;
+  }
+  .ulasan-score-col {
+    padding-right: 0;
+    border-right: none;
+    border-bottom: 1px solid #F1F5F9;
+    padding-bottom: 18px;
+    width: 100%;
+    text-align: left;
+    display: flex;
+    align-items: center;
+    gap: 20px;
+  }
+  .ulasan-metrics-grid {
+    width: 100%;
+  }
+  .mitra-cards-grid {
+    grid-template-columns: repeat(2, 1fr);
+  }
+}
+
+@media (max-width: 860px) {
+  .mkt-layout-container {
+    flex-direction: column;
+    padding: 0 16px;
+  }
+  /* Hide bulky left sidebar from default mobile flow to prevent endless scrolling */
+  .mkt-sidebar-left {
+    display: none;
+  }
+  .mkt-mobile-filter-bar {
+    display: flex;
+    gap: 10px;
+    align-items: center;
+    margin-bottom: 18px;
+    width: 100%;
+  }
+  .btn-mkt-filter-mobile {
+    flex: 1;
+    display: inline-flex;
+    align-items: center;
+    justify-content: center;
+    gap: 8px;
+    background: #ffffff;
+    border: 1.5px solid #CBD5E1;
+    padding: 11px 16px;
+    border-radius: 12px;
+    font-weight: 700;
+    font-size: 13.5px;
+    color: #0F172A;
+    cursor: pointer;
+    box-shadow: 0 2px 6px rgba(15, 23, 42, 0.04);
+  }
+  .btn-mkt-filter-mobile:hover {
+    border-color: #10B981;
+    color: #059669;
+  }
+  .filter-count-badge {
+    background: #10B981;
+    color: #ffffff;
+    font-size: 11px;
+    font-weight: 800;
+    padding: 1px 7px;
+    border-radius: 9999px;
+  }
+  .mkt-mobile-sort-wrap {
+    flex: 1;
+  }
+  .mkt-mobile-sort-select {
+    width: 100%;
+    background: #ffffff;
+    border: 1.5px solid #CBD5E1;
+    border-radius: 12px;
+    padding: 11px 14px;
+    font-size: 13px;
+    font-weight: 600;
+    color: #334155;
+    cursor: pointer;
+    box-shadow: 0 2px 6px rgba(15, 23, 42, 0.04);
+  }
+  .mkt-search-pill-container {
+    padding: 16px 16px 12px;
+  }
+  .mkt-top-stats-bar {
+    flex-direction: column;
+    align-items: flex-start;
+    gap: 10px;
+    margin-bottom: 16px;
+  }
+  .mkt-sort-box {
+    display: none; /* replaced by mobile sort bar */
+  }
+}
+
+@media (max-width: 768px) {
+  /* ==========================================================================
+     DASHBOARD & PORTAL MOBILE OPTIMIZATIONS (SMARTPHONE / HP)
+     ========================================================================== */
+
+  /* 1. Mobile Sidebar Drawer & Backdrop */
+  .app-sidebar {
+    position: fixed !important;
+    left: -100% !important;
+    top: 0 !important;
+    bottom: 0 !important;
+    width: 290px !important;
+    max-width: 85vw !important;
+    height: 100vh !important;
+    z-index: 1050 !important;
+    box-shadow: 0 10px 30px rgba(15, 23, 42, 0.25) !important;
+    border-right: 1px solid #e2e8f0 !important;
+    background: #ffffff !important;
+    transition: left 0.28s cubic-bezier(0.4, 0, 0.2, 1) !important;
+    display: flex !important;
+  }
+
+  .app-sidebar.open {
+    left: 0 !important;
+  }
+
+  .sidebar-backdrop {
+    display: none;
+    position: fixed !important;
+    inset: 0 !important;
+    background: rgba(15, 23, 42, 0.5) !important;
+    backdrop-filter: blur(3px) !important;
+    -webkit-backdrop-filter: blur(3px) !important;
+    z-index: 1040 !important;
+    opacity: 0;
+    transition: opacity 0.25s ease !important;
+  }
+
+  .sidebar-backdrop.active {
+    display: block !important;
+    opacity: 1 !important;
+  }
+
+  body.sidebar-drawer-open {
+    overflow: hidden !important;
+  }
+
+  .sidebar-header {
+    display: flex !important;
+    align-items: center !important;
+    justify-content: space-between !important;
+    padding: 16px 18px !important;
+  }
+
+  .sidebar-close-btn {
+    display: inline-flex !important;
+    align-items: center;
+    justify-content: center;
+    width: 34px;
+    height: 34px;
+    border-radius: 8px;
+    border: 1px solid #e2e8f0;
+    background: #f8fafc;
+    color: #64748b;
+    cursor: pointer;
+    flex-shrink: 0;
+    transition: all 0.15s ease;
+  }
+
+  .sidebar-close-btn:hover {
+    background: #fee2e2;
+    color: #dc2626;
+    border-color: #fca5a5;
+  }
+
+  /* 2. Main Header Responsive (Two-Row Clean Layout on Mobile) */
+  .main-header {
+    padding: 10px 14px !important;
+    flex-direction: column !important;
+    align-items: stretch !important;
+    gap: 8px !important;
+    min-height: auto !important;
+    background: #ffffff !important;
+    position: sticky !important;
+    top: 0 !important;
+    z-index: 40 !important;
+    border-bottom: 1px solid #e2e8f0 !important;
+  }
+
+  .header-left {
+    display: flex !important;
+    align-items: center !important;
+    gap: 10px !important;
+    width: 100% !important;
+  }
+
+  #menu-toggle-btn {
+    display: inline-flex !important;
+    align-items: center !important;
+    justify-content: center !important;
+    width: 38px !important;
+    height: 38px !important;
+    border-radius: 10px !important;
+    flex-shrink: 0 !important;
+    background: #f8fafc !important;
+    border: 1.5px solid #e2e8f0 !important;
+    color: #0f172a !important;
+    padding: 0 !important;
+    cursor: pointer;
+    transition: all 0.15s ease;
+  }
+
+  #menu-toggle-btn:hover {
+    background: #ecfdf5 !important;
+    color: #059669 !important;
+    border-color: #a7f3d0 !important;
+  }
+
+  .header-title-area {
+    flex: 1 !important;
+    min-width: 0 !important;
+  }
+
+  .header-title-area h2 {
+    font-size: 15px !important;
+    font-weight: 700 !important;
+    line-height: 1.25 !important;
+    margin: 0 !important;
+    white-space: nowrap !important;
+    overflow: hidden !important;
+    text-overflow: ellipsis !important;
+  }
+
+  .header-title-area p {
+    display: none !important;
+  }
+
+  .header-actions {
+    display: flex !important;
+    align-items: center !important;
+    gap: 8px !important;
+    width: 100% !important;
+    overflow-x: auto !important;
+    -webkit-overflow-scrolling: touch !important;
+    padding-bottom: 2px !important;
+    scrollbar-width: none !important;
+  }
+
+  .header-actions::-webkit-scrollbar {
+    display: none !important;
+  }
+
+  .header-actions .btn {
+    font-size: 12px !important;
+    padding: 6px 12px !important;
+    border-radius: 9999px !important;
+    white-space: nowrap !important;
+    flex-shrink: 0 !important;
+  }
+
+  .header-actions .btn-logout-clean {
+    margin-left: auto !important;
+    padding: 6px 12px !important;
+    font-size: 11.5px !important;
+    white-space: nowrap !important;
+    flex-shrink: 0 !important;
+  }
+
+  /* 3. Stat Cards / KPI Grid (2x2 on Mobile HP) */
+  .grid-4 {
+    display: grid !important;
+    grid-template-columns: repeat(2, 1fr) !important;
+    gap: 10px !important;
+    margin-bottom: 16px !important;
+  }
+
+  .stat-card {
+    padding: 12px !important;
+    border-radius: 14px !important;
+    gap: 8px !important;
+    box-shadow: 0 1px 3px rgba(15, 23, 42, 0.04) !important;
+  }
+
+  .stat-info span {
+    font-size: 11px !important;
+    line-height: 1.25 !important;
+    display: -webkit-box;
+    -webkit-line-clamp: 1;
+    -webkit-box-orient: vertical;
+    overflow: hidden;
+  }
+
+  .stat-info h3 {
+    font-size: 20px !important;
+    margin-top: 2px !important;
+    line-height: 1.1 !important;
+  }
+
+  .stat-info p {
+    font-size: 10px !important;
+    margin-top: 2px !important;
+    white-space: nowrap !important;
+    overflow: hidden !important;
+    text-overflow: ellipsis !important;
+  }
+
+  .stat-icon {
+    width: 36px !important;
+    height: 36px !important;
+    border-radius: 10px !important;
+  }
+
+  .stat-icon svg {
+    width: 18px !important;
+    height: 18px !important;
+  }
+
+  /* 4. Dashboard Content Body & Card Containers on Mobile */
+  .content-body {
+    padding: 14px 12px 84px 12px !important;
+    max-width: 100% !important;
+  }
+
+  .grid-2, .grid-3 {
+    display: grid !important;
+    grid-template-columns: 1fr !important;
+    gap: 14px !important;
+  }
+
+  .card {
+    padding: 16px 14px !important;
+    border-radius: 14px !important;
+    margin-bottom: 14px !important;
+    box-shadow: 0 1px 4px rgba(15, 23, 42, 0.04) !important;
+  }
+
+  /* 5. Responsive Data Tables on Mobile */
+  .table-responsive {
+    overflow-x: auto !important;
+    -webkit-overflow-scrolling: touch !important;
+    border-radius: 10px !important;
+    margin: 0 -14px !important;
+    padding: 0 14px !important;
+    position: relative !important;
+    scrollbar-width: thin !important;
+  }
+
+  .custom-table {
+    min-width: 580px !important;
+  }
+
+  .custom-table th {
+    padding: 10px 12px !important;
+    font-size: 11px !important;
+    white-space: nowrap !important;
+  }
+
+  .custom-table td {
+    padding: 10px 12px !important;
+    font-size: 12.5px !important;
+  }
+
+  .table-responsive::after {
+    content: '↔ Geser tabel ke samping';
+    display: block;
+    font-size: 11px;
+    font-weight: 600;
+    color: #94a3b8;
+    text-align: right;
+    padding: 6px 0 2px;
+  }
+
+  /* Card headers and toolbars on mobile */
+  .card > div:first-child[style*="justify-content: space-between"] {
+    flex-direction: column !important;
+    align-items: stretch !important;
+    gap: 12px !important;
+  }
+
+  .card > div:first-child[style*="justify-content: space-between"] > div {
+    width: 100% !important;
+  }
+
+  .card > div:first-child[style*="justify-content: space-between"] select,
+  .card > div:first-child[style*="justify-content: space-between"] input {
+    width: 100% !important;
+    min-width: 0 !important;
+  }
+
+  .card > div:first-child[style*="justify-content: space-between"] button.btn:not(.btn-ghost) {
+    width: 100% !important;
+    justify-content: center !important;
+  }
+
+
+  /* 6. Interactive Timeline Stepper on Mobile (Siswa Portal) */
+  .tracking-timeline {
+    display: flex !important;
+    flex-direction: column !important;
+    gap: 16px !important;
+    position: relative !important;
+    padding-left: 30px !important;
+    margin: 18px 0 !important;
+  }
+
+  .tracking-timeline::before {
+    content: '' !important;
+    position: absolute !important;
+    left: 14px !important;
+    top: 14px !important;
+    bottom: 14px !important;
+    width: 2px !important;
+    background: #e2e8f0 !important;
+    display: block !important;
+  }
+
+  .timeline-step {
+    display: flex !important;
+    flex-direction: row !important;
+    align-items: center !important;
+    gap: 12px !important;
+    text-align: left !important;
+  }
+
+  .step-circle {
+    margin-bottom: 0 !important;
+    position: relative !important;
+    z-index: 2 !important;
+    width: 30px !important;
+    height: 30px !important;
+    font-size: 12px !important;
+    flex-shrink: 0 !important;
+  }
+
+  .step-label {
+    font-size: 13px !important;
+    font-weight: 700 !important;
+    color: #1e293b !important;
+  }
+
+  .step-sub {
+    font-size: 11px !important;
+    color: #64748b !important;
+  }
+
+  /* 7. Account States Banner on Mobile */
+  .account-state-banner {
+    padding: 18px 16px !important;
+    border-radius: 16px !important;
+    margin-bottom: 18px !important;
+  }
+
+  .state-top-row {
+    flex-direction: column !important;
+    align-items: flex-start !important;
+    gap: 8px !important;
+  }
+
+  .btn-mobile-drawer-toggle {
+    display: inline-flex;
+  }
+
+
+
+  /* Mobile bottom navigation bar active */
+  .mobile-bottom-nav {
+    display: flex;
+    position: fixed;
+    bottom: 0;
+    left: 0;
+    right: 0;
+    height: 62px;
+    background: #ffffff;
+    border-top: 1px solid #E2E8F0;
+    z-index: 1000;
+    box-shadow: 0 -4px 16px rgba(15, 23, 42, 0.08);
+    justify-content: space-around;
+    align-items: center;
+    padding: 0 4px;
+    backdrop-filter: blur(8px);
+    -webkit-backdrop-filter: blur(8px);
+  }
+
+  .mobile-nav-btn {
+    flex: 1;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    justify-content: center;
+    gap: 3px;
+    background: none;
+    border: none;
+    padding: 6px 2px;
+    cursor: pointer;
+    color: #64748B;
+    font-family: inherit;
+    font-size: 10.5px;
+    font-weight: 600;
+    transition: all 0.18s ease;
+    text-decoration: none;
+    position: relative;
+  }
+
+  .mobile-nav-btn.active {
+    color: #059669;
+    font-weight: 800;
+  }
+
+  .mobile-nav-btn.active .mobile-nav-icon {
+    color: #059669;
+    transform: translateY(-2px);
+  }
+
+  .mobile-nav-icon {
+    position: relative;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    transition: transform 0.18s ease;
+  }
+
+  .mobile-nav-badge {
+    position: absolute;
+    top: -4px;
+    right: -10px;
+    background: #059669;
+    color: #ffffff;
+    font-size: 10px;
+    font-weight: 800;
+    min-width: 16px;
+    height: 16px;
+    border-radius: 9999px;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    padding: 0 4px;
+    line-height: 1;
+    box-shadow: 0 2px 4px rgba(5, 150, 105, 0.4);
+  }
+
+  /* Padding bottom on all portal views so bottom nav doesn't cover elements */
+  .mkt-page-wrapper,
+  .page-body-container,
+  .hero-modern-section,
+  .content-body {
+    padding-bottom: 74px !important;
+  }
+
+  .public-nav-links {
+    display: none; /* Cleaned up in favor of bottom nav bar and hamburger drawer */
+  }
+
+  .page-hero-title {
+    font-size: 22px;
+  }
+  .page-hero-desc {
+    font-size: 13px;
+    margin-bottom: 16px;
+  }
+  .page-stats-row {
+    gap: 6px;
+    flex-wrap: wrap;
+  }
+  .page-stat-chip {
+    font-size: 11.5px;
+    padding: 5px 10px;
+  }
+  .mitra-cards-grid,
+  .ulasan-cards-grid,
+  .mkt-cards-grid {
+    grid-template-columns: 1fr;
+    gap: 14px;
+  }
+  .ulasan-metrics-grid {
+    grid-template-columns: 1fr;
+  }
+  .mitra-filter-top-row {
+    flex-direction: column;
+    align-items: stretch;
+  }
+  .mitra-search-input-wrap {
+    width: 100%;
+  }
+  .mitra-city-select {
+    width: 100%;
+  }
+  .ulasan-toolbar {
+    flex-direction: column;
+    align-items: stretch;
+  }
+  .btn-tulis-ulasan {
+    justify-content: center;
+    width: 100%;
+  }
+  .btn-nav-hubin-pill {
+    display: none !important;
+  }
+  .guest-nav-auth-group {
+    display: none !important;
+  }
+  .btn-mobile-login {
+    display: inline-flex !important;
+    align-items: center;
+    justify-content: center;
+    background: #ecfdf5;
+    border: 1.5px solid #a7f3d0;
+    color: #047857;
+    font-size: 12.5px;
+    font-weight: 700;
+    padding: 6px 14px;
+    border-radius: 9999px;
+    cursor: pointer;
+    transition: all 0.2s ease;
+    text-decoration: none;
+  }
+  .btn-mobile-login:hover {
+    background: #d1fae5;
+  }
+  .mkt-user-meta {
+    display: none !important;
+  }
+  .mkt-user-profile-pill {
+    padding: 2px !important;
+    border: none !important;
+    background: transparent !important;
+    box-shadow: none !important;
+  }
+  .mkt-user-chevron {
+    display: none !important;
+  }
+
+  .modal-dialog {
+    width: 95% !important;
+    max-width: 95% !important;
+    max-height: 90vh !important;
+    margin: 14px auto !important;
+    border-radius: 16px !important;
+  }
+  .modal-header {
+    padding: 14px 16px !important;
+  }
+  .modal-body {
+    padding: 16px !important;
+    max-height: calc(90vh - 65px) !important;
+    overflow-y: auto !important;
+  }
+  .modal-body .grid-2,
+  .modal-body .grid-3 {
+    grid-template-columns: 1fr !important;
+    gap: 10px !important;
+  }
+
+
+  /* Rekomendasi Lowongan PKL Mobile Horizontal Carousel Slider */
+  .rekomendasi-section {
+    padding: 44px 0 54px !important;
+    overflow-x: hidden !important;
+  }
+  .rekomendasi-section .section-modern-title {
+    padding: 0 20px !important;
+    margin-bottom: 12px !important;
+  }
+  .rekomendasi-mobile-nav {
+    display: flex !important;
+    align-items: center !important;
+    justify-content: space-between !important;
+    padding: 0 20px 14px !important;
+  }
+  .rekomendasi-swipe-hint {
+    display: inline-flex !important;
+    align-items: center !important;
+    gap: 6px !important;
+    font-size: 12px !important;
+    font-weight: 700 !important;
+    color: #059669 !important;
+    background: #ecfdf5 !important;
+    padding: 5px 12px !important;
+    border-radius: 9999px !important;
+    border: 1px solid #a7f3d0 !important;
+  }
+  .rekomendasi-arrow-group {
+    display: inline-flex !important;
+    gap: 8px !important;
+    align-items: center !important;
+  }
+  .btn-rekomendasi-arrow {
+    width: 32px !important;
+    height: 32px !important;
+    border-radius: 50% !important;
+    background: #ffffff !important;
+    border: 1.5px solid #cbd5e1 !important;
+    color: #0f172a !important;
+    display: inline-flex !important;
+    align-items: center !important;
+    justify-content: center !important;
+    cursor: pointer !important;
+    box-shadow: 0 2px 5px rgba(15, 23, 42, 0.05) !important;
+    transition: all 0.15s ease !important;
+    padding: 0 !important;
+  }
+  .btn-rekomendasi-arrow:active {
+    transform: scale(0.92) !important;
+    background: #f1f5f9 !important;
+  }
+  .rekomendasi-grid {
+    display: flex !important;
+    flex-direction: row !important;
+    flex-wrap: nowrap !important;
+    overflow-x: auto !important;
+    overflow-y: hidden !important;
+    scroll-snap-type: x mandatory !important;
+    -webkit-overflow-scrolling: touch !important;
+    scroll-behavior: smooth !important;
+    gap: 16px !important;
+    padding: 8px 20px 24px 20px !important;
+    margin: 0 !important;
+    width: 100% !important;
+    scrollbar-width: none !important;
+  }
+  .rekomendasi-grid::-webkit-scrollbar {
+    display: none !important;
+  }
+  .rekomendasi-card {
+    flex: 0 0 84% !important;
+    max-width: 320px !important;
+    min-width: 275px !important;
+    scroll-snap-align: start !important;
+    border-radius: 18px !important;
+    padding: 20px !important;
+    box-shadow: 0 4px 16px rgba(15, 23, 42, 0.06) !important;
+  }
+  .rekomendasi-carousel-dots {
+    display: flex !important;
+    justify-content: center !important;
+    align-items: center !important;
+    gap: 6px !important;
+    margin-top: 4px !important;
+    padding: 0 20px !important;
+  }
+  .carousel-dot {
+    width: 7px !important;
+    height: 7px !important;
+    border-radius: 9999px !important;
+    background: #cbd5e1 !important;
+    transition: all 0.25s ease !important;
+    cursor: pointer !important;
+  }
+  .carousel-dot.active {
+    width: 22px !important;
+    background: #059669 !important;
+  }
+}
+
+@media (max-width: 480px) {
+  .public-nav-container {
+    padding: 8px 12px;
+  }
+  .brand-logo-text {
+    font-size: 16px;
+  }
+  .brand-logo-icon {
+    width: 30px;
+    height: 30px;
+  }
+  .btn-nav-auth {
+    padding: 5px 10px !important;
+    font-size: 11.5px !important;
+  }
+  .hero-headline-modern {
+    font-size: 26px !important;
+    letter-spacing: -0.5px;
+    color: #ffffff !important;
+  }
+  .hero-subtitle-modern {
+    font-size: 13.5px !important;
+    color: rgba(255, 255, 255, 0.94) !important;
+  }
+  .search-bar-unified {
+    padding: 12px !important;
+  }
+  .mkt-search-pill {
+    padding: 12px !important;
+  }
+  .mkt-pagination-row {
+    flex-direction: column;
+    gap: 12px;
+    text-align: center;
+  }
+}
+
+/* Star Rating Selector in Review Modal */
+.star-rating-selector {
+  display: inline-flex;
+  gap: 6px;
+  align-items: center;
+}
+
+.star-btn {
+  background: none;
+  border: none;
+  font-size: 26px;
+  line-height: 1;
+  color: #CBD5E1;
+  cursor: pointer;
+  transition: transform 0.15s ease, color 0.15s ease;
+  padding: 2px 4px;
+}
+
+.star-btn:hover,
+.star-btn.active {
+  color: #F59E0B;
+  transform: scale(1.15);
+}

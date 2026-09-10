@@ -1,0 +1,15 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 120 120" width="120" height="120">
+  <rect width="120" height="120" rx="26" fill="#FAF5FF" stroke="#F3E8FF" stroke-width="2"/>
+  <defs>
+    <linearGradient id="glowGrad" x1="0%" y1="0%" x2="100%" y2="100%">
+      <stop offset="0%" stop-color="#C084FC"/>
+      <stop offset="50%" stop-color="#A855F7"/>
+      <stop offset="100%" stop-color="#7E22CE"/>
+    </linearGradient>
+  </defs>
+  <!-- Glowing 4-point design studio star -->
+  <path d="M60 20 C60 44 44 60 20 60 C44 60 60 76 60 100 C60 76 76 60 100 60 C76 60 60 44 60 20 Z" fill="url(#glowGrad)"/>
+  <circle cx="60" cy="60" r="8" fill="#FFFFFF"/>
+  <circle cx="78" cy="42" r="4.5" fill="#F472B6"/>
+  <circle cx="42" cy="78" r="3.5" fill="#818CF8"/>
+</svg>

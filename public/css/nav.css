@@ -1,0 +1,565 @@
+/* ==========================================================================
+   FIND MY PKL - NAVIGATION STYLES
+   Public Navbar, Brand Logo, Pill Tabs, User Dropdown, Mobile Drawer & Bottom Nav
+   ========================================================================== */
+
+/* ==========================================================================
+   MODERN HOMEPAGE STYLES (MATCHING DESIGN MOCKUP)
+   Emerald-accented, clean, floating search bar, partner strip, 
+   step workflow, marketplace cards, testimonials, dual CTAs, FAQ, dark footer
+   ========================================================================== */
+
+:root {
+  --brand-green: #10b981;
+  --brand-green-hover: #059669;
+  --brand-green-light: #ecfdf5;
+  --brand-green-border: #a7f3d0;
+  --brand-green-dark: #047857;
+  --dark-navy: #0b1120;
+  --dark-surface: #0f172a;
+}
+
+/* 1. Public Navbar */
+.public-navbar {
+  background-color: #ffffff;
+  border-bottom: 1px solid #eef2f6;
+  position: sticky;
+  top: 0;
+  z-index: 1000;
+  box-shadow: 0 1px 3px rgba(15, 23, 42, 0.04);
+  transition: background-color 0.3s cubic-bezier(0.4, 0, 0.2, 1),
+              border-color 0.3s cubic-bezier(0.4, 0, 0.2, 1),
+              box-shadow 0.3s cubic-bezier(0.4, 0, 0.2, 1),
+              backdrop-filter 0.3s cubic-bezier(0.4, 0, 0.2, 1);
+}
+
+.public-navbar.navbar-solid {
+  position: sticky;
+  top: 0;
+  background-color: #ffffff;
+  border-bottom: 1px solid #eef2f6;
+}
+
+/* Glassmorphism Navbar (Floating over 100vh Hero on Landing Page) */
+.public-navbar.navbar-transparent {
+  position: fixed;
+  top: 0;
+  left: 0;
+  right: 0;
+  width: 100%;
+  background: linear-gradient(180deg, rgba(15, 23, 42, 0.48) 0%, rgba(15, 23, 42, 0.26) 75%, rgba(15, 23, 42, 0.12) 100%) !important;
+  backdrop-filter: blur(14px) saturate(160%);
+  -webkit-backdrop-filter: blur(14px) saturate(160%);
+  border: none !important;
+  border-bottom: none !important;
+  box-shadow: none !important;
+}
+
+/* Brand Text in transparent navbar */
+.public-navbar.navbar-transparent .brand-logo-text {
+  color: #ffffff;
+  text-shadow: 0 1px 4px rgba(0, 0, 0, 0.6);
+  transition: color 0.3s ease;
+}
+.public-navbar.navbar-transparent .brand-logo-text span {
+  color: #34d399;
+  transition: color 0.3s ease;
+}
+.public-navbar.navbar-transparent .brand-logo-modern div div:last-child {
+  color: rgba(255, 255, 255, 0.75) !important;
+  text-shadow: 0 1px 3px rgba(0, 0, 0, 0.5);
+  transition: color 0.3s ease;
+}
+
+/* Nav Links in transparent navbar */
+.public-navbar.navbar-transparent .public-nav-link {
+  color: rgba(255, 255, 255, 0.92);
+  text-shadow: 0 1px 4px rgba(0, 0, 0, 0.5);
+  transition: all 0.2s ease;
+}
+.public-navbar.navbar-transparent .public-nav-link:hover {
+  color: #ffffff;
+  background: rgba(255, 255, 255, 0.16);
+  box-shadow: 0 2px 8px rgba(0, 0, 0, 0.15);
+}
+.public-navbar.navbar-transparent .public-nav-link.nav-pill-active,
+.public-navbar.navbar-transparent .public-nav-link.active {
+  background: rgba(255, 255, 255, 0.22);
+  color: #ffffff !important;
+  border: 1px solid rgba(255, 255, 255, 0.3);
+  backdrop-filter: blur(8px);
+  -webkit-backdrop-filter: blur(8px);
+  box-shadow: 0 2px 10px rgba(0, 0, 0, 0.2);
+}
+
+/* Hubin Pill in transparent navbar */
+.public-navbar.navbar-transparent .btn-nav-hubin-pill {
+  background: rgba(255, 255, 255, 0.14);
+  border: 1px solid rgba(255, 255, 255, 0.25);
+  border-radius: 9999px;
+  color: #ffffff;
+  backdrop-filter: blur(8px);
+  -webkit-backdrop-filter: blur(8px);
+  text-shadow: 0 1px 3px rgba(0, 0, 0, 0.4);
+  box-shadow: 0 2px 10px rgba(0, 0, 0, 0.15);
+  transition: all 0.2s ease;
+}
+.public-navbar.navbar-transparent .btn-nav-hubin-pill:hover {
+  background: rgba(255, 255, 255, 0.25);
+  border-color: rgba(255, 255, 255, 0.45);
+  color: #ffffff;
+  box-shadow: 0 4px 14px rgba(0, 0, 0, 0.25);
+}
+
+/* Auth Buttons in transparent navbar */
+.public-navbar.navbar-transparent .btn-nav-login {
+  background: rgba(255, 255, 255, 0.14);
+  border: 1px solid rgba(255, 255, 255, 0.25);
+  border-radius: 9999px;
+  padding: 7px 18px;
+  color: #ffffff;
+  backdrop-filter: blur(8px);
+  -webkit-backdrop-filter: blur(8px);
+  text-shadow: 0 1px 3px rgba(0, 0, 0, 0.4);
+  box-shadow: 0 2px 10px rgba(0, 0, 0, 0.15);
+  transition: all 0.2s ease;
+}
+.public-navbar.navbar-transparent .btn-nav-login:hover {
+  background: rgba(255, 255, 255, 0.25);
+  border-color: rgba(255, 255, 255, 0.45);
+  color: #ffffff;
+}
+.public-navbar.navbar-transparent .btn-nav-register {
+  border-radius: 9999px;
+}
+.public-navbar.navbar-transparent .btn-mobile-login {
+  background: rgba(255, 255, 255, 0.14);
+  border: 1px solid rgba(255, 255, 255, 0.25);
+  border-radius: 9999px;
+  color: #ffffff;
+  backdrop-filter: blur(8px);
+  -webkit-backdrop-filter: blur(8px);
+}
+
+/* User Profile Pill in transparent navbar */
+.public-navbar.navbar-transparent .mkt-user-profile-pill {
+  background: rgba(255, 255, 255, 0.16);
+  border: 1px solid rgba(255, 255, 255, 0.3);
+  backdrop-filter: blur(8px);
+  -webkit-backdrop-filter: blur(8px);
+  box-shadow: 0 2px 10px rgba(0, 0, 0, 0.15);
+  transition: all 0.2s ease;
+}
+.public-navbar.navbar-transparent .mkt-user-name {
+  color: #ffffff;
+}
+.public-navbar.navbar-transparent .mkt-user-sub {
+  color: rgba(255, 255, 255, 0.82);
+}
+.public-navbar.navbar-transparent .mkt-user-chevron {
+  color: #ffffff;
+}
+
+/* Mobile Drawer Toggle in transparent navbar */
+.public-navbar.navbar-transparent .btn-mobile-drawer-toggle {
+  border-color: rgba(255, 255, 255, 0.35);
+  color: #ffffff;
+  background: rgba(255, 255, 255, 0.14);
+  backdrop-filter: blur(8px);
+  -webkit-backdrop-filter: blur(8px);
+  transition: all 0.2s ease;
+}
+
+/* ==========================================================================
+   SCROLLED STATE FOR NAVBAR (.navbar-scrolled)
+   Follows user when scrolling down, turns solid white with smooth animation
+   ========================================================================== */
+.public-navbar.navbar-transparent.navbar-scrolled {
+  background-color: rgba(255, 255, 255, 0.97) !important;
+  backdrop-filter: blur(14px);
+  -webkit-backdrop-filter: blur(14px);
+  border-bottom: 1px solid #eef2f6 !important;
+  box-shadow: 0 4px 20px rgba(15, 23, 42, 0.08) !important;
+}
+
+.public-navbar.navbar-transparent.navbar-scrolled .brand-logo-text {
+  color: #0f172a;
+  text-shadow: none;
+}
+.public-navbar.navbar-transparent.navbar-scrolled .brand-logo-text span {
+  color: #10b981;
+}
+.public-navbar.navbar-transparent.navbar-scrolled .brand-logo-modern div div:last-child {
+  color: #94A3B8 !important;
+  text-shadow: none;
+}
+
+.public-navbar.navbar-transparent.navbar-scrolled .public-nav-link {
+  color: #475569;
+  text-shadow: none;
+}
+.public-navbar.navbar-transparent.navbar-scrolled .public-nav-link:hover {
+  color: #059669;
+  background: #f0fdf4;
+}
+.public-navbar.navbar-transparent.navbar-scrolled .public-nav-link.nav-pill-active,
+.public-navbar.navbar-transparent.navbar-scrolled .public-nav-link.active {
+  background: #ecfdf5;
+  color: #047857 !important;
+  border: none;
+}
+
+.public-navbar.navbar-transparent.navbar-scrolled .btn-nav-hubin-pill {
+  background: #ffffff;
+  border: 1px solid #E2E8F0;
+  color: #334155;
+  text-shadow: none;
+}
+.public-navbar.navbar-transparent.navbar-scrolled .btn-nav-hubin-pill:hover {
+  background: #F8FAFC;
+  border-color: #CBD5E1;
+  color: #0F172A;
+}
+
+.public-navbar.navbar-transparent.navbar-scrolled .btn-nav-login {
+  background: #ffffff;
+  border: 1px solid #e2e8f0;
+  color: #334155;
+  text-shadow: none;
+}
+.public-navbar.navbar-transparent.navbar-scrolled .btn-nav-login:hover {
+  background: #f8fafc;
+  border-color: #cbd5e1;
+  color: #0f172a;
+}
+.public-navbar.navbar-transparent.navbar-scrolled .btn-mobile-login {
+  background: #ffffff;
+  border: 1px solid #e2e8f0;
+  color: #334155;
+}
+
+.public-navbar.navbar-transparent.navbar-scrolled .mkt-user-profile-pill {
+  background: #ffffff;
+  border: 1px solid #E2E8F0;
+}
+.public-navbar.navbar-transparent.navbar-scrolled .mkt-user-name {
+  color: #0f172a;
+}
+.public-navbar.navbar-transparent.navbar-scrolled .mkt-user-sub {
+  color: #64748B;
+}
+.public-navbar.navbar-transparent.navbar-scrolled .mkt-user-chevron {
+  color: #64748B;
+}
+
+.public-navbar.navbar-transparent.navbar-scrolled .btn-mobile-drawer-toggle {
+  border-color: #E2E8F0;
+  color: #334155;
+  background: transparent;
+}
+
+.public-nav-container {
+  max-width: 1240px;
+  margin: 0 auto;
+  padding: 0 20px;
+  height: 68px;
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  gap: 16px;
+  width: 100%;
+}
+
+.brand-logo-modern {
+  display: flex;
+  align-items: center;
+  gap: 10px;
+  cursor: pointer;
+  text-decoration: none;
+  flex-shrink: 0;
+}
+
+.brand-logo-icon {
+  width: 36px;
+  height: 36px;
+  border-radius: 9px;
+  background: linear-gradient(135deg, #10b981, #059669);
+  color: #ffffff;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  box-shadow: 0 2px 8px rgba(16, 185, 129, 0.25);
+  flex-shrink: 0;
+}
+
+.brand-logo-text {
+  font-size: 19px;
+  font-weight: 800;
+  color: #0f172a;
+  letter-spacing: -0.4px;
+}
+
+.brand-logo-text span {
+  color: #10b981;
+}
+
+.public-nav-links {
+  display: flex;
+  align-items: center;
+  gap: 4px;
+}
+
+.public-nav-link {
+  font-size: 13.5px;
+  font-weight: 600;
+  color: #475569;
+  cursor: pointer;
+  padding: 7px 14px;
+  border-radius: 9999px;
+  transition: all 0.15s ease;
+  text-decoration: none;
+  display: inline-flex;
+  align-items: center;
+  gap: 6px;
+  white-space: nowrap;
+}
+
+.public-nav-link:hover {
+  color: #059669;
+  background: #f0fdf4;
+}
+
+.public-nav-link.nav-pill-active,
+.public-nav-link.active {
+  background: #ecfdf5;
+  color: #047857 !important;
+  font-weight: 700;
+}
+
+.nav-fav-badge {
+  background: #10b981;
+  color: #ffffff;
+  font-size: 10px;
+  font-weight: 800;
+  padding: 1px 6px;
+  border-radius: 9999px;
+  line-height: 1.3;
+}
+
+.public-nav-actions {
+  display: flex;
+  align-items: center;
+  gap: 8px;
+  flex-shrink: 0;
+}
+
+.guest-nav-auth-group {
+  display: flex;
+  align-items: center;
+  gap: 8px;
+}
+
+.btn-nav-login {
+  background: #ffffff;
+  border: 1px solid #e2e8f0;
+  color: #334155;
+  padding: 6.5px 15px;
+  border-radius: 8px;
+  font-size: 13px;
+  font-weight: 600;
+  cursor: pointer;
+  transition: all 0.15s ease;
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  text-decoration: none;
+  white-space: nowrap;
+}
+
+.btn-nav-login:hover {
+  background: #f8fafc;
+  border-color: #cbd5e1;
+  color: #0f172a;
+}
+
+.btn-nav-register {
+  background: #10b981;
+  border: none;
+  color: #ffffff;
+  padding: 7px 18px;
+  border-radius: 8px;
+  font-size: 13px;
+  font-weight: 700;
+  cursor: pointer;
+  transition: all 0.15s ease;
+  box-shadow: 0 2px 6px rgba(16, 185, 129, 0.25);
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  text-decoration: none;
+  white-space: nowrap;
+}
+
+.btn-nav-register:hover {
+  background: #059669;
+  transform: translateY(-1px);
+}
+
+.btn-mobile-login {
+  display: none;
+}
+
+.mobile-drawer-guest-card {
+  margin: 14px 16px 8px;
+  background: #f8fafc;
+  border: 1px solid #e2e8f0;
+  border-radius: 14px;
+  padding: 16px;
+}
+
+
+/* ==========================================================================
+   MOBILE BOTTOM NAVIGATION BAR
+   ========================================================================== */
+.mobile-bottom-nav {
+  display: none;
+}
+
+
+/* Mobile Drawer (Slide-Over Navigation) */
+.mobile-drawer-overlay {
+  position: fixed;
+  top: 0;
+  left: 0;
+  right: 0;
+  bottom: 0;
+  background: rgba(15, 23, 42, 0.55);
+  backdrop-filter: blur(4px);
+  -webkit-backdrop-filter: blur(4px);
+  z-index: 2000;
+  opacity: 0;
+  visibility: hidden;
+  transition: opacity 0.25s ease, visibility 0.25s ease;
+}
+
+.mobile-drawer-overlay.active {
+  opacity: 1;
+  visibility: visible;
+}
+
+.mobile-drawer {
+  position: fixed;
+  top: 0;
+  right: 0;
+  bottom: 0;
+  width: 86%;
+  max-width: 340px;
+  background: #ffffff;
+  z-index: 2001;
+  box-shadow: -8px 0 32px rgba(15, 23, 42, 0.2);
+  display: flex;
+  flex-direction: column;
+  transform: translateX(100%);
+  transition: transform 0.28s cubic-bezier(0.16, 1, 0.3, 1);
+  overflow-y: auto;
+}
+
+.mobile-drawer-overlay.active .mobile-drawer {
+  transform: translateX(0);
+}
+
+.mobile-drawer-header {
+  padding: 16px 20px;
+  background: #F8FAFC;
+  border-bottom: 1px solid #E2E8F0;
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+}
+
+.mobile-drawer-close {
+  background: #F1F5F9;
+  border: none;
+  width: 32px;
+  height: 32px;
+  border-radius: 50%;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  cursor: pointer;
+  color: #64748B;
+  font-size: 18px;
+  line-height: 1;
+}
+
+.mobile-drawer-profile {
+  padding: 18px 20px;
+  border-bottom: 1px solid #F1F5F9;
+  display: flex;
+  align-items: center;
+  gap: 14px;
+}
+
+.mobile-drawer-avatar {
+  width: 44px;
+  height: 44px;
+  border-radius: 50%;
+  background: #10B981;
+  color: #ffffff;
+  font-weight: 800;
+  font-size: 16px;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  flex-shrink: 0;
+}
+
+.mobile-drawer-nav {
+  padding: 12px 14px;
+  display: flex;
+  flex-direction: column;
+  gap: 4px;
+}
+
+.mobile-drawer-link {
+  display: flex;
+  align-items: center;
+  gap: 12px;
+  padding: 11px 14px;
+  border-radius: 10px;
+  font-size: 13.5px;
+  font-weight: 600;
+  color: #334155;
+  text-decoration: none;
+  cursor: pointer;
+  transition: all 0.15s ease;
+}
+
+.mobile-drawer-link:hover,
+.mobile-drawer-link.active {
+  background: #ECFDF5;
+  color: #047857;
+}
+
+.mobile-drawer-link svg {
+  flex-shrink: 0;
+}
+
+.mobile-drawer-divider {
+  height: 1px;
+  background: #F1F5F9;
+  margin: 8px 14px;
+}
+
+.btn-mobile-drawer-toggle {
+  display: none;
+  background: transparent;
+  border: 1.5px solid #E2E8F0;
+  border-radius: 10px;
+  width: 38px;
+  height: 38px;
+  align-items: center;
+  justify-content: center;
+  color: #334155;
+  cursor: pointer;
+}

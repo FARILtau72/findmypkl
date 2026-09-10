@@ -1,0 +1,17 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 120 120" width="120" height="120">
+  <rect width="120" height="120" rx="26" fill="#F0F9FF" stroke="#BAE6FD" stroke-width="2"/>
+  <defs>
+    <linearGradient id="ptdiBlue" x1="0%" y1="0%" x2="100%" y2="100%">
+      <stop offset="0%" stop-color="#0284C7"/>
+      <stop offset="100%" stop-color="#0369A1"/>
+    </linearGradient>
+  </defs>
+  <!-- Indonesian Aerospace Jet Delta Wing -->
+  <path d="M60 22 L86 78 L60 66 L34 78 Z" fill="url(#ptdiBlue)"/>
+  <path d="M60 22 L60 66 L86 78 Z" fill="#0369A1"/>
+  <path d="M60 22 L60 66 L34 78 Z" fill="#0EA5E9"/>
+  <!-- Aircraft contrails / globe orbit -->
+  <path d="M22 86 C40 76 80 76 98 86 C80 82 40 82 22 86 Z" fill="#0284C7" opacity="0.6"/>
+  <circle cx="60" cy="52" r="6" fill="#FFFFFF"/>
+  <circle cx="60" cy="52" r="3" fill="#0369A1"/>
+</svg>

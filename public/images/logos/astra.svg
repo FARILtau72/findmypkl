@@ -1,0 +1,13 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 120 120" width="120" height="120">
+  <rect width="120" height="120" rx="26" fill="#EFF6FF" stroke="#BFDBFE" stroke-width="2"/>
+  <defs>
+    <linearGradient id="astraBlue" x1="0%" y1="0%" x2="100%" y2="100%">
+      <stop offset="0%" stop-color="#1D4ED8"/>
+      <stop offset="100%" stop-color="#1E3A8A"/>
+    </linearGradient>
+  </defs>
+  <!-- Astra Iconic 3-Wing Star Logo -->
+  <circle cx="60" cy="60" r="34" fill="none" stroke="url(#astraBlue)" stroke-width="5"/>
+  <path d="M60 26 C60 48 76 60 94 60 C76 66 66 84 66 94 C58 76 44 66 26 60 C48 56 56 40 60 26 Z" fill="url(#astraBlue)"/>
+  <circle cx="60" cy="60" r="6" fill="#FFFFFF"/>
+</svg>

@@ -1,0 +1,718 @@
+/* ==========================================================================
+   FIND MY PKL - PORTAL PAGES STYLES
+   Hero Banners, Mitra DUDI Grid, Favorit Saya, Ulasan Perusahaan & Star Rating
+   ========================================================================== */
+
+/* ==========================================================================
+   PAGE HERO BANNERS & SECTIONS (Mitra, Favorit, Ulasan)
+   ========================================================================== */
+
+.page-hero-section {
+  background: linear-gradient(180deg, #F0FDF4 0%, #FFFFFF 100%);
+  border-bottom: 1px solid #E2E8F0;
+  padding: 44px 24px 36px;
+  text-align: center;
+}
+
+.page-hero-inner {
+  max-width: 860px;
+  margin: 0 auto;
+}
+
+.page-hero-badge {
+  display: inline-flex;
+  align-items: center;
+  gap: 8px;
+  background: #DCFCE7;
+  color: #166534;
+  font-size: 12px;
+  font-weight: 700;
+  padding: 6px 14px;
+  border-radius: 9999px;
+  margin-bottom: 14px;
+  letter-spacing: 0.3px;
+  text-transform: uppercase;
+}
+
+.page-hero-title {
+  font-size: 32px;
+  font-weight: 800;
+  color: #0F172A;
+  line-height: 1.25;
+  margin-bottom: 10px;
+}
+
+.page-hero-title span {
+  color: #10B981;
+}
+
+.page-hero-desc {
+  font-size: 15px;
+  color: #64748B;
+  line-height: 1.6;
+  margin-bottom: 24px;
+}
+
+/* Stats Chips Row */
+.page-stats-row {
+  display: flex;
+  justify-content: center;
+  gap: 12px;
+  flex-wrap: wrap;
+}
+
+.page-stat-chip {
+  background: #ffffff;
+  border: 1px solid #E2E8F0;
+  box-shadow: 0 1px 3px rgba(0,0,0,0.04);
+  padding: 8px 16px;
+  border-radius: 9999px;
+  font-size: 13px;
+  font-weight: 600;
+  color: #334155;
+  display: inline-flex;
+  align-items: center;
+  gap: 8px;
+}
+
+.page-stat-chip strong {
+  color: #0F172A;
+}
+
+/* Page Main Container */
+.page-body-container {
+  max-width: 1240px;
+  margin: 0 auto;
+  padding: 32px 24px 60px;
+}
+
+/* ==========================================================================
+   MITRA INDUSTRI (DUDI) PAGE STYLES
+   ========================================================================== */
+
+.mitra-filter-bar {
+  background: #ffffff;
+  border: 1px solid #E2E8F0;
+  border-radius: 16px;
+  padding: 16px 20px;
+  box-shadow: 0 2px 6px rgba(15, 23, 42, 0.04);
+  margin-bottom: 28px;
+  display: flex;
+  flex-direction: column;
+  gap: 14px;
+}
+
+.mitra-filter-top-row {
+  display: flex;
+  gap: 12px;
+  align-items: center;
+  flex-wrap: wrap;
+}
+
+.mitra-search-input-wrap {
+  flex: 1;
+  min-width: 260px;
+  position: relative;
+  display: flex;
+  align-items: center;
+}
+
+.mitra-search-input-wrap svg {
+  position: absolute;
+  left: 14px;
+  color: #94A3B8;
+  pointer-events: none;
+}
+
+.mitra-search-input-wrap input {
+  width: 100%;
+  padding: 10px 14px 10px 42px;
+  border: 1.5px solid #E2E8F0;
+  border-radius: 10px;
+  font-size: 14px;
+  outline: none;
+  transition: all 0.15s ease;
+}
+
+.mitra-search-input-wrap input:focus {
+  border-color: #10B981;
+  box-shadow: 0 0 0 3px rgba(16, 185, 129, 0.12);
+}
+
+.mitra-city-select {
+  padding: 10px 14px;
+  border: 1.5px solid #E2E8F0;
+  border-radius: 10px;
+  font-size: 13.5px;
+  font-weight: 600;
+  color: #334155;
+  background-color: #ffffff;
+  outline: none;
+  cursor: pointer;
+  transition: all 0.15s ease;
+}
+
+.mitra-city-select:focus {
+  border-color: #10B981;
+}
+
+.mitra-sector-pills {
+  display: flex;
+  gap: 8px;
+  overflow-x: auto;
+  white-space: nowrap;
+  padding-bottom: 4px;
+  -webkit-overflow-scrolling: touch;
+}
+
+.mitra-sector-btn {
+  background: #F8FAFC;
+  border: 1px solid #E2E8F0;
+  border-radius: 9999px;
+  padding: 6px 14px;
+  font-size: 12.5px;
+  font-weight: 600;
+  color: #475569;
+  cursor: pointer;
+  transition: all 0.15s ease;
+  flex-shrink: 0;
+}
+
+.mitra-sector-btn:hover {
+  border-color: #CBD5E1;
+  color: #0F172A;
+  background: #F1F5F9;
+}
+
+.mitra-sector-btn.active {
+  background: #10B981;
+  border-color: #10B981;
+  color: #ffffff;
+  font-weight: 700;
+}
+
+/* Mitra Cards Grid */
+.mitra-cards-grid {
+  display: grid;
+  grid-template-columns: repeat(auto-fill, minmax(350px, 1fr));
+  gap: 22px;
+}
+
+.mitra-card-item {
+  background: #ffffff;
+  border: 1px solid #E2E8F0;
+  border-radius: 18px;
+  box-shadow: 0 2px 8px rgba(15, 23, 42, 0.04);
+  padding: 22px;
+  display: flex;
+  flex-direction: column;
+  justify-content: space-between;
+  transition: all 0.2s ease;
+}
+
+.mitra-card-item:hover {
+  transform: translateY(-3px);
+  box-shadow: 0 10px 24px -4px rgba(15, 23, 42, 0.08);
+  border-color: #CBD5E1;
+}
+
+.mitra-card-top {
+  display: flex;
+  align-items: flex-start;
+  gap: 14px;
+  margin-bottom: 14px;
+}
+
+.mitra-avatar-box {
+  width: 52px;
+  height: 52px;
+  border-radius: 12px;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  color: #ffffff;
+  font-weight: 800;
+  font-size: 14px;
+  flex-shrink: 0;
+  box-shadow: 0 3px 8px rgba(0,0,0,0.12);
+}
+
+.mitra-title-meta {
+  flex: 1;
+  min-width: 0;
+}
+
+.mitra-card-name {
+  font-size: 16px;
+  font-weight: 800;
+  color: #0F172A;
+  line-height: 1.3;
+  margin-bottom: 4px;
+}
+
+.mitra-card-sector {
+  font-size: 12px;
+  color: #64748B;
+  font-weight: 500;
+}
+
+.mitra-card-desc {
+  font-size: 13px;
+  color: #475569;
+  line-height: 1.55;
+  margin-bottom: 16px;
+  display: -webkit-box;
+  -webkit-line-clamp: 3;
+  -webkit-box-orient: vertical;
+  overflow: hidden;
+}
+
+.mitra-card-mou-row {
+  background: #F8FAFC;
+  border: 1px solid #F1F5F9;
+  border-radius: 10px;
+  padding: 8px 12px;
+  font-size: 11.5px;
+  color: #475569;
+  margin-bottom: 16px;
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  gap: 8px;
+}
+
+.mitra-card-mou-row code {
+  color: #1E40AF;
+  font-weight: 600;
+}
+
+.mitra-card-footer-actions {
+  display: flex;
+  gap: 10px;
+  align-items: center;
+  padding-top: 14px;
+  border-top: 1px solid #F1F5F9;
+}
+
+.btn-mitra-view-jobs {
+  flex: 1;
+  background: #ECFDF5;
+  border: 1px solid #A7F3D0;
+  color: #047857;
+  font-size: 12.5px;
+  font-weight: 700;
+  padding: 9px 12px;
+  border-radius: 9px;
+  cursor: pointer;
+  transition: all 0.15s ease;
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  gap: 6px;
+}
+
+.btn-mitra-view-jobs:hover {
+  background: #10B981;
+  border-color: #10B981;
+  color: #ffffff;
+}
+
+.btn-mitra-profile {
+  background: #ffffff;
+  border: 1px solid #E2E8F0;
+  color: #475569;
+  font-size: 12.5px;
+  font-weight: 600;
+  padding: 9px 14px;
+  border-radius: 9px;
+  cursor: pointer;
+  transition: all 0.15s ease;
+}
+
+.btn-mitra-profile:hover {
+  background: #F8FAFC;
+  border-color: #CBD5E1;
+  color: #0F172A;
+}
+
+/* ==========================================================================
+   FAVORIT SAYA PAGE STYLES
+   ========================================================================= */
+
+.favorit-toolbar-row {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  margin-bottom: 24px;
+  flex-wrap: wrap;
+  gap: 12px;
+}
+
+.favorit-empty-box {
+  background: #ffffff;
+  border: 1.5px dashed #CBD5E1;
+  border-radius: 20px;
+  padding: 60px 24px;
+  text-align: center;
+  max-width: 580px;
+  margin: 30px auto;
+}
+
+.favorit-empty-icon {
+  width: 72px;
+  height: 72px;
+  border-radius: 50%;
+  background: #FEF3C7;
+  color: #D97706;
+  font-size: 32px;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  margin: 0 auto 20px;
+}
+
+.favorit-empty-title {
+  font-size: 20px;
+  font-weight: 800;
+  color: #0F172A;
+  margin-bottom: 8px;
+}
+
+.favorit-empty-desc {
+  font-size: 14px;
+  color: #64748B;
+  line-height: 1.6;
+  margin-bottom: 24px;
+}
+
+/* ==========================================================================
+   ULASAN PERUSAHAAN PAGE STYLES
+   ========================================================================== */
+
+.ulasan-hero-card {
+  background: #ffffff;
+  border: 1px solid #E2E8F0;
+  border-radius: 20px;
+  padding: 24px;
+  box-shadow: 0 4px 12px rgba(15, 23, 42, 0.05);
+  margin-bottom: 28px;
+  display: flex;
+  gap: 28px;
+  align-items: center;
+}
+
+.ulasan-score-col {
+  padding-right: 28px;
+  border-right: 1px solid #F1F5F9;
+  text-align: center;
+  min-width: 190px;
+}
+
+.ulasan-big-num {
+  font-size: 46px;
+  font-weight: 900;
+  color: #0F172A;
+  line-height: 1;
+  margin-bottom: 6px;
+}
+
+.ulasan-big-num span {
+  font-size: 22px;
+  color: #94A3B8;
+  font-weight: 700;
+}
+
+.ulasan-stars-gold {
+  color: #F59E0B;
+  font-size: 18px;
+  letter-spacing: 2px;
+  margin-bottom: 6px;
+}
+
+.ulasan-score-sub {
+  font-size: 12px;
+  color: #64748B;
+  font-weight: 600;
+}
+
+.ulasan-metrics-grid {
+  flex: 1;
+  display: grid;
+  grid-template-columns: repeat(2, 1fr);
+  gap: 16px;
+}
+
+.ulasan-metric-item {
+  display: flex;
+  flex-direction: column;
+  gap: 4px;
+}
+
+.ulasan-metric-label-row {
+  display: flex;
+  justify-content: space-between;
+  font-size: 12.5px;
+  font-weight: 600;
+  color: #334155;
+}
+
+.ulasan-progress-bg {
+  width: 100%;
+  height: 8px;
+  border-radius: 9999px;
+  background: #F1F5F9;
+  overflow: hidden;
+}
+
+.ulasan-progress-fill {
+  height: 100%;
+  background: linear-gradient(90deg, #10B981, #059669);
+  border-radius: 9999px;
+}
+
+/* Ulasan Toolbar */
+.ulasan-toolbar {
+  background: #ffffff;
+  border: 1px solid #E2E8F0;
+  border-radius: 16px;
+  padding: 16px 20px;
+  box-shadow: 0 2px 6px rgba(15, 23, 42, 0.04);
+  margin-bottom: 28px;
+  display: flex;
+  gap: 12px;
+  align-items: center;
+  flex-wrap: wrap;
+}
+
+.btn-tulis-ulasan {
+  background: #10B981;
+  border: 1.5px solid #10B981;
+  color: #ffffff;
+  font-size: 13.5px;
+  font-weight: 700;
+  padding: 10px 18px;
+  border-radius: 10px;
+  cursor: pointer;
+  display: inline-flex;
+  align-items: center;
+  gap: 8px;
+  transition: all 0.15s ease;
+  white-space: nowrap;
+}
+
+.btn-tulis-ulasan:hover {
+  background: #059669;
+  border-color: #059669;
+  box-shadow: 0 4px 12px rgba(16, 185, 129, 0.25);
+}
+
+/* Ulasan Cards List */
+.ulasan-cards-grid {
+  display: grid;
+  grid-template-columns: repeat(auto-fill, minmax(360px, 1fr));
+  gap: 20px;
+}
+
+.ulasan-card-item {
+  background: #ffffff;
+  border: 1px solid #E2E8F0;
+  border-radius: 18px;
+  padding: 22px;
+  box-shadow: 0 2px 6px rgba(15, 23, 42, 0.04);
+  display: flex;
+  flex-direction: column;
+  justify-content: space-between;
+  transition: all 0.2s ease;
+}
+
+.ulasan-card-item:hover {
+  border-color: #CBD5E1;
+  box-shadow: 0 8px 20px -4px rgba(15, 23, 42, 0.08);
+}
+
+.ulasan-author-row {
+  display: flex;
+  align-items: center;
+  gap: 12px;
+  margin-bottom: 12px;
+}
+
+.ulasan-avatar {
+  width: 44px;
+  height: 44px;
+  border-radius: 50%;
+  background: #EFF6FF;
+  color: #2563EB;
+  font-weight: 800;
+  font-size: 14px;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  flex-shrink: 0;
+}
+
+.ulasan-author-info {
+  flex: 1;
+  min-width: 0;
+}
+
+.ulasan-author-name {
+  font-size: 14px;
+  font-weight: 700;
+  color: #0F172A;
+  display: flex;
+  align-items: center;
+  gap: 6px;
+  flex-wrap: wrap;
+}
+
+.ulasan-verified-badge {
+  display: inline-flex;
+  align-items: center;
+  gap: 4px;
+  font-size: 10.5px;
+  font-weight: 700;
+  color: #059669;
+  background: #ECFDF5;
+  padding: 2px 7px;
+  border-radius: 9999px;
+  border: 1px solid #A7F3D0;
+}
+
+.ulasan-author-meta {
+  font-size: 11.5px;
+  color: #64748B;
+}
+
+.ulasan-comp-tag {
+  display: inline-block;
+  background: #F8FAFC;
+  border: 1px solid #E2E8F0;
+  border-radius: 8px;
+  padding: 5px 10px;
+  font-size: 12px;
+  font-weight: 700;
+  color: #1E293B;
+  margin-bottom: 12px;
+}
+
+.ulasan-rating-aspects-row {
+  display: flex;
+  gap: 6px;
+  flex-wrap: wrap;
+  margin-bottom: 12px;
+}
+
+.ulasan-aspect-chip {
+  font-size: 11px;
+  font-weight: 600;
+  color: #475569;
+  background: #F1F5F9;
+  padding: 3px 8px;
+  border-radius: 6px;
+}
+
+.ulasan-text-body {
+  font-size: 13.5px;
+  color: #334155;
+  line-height: 1.6;
+  margin-bottom: 14px;
+  font-style: italic;
+}
+
+.ulasan-pros-cons-box {
+  display: flex;
+  flex-direction: column;
+  gap: 6px;
+  margin-bottom: 16px;
+}
+
+.ulasan-pro-pill {
+  background: #F0FDF4;
+  border: 1px solid #BBF7D0;
+  border-radius: 8px;
+  padding: 6px 10px;
+  font-size: 11.5px;
+  color: #166534;
+  line-height: 1.4;
+}
+
+.ulasan-con-pill {
+  background: #FFFBEB;
+  border: 1px solid #FDE68A;
+  border-radius: 8px;
+  padding: 6px 10px;
+  font-size: 11.5px;
+  color: #92400E;
+  line-height: 1.4;
+}
+
+.ulasan-card-footer {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  padding-top: 12px;
+  border-top: 1px solid #F1F5F9;
+  font-size: 12px;
+  color: #94A3B8;
+}
+
+.btn-review-upvote {
+  background: #ffffff;
+  border: 1px solid #E2E8F0;
+  border-radius: 8px;
+  padding: 5px 12px;
+  font-size: 12px;
+  font-weight: 600;
+  color: #475569;
+  cursor: pointer;
+  transition: all 0.15s ease;
+  display: inline-flex;
+  align-items: center;
+  gap: 6px;
+}
+
+.btn-review-upvote:hover {
+  background: #F8FAFC;
+  border-color: #10B981;
+  color: #059669;
+}
+
+.btn-review-upvote.upvoted {
+  background: #ECFDF5;
+  border-color: #10B981;
+  color: #047857;
+  font-weight: 700;
+}
+
+
+/* Star Rating Selector in Modal */
+.star-rating-selector {
+  display: flex;
+  gap: 8px;
+  align-items: center;
+  margin: 6px 0 12px;
+}
+
+.star-btn {
+  background: #F8FAFC;
+  border: 1.5px solid #E2E8F0;
+  border-radius: 10px;
+  padding: 8px 14px;
+  cursor: pointer;
+  font-size: 16px;
+  color: #94A3B8;
+  font-weight: 700;
+  display: inline-flex;
+  align-items: center;
+  gap: 4px;
+  transition: all 0.15s ease;
+}
+
+.star-btn:hover,
+.star-btn.active {
+  background: #FEF3C7;
+  border-color: #F59E0B;
+  color: #D97706;
+  transform: translateY(-1px);
+}

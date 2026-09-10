@@ -1,0 +1,23 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 120 120" width="120" height="120">
+  <rect width="120" height="120" rx="26" fill="#FFF7ED" stroke="#FED7AA" stroke-width="2"/>
+  <defs>
+    <linearGradient id="kdTop" x1="0%" y1="0%" x2="100%" y2="100%">
+      <stop offset="0%" stop-color="#FB923C"/>
+      <stop offset="100%" stop-color="#F97316"/>
+    </linearGradient>
+    <linearGradient id="kdLeft" x1="0%" y1="0%" x2="100%" y2="100%">
+      <stop offset="0%" stop-color="#EA580C"/>
+      <stop offset="100%" stop-color="#C2410C"/>
+    </linearGradient>
+    <linearGradient id="kdRight" x1="0%" y1="0%" x2="100%" y2="100%">
+      <stop offset="0%" stop-color="#FDBA74"/>
+      <stop offset="100%" stop-color="#FB923C"/>
+    </linearGradient>
+  </defs>
+  <!-- 3D Isometric Creative Studio Cube -->
+  <polygon points="60,26 88,42 60,58 32,42" fill="url(#kdTop)"/>
+  <polygon points="32,42 60,58 60,90 32,74" fill="url(#kdLeft)"/>
+  <polygon points="88,42 60,58 60,90 88,74" fill="url(#kdRight)"/>
+  <!-- Creative spark in center -->
+  <circle cx="60" cy="58" r="5" fill="#FFFFFF"/>
+</svg>

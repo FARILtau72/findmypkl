@@ -1,0 +1,20 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 120 120" width="120" height="120">
+  <rect width="120" height="120" rx="26" fill="#ECFEFF" stroke="#A5F3FC" stroke-width="2"/>
+  <defs>
+    <linearGradient id="sdiGrad" x1="0%" y1="0%" x2="100%" y2="100%">
+      <stop offset="0%" stop-color="#06B6D4"/>
+      <stop offset="100%" stop-color="#0891B2"/>
+    </linearGradient>
+  </defs>
+  <!-- Connected Cloud Database Matrix -->
+  <circle cx="60" cy="38" r="10" fill="url(#sdiGrad)"/>
+  <circle cx="38" cy="74" r="10" fill="url(#sdiGrad)"/>
+  <circle cx="82" cy="74" r="10" fill="url(#sdiGrad)"/>
+  <!-- Connecting lines -->
+  <line x1="60" y1="38" x2="38" y2="74" stroke="#0891B2" stroke-width="4"/>
+  <line x1="60" y1="38" x2="82" y2="74" stroke="#0891B2" stroke-width="4"/>
+  <line x1="38" y1="74" x2="82" y2="74" stroke="#0891B2" stroke-width="4"/>
+  <!-- Center Core Node -->
+  <circle cx="60" cy="62" r="7" fill="#FFFFFF" stroke="#0891B2" stroke-width="3"/>
+  <circle cx="60" cy="62" r="3" fill="#0891B2"/>
+</svg>

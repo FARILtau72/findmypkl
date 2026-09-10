@@ -1,0 +1,584 @@
+/* ==========================================================================
+   FIND MY PKL - AUTHENTICATION & REGISTRATION STYLES
+   Login Card, Wizard Steps, Account State Banners (Verified, Pending, Revision, Rejected)
+   ========================================================================== */
+
+/* ==========================================================================
+   STEP-BY-STEP REGISTRATION WIZARD & ACCOUNT STATES
+   ========================================================================== */
+
+/* Badge Orange (Perlu Perbaikan) */
+.badge-orange {
+  background-color: #ffedd5;
+  color: #c2410c;
+  border: 1px solid #fed7aa;
+}
+
+/* 1. Registration Wizard Container */
+.reg-wizard-card {
+  max-width: 740px;
+  margin: 10px auto 40px;
+  background: #ffffff;
+  border-radius: 20px;
+  border: 1px solid #e2e8f0;
+  box-shadow: 0 10px 30px -5px rgba(15, 23, 42, 0.07);
+  overflow: hidden;
+}
+
+.reg-wizard-top {
+  background: #ffffff;
+  color: #0f172a;
+  padding: 16px 28px;
+  border-bottom: 1px solid #f1f5f9;
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+}
+
+.reg-wizard-header {
+  padding: 28px 32px 20px;
+  text-align: center;
+  background: #ffffff;
+}
+
+.reg-wizard-header h2 {
+  font-size: 24px;
+  font-weight: 800;
+  color: #0f172a;
+  margin-bottom: 6px;
+  letter-spacing: -0.5px;
+}
+
+.reg-wizard-header p {
+  font-size: 13.5px;
+  color: #64748b;
+  max-width: 520px;
+  margin: 0 auto;
+}
+
+/* Wizard Steps Navigation */
+.reg-steps-nav {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  padding: 18px 32px;
+  background: #f8fafc;
+  border-top: 1px solid #f1f5f9;
+  border-bottom: 1px solid #e2e8f0;
+  position: relative;
+}
+
+.reg-step-node {
+  display: flex;
+  align-items: center;
+  gap: 10px;
+  z-index: 2;
+  cursor: default;
+}
+
+.reg-step-bubble {
+  width: 34px;
+  height: 34px;
+  border-radius: 50%;
+  background: #e2e8f0;
+  color: #64748b;
+  font-size: 13px;
+  font-weight: 800;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  transition: all 0.25s ease;
+  border: 2px solid transparent;
+}
+
+.reg-step-node.active .reg-step-bubble {
+  background: #10b981;
+  color: #ffffff;
+  box-shadow: 0 0 0 4px rgba(16, 185, 129, 0.2);
+}
+
+.reg-step-node.completed .reg-step-bubble {
+  background: #047857;
+  color: #ffffff;
+}
+
+.reg-step-label {
+  font-size: 13px;
+  font-weight: 700;
+  color: #64748b;
+  transition: color 0.2s ease;
+}
+
+.reg-step-node.active .reg-step-label {
+  color: #0f172a;
+  font-weight: 800;
+}
+
+.reg-step-node.completed .reg-step-label {
+  color: #047857;
+  font-weight: 700;
+}
+
+.reg-step-connector {
+  flex: 1;
+  height: 2px;
+  background: #e2e8f0;
+  margin: 0 14px;
+  transition: background 0.3s ease;
+}
+
+.reg-step-connector.completed,
+.reg-step-connector.filled {
+  background: #10b981;
+}
+
+/* Wizard Body Form */
+.reg-wizard-body {
+  padding: 32px;
+}
+
+.reg-form-pane {
+  display: block !important;
+  animation: fadeInPane 0.25s ease;
+}
+
+.reg-form-pane.active {
+  display: block !important;
+}
+
+@keyframes fadeInPane {
+  from { opacity: 0; transform: translateY(6px); }
+  to { opacity: 1; transform: translateY(0); }
+}
+
+/* Input Password with Toggle Eye */
+.input-password-wrapper {
+  position: relative;
+  display: flex;
+  align-items: center;
+}
+
+.input-password-wrapper input {
+  padding-right: 44px;
+}
+
+.btn-toggle-pwd {
+  position: absolute;
+  right: 12px;
+  background: transparent;
+  border: none;
+  color: #94a3b8;
+  cursor: pointer;
+  display: flex;
+  align-items: center;
+  padding: 4px;
+  transition: color 0.15s ease;
+}
+
+.btn-toggle-pwd:hover {
+  color: #0f172a;
+}
+
+/* Recap review card in Step 3 */
+.reg-recap-box {
+  background: #f8fafc;
+  border: 1px solid #e2e8f0;
+  border-radius: 14px;
+  padding: 20px 22px;
+  margin-bottom: 22px;
+}
+
+.reg-recap-grid {
+  display: grid;
+  grid-template-columns: 1fr 1fr;
+  gap: 16px;
+}
+
+.reg-recap-item {
+  display: flex;
+  flex-direction: column;
+  gap: 3px;
+}
+
+.reg-recap-label {
+  font-size: 11px;
+  font-weight: 700;
+  text-transform: uppercase;
+  color: #64748b;
+  letter-spacing: 0.5px;
+}
+
+.reg-recap-val {
+  font-size: 14px;
+  font-weight: 700;
+  color: #0f172a;
+}
+
+/* Wizard Footer Navigation Buttons */
+.reg-wizard-footer {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  margin-top: 28px;
+  padding-top: 20px;
+  border-top: 1px solid #f1f5f9;
+}
+
+/* 2. Post-Registration Success Banner / Modal */
+.post-reg-card {
+  max-width: 640px;
+  margin: 20px auto;
+  background: #ffffff;
+  border-radius: 24px;
+  border: 1px solid #a7f3d0;
+  box-shadow: 0 12px 36px -6px rgba(16, 185, 129, 0.15);
+  padding: 40px 32px;
+  text-align: center;
+}
+
+.post-reg-icon-box {
+  width: 76px;
+  height: 76px;
+  border-radius: 50%;
+  background: #ecfdf5;
+  border: 3px solid #a7f3d0;
+  color: #10b981;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  margin: 0 auto 20px;
+  font-size: 34px;
+}
+
+/* 3. Account States UI (4 Distinct States) */
+.account-state-banner {
+  border-radius: 20px;
+  padding: 28px 32px;
+  margin-bottom: 28px;
+  border: 1.5px solid;
+  position: relative;
+  overflow: hidden;
+  box-shadow: 0 4px 16px rgba(15, 23, 42, 0.04);
+}
+
+/* A. MENUNGGU VERIFIKASI */
+.account-state-banner.state-pending {
+  background: linear-gradient(135deg, #fffbeb 0%, #fef3c7 100%);
+  border-color: #fcd34d;
+  color: #78350f;
+}
+
+.account-state-banner.state-pending .state-icon-box {
+  background: #fde68a;
+  color: #d97706;
+}
+
+/* B. TERVERIFIKASI */
+.account-state-banner.state-verified {
+  background: linear-gradient(135deg, #ecfdf5 0%, #d1fae5 100%);
+  border-color: #6ee7b7;
+  color: #064e3b;
+}
+
+.account-state-banner.state-verified .state-icon-box {
+  background: #a7f3d0;
+  color: #059669;
+}
+
+/* C. PERLU PERBAIKAN */
+.account-state-banner.state-revision {
+  background: linear-gradient(135deg, #fff7ed 0%, #ffedd5 100%);
+  border-color: #fdba74;
+  color: #7c2d12;
+}
+
+.account-state-banner.state-revision .state-icon-box {
+  background: #fed7aa;
+  color: #ea580c;
+}
+
+/* D. DITOLAK */
+.account-state-banner.state-rejected {
+  background: linear-gradient(135deg, #fef2f2 0%, #fee2e2 100%);
+  border-color: #fca5a5;
+  color: #7f1d1d;
+}
+
+.account-state-banner.state-rejected .state-icon-box {
+  background: #fecaca;
+  color: #dc2626;
+}
+
+.state-top-row {
+  display: flex;
+  align-items: flex-start;
+  gap: 20px;
+}
+
+.state-icon-box {
+  width: 56px;
+  height: 56px;
+  border-radius: 16px;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  flex-shrink: 0;
+}
+
+.state-text-col {
+  flex: 1;
+}
+
+.state-badge-row {
+  display: flex;
+  align-items: center;
+  gap: 10px;
+  margin-bottom: 6px;
+}
+
+.state-title {
+  font-size: 20px;
+  font-weight: 800;
+  line-height: 1.3;
+  margin-bottom: 6px;
+}
+
+.state-desc {
+  font-size: 14px;
+  line-height: 1.6;
+  opacity: 0.95;
+}
+
+/* Verification Stepper Timeline in State Banner */
+.state-timeline-steps {
+  display: flex;
+  align-items: center;
+  gap: 12px;
+  margin-top: 20px;
+  padding-top: 18px;
+  border-top: 1px solid rgba(0, 0, 0, 0.08);
+}
+
+.state-timeline-node {
+  display: flex;
+  align-items: center;
+  gap: 8px;
+  font-size: 12px;
+  font-weight: 700;
+}
+
+.state-node-bullet {
+  width: 22px;
+  height: 22px;
+  border-radius: 50%;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  font-size: 11px;
+}
+
+.state-timeline-node.done .state-node-bullet {
+  background: #10b981;
+  color: #ffffff;
+}
+
+.state-timeline-node.current .state-node-bullet {
+  background: #f59e0b;
+  color: #ffffff;
+  box-shadow: 0 0 0 3px rgba(245, 158, 11, 0.25);
+}
+
+.state-timeline-node.upcoming .state-node-bullet {
+  background: rgba(0, 0, 0, 0.15);
+  color: #64748b;
+}
+
+.state-timeline-sep {
+  flex: 1;
+  height: 2px;
+  background: rgba(0, 0, 0, 0.1);
+}
+
+/* Locked Catalog Overlay Card */
+.locked-catalog-card {
+  background: #ffffff;
+  border: 2px dashed #cbd5e1;
+  border-radius: 20px;
+  padding: 48px 24px;
+  text-align: center;
+  margin-top: 20px;
+}
+
+.locked-icon-circle {
+  width: 60px;
+  height: 60px;
+  border-radius: 50%;
+  background: #f1f5f9;
+  color: #64748b;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  margin: 0 auto 16px;
+}
+
+@media (max-width: 640px) {
+  .reg-wizard-top {
+    flex-direction: column;
+    gap: 12px;
+    padding: 16px 20px;
+    text-align: center;
+  }
+  .reg-steps-nav {
+    flex-direction: column;
+    align-items: flex-start;
+    gap: 14px;
+  }
+  .reg-step-connector {
+    display: none;
+  }
+  .reg-recap-grid {
+    grid-template-columns: 1fr;
+  }
+  .state-top-row {
+    flex-direction: column;
+  }
+  .state-timeline-steps {
+    flex-direction: column;
+    align-items: flex-start;
+  }
+  .state-timeline-sep {
+    display: none;
+  }
+}
+
+/* 4. Dedicated Authentication / Login Page */
+.auth-page-container {
+  min-height: 100vh;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  padding: 40px 20px;
+  background: radial-gradient(circle at 50% 10%, #ecfdf5 0%, #f8fafc 60%, #f1f5f9 100%);
+}
+
+.auth-card-modern {
+  width: 100%;
+  max-width: 480px;
+  background: #ffffff;
+  border-radius: 24px;
+  border: 1px solid #e2e8f0;
+  box-shadow: 0 20px 45px -10px rgba(15, 23, 42, 0.08);
+  overflow: hidden;
+}
+
+.auth-card-header {
+  padding: 32px 32px 20px;
+  text-align: center;
+  border-bottom: 1px solid #f1f5f9;
+}
+
+.auth-tabs-row {
+  display: flex;
+  background: #f1f5f9;
+  border-radius: 12px;
+  padding: 4px;
+  margin-top: 18px;
+}
+
+.auth-tab-btn {
+  flex: 1;
+  padding: 10px 14px;
+  font-family: inherit;
+  font-size: 13px;
+  font-weight: 700;
+  color: #64748b;
+  background: transparent;
+  border: none;
+  border-radius: 9px;
+  cursor: pointer;
+  transition: all 0.2s ease;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  gap: 6px;
+}
+
+.auth-tab-btn.active {
+  background: #ffffff;
+  color: #0f172a;
+  box-shadow: 0 2px 6px rgba(15, 23, 42, 0.06);
+}
+
+.auth-card-body {
+  padding: 28px 32px 32px;
+}
+
+.quick-test-accounts-box {
+  background: #f8fafc;
+  border: 1px dashed #cbd5e1;
+  border-radius: 14px;
+  padding: 14px 16px;
+  margin-top: 24px;
+}
+
+.quick-test-accounts-box h5 {
+  font-size: 11px;
+  font-weight: 800;
+  text-transform: uppercase;
+  color: #64748b;
+  letter-spacing: 0.6px;
+  margin-bottom: 10px;
+  display: flex;
+  align-items: center;
+  gap: 6px;
+}
+
+.quick-test-grid {
+  display: flex;
+  flex-direction: column;
+  gap: 6px;
+}
+
+.quick-test-pill {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  padding: 7px 12px;
+  background: #ffffff;
+  border: 1px solid #e2e8f0;
+  border-radius: 8px;
+  font-size: 12px;
+  font-weight: 600;
+  color: #334155;
+  cursor: pointer;
+  transition: all 0.15s ease;
+  text-align: left;
+}
+
+.quick-test-pill:hover {
+  border-color: #10b981;
+  background: #ecfdf5;
+  color: #047857;
+  transform: translateX(2px);
+}
+
+.btn-logout-clean {
+  background: transparent;
+  border: 1px solid #e2e8f0;
+  color: #64748b;
+  font-size: 12px;
+  font-weight: 700;
+  padding: 6px 14px;
+  border-radius: 9999px;
+  cursor: pointer;
+  display: inline-flex;
+  align-items: center;
+  gap: 6px;
+  transition: all 0.2s ease;
+}
+
+.btn-logout-clean:hover {
+  background: #fef2f2;
+  border-color: #fca5a5;
+  color: #dc2626;
+}

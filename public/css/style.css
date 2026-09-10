@@ -1,0 +1,14 @@
+/* ==========================================================================
+   FIND MY PKL - MASTER MODULAR STYLESHEET
+   SMK Taruna Bangsa Kota Bekasi
+   Modular architecture - each feature has its own dedicated stylesheet
+   ========================================================================== */
+
+@import url('base.css');
+@import url('dashboard.css');
+@import url('nav.css');
+@import url('homepage.css');
+@import url('catalog.css');
+@import url('portal-pages.css');
+@import url('auth.css');
+@import url('responsive.css');

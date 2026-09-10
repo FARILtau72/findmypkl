@@ -1,0 +1,26 @@
+{
+  "name": "findmypkl",
+  "version": "1.0.0",
+  "description": "Platform Terpusat Penemuan dan Manajemen PKL SMK Indonesia",
+  "main": "server/index.js",
+  "scripts": {
+    "start": "node server/index.js",
+    "dev": "node server/index.js",
+    "test": "node db-test.js"
+  },
+  "keywords": [
+    "smk",
+    "pkl",
+    "internship",
+    "kemendikbud",
+    "tidb-zero"
+  ],
+  "author": "Find My PKL Team",
+  "license": "ISC",
+  "dependencies": {
+    "cors": "^2.8.5",
+    "dotenv": "^16.4.7",
+    "express": "^4.21.2",
+    "mysql2": "^3.12.0"
+  }
+}

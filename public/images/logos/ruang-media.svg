@@ -1,0 +1,14 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 120 120" width="120" height="120">
+  <rect width="120" height="120" rx="26" fill="#FDF2F8" stroke="#FBCFE8" stroke-width="2"/>
+  <defs>
+    <linearGradient id="rmkGrad" x1="0%" y1="0%" x2="100%" y2="100%">
+      <stop offset="0%" stop-color="#F43F5E"/>
+      <stop offset="100%" stop-color="#E11D48"/>
+    </linearGradient>
+  </defs>
+  <!-- Media camera aperture & play frame -->
+  <rect x="28" y="32" width="64" height="56" rx="14" fill="url(#rmkGrad)"/>
+  <circle cx="60" cy="60" r="16" fill="#FFFFFF"/>
+  <polygon points="56,52 68,60 56,68" fill="#E11D48"/>
+  <circle cx="78" cy="44" r="3.5" fill="#FFE4E6"/>
+</svg>

@@ -1,0 +1,17 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 120 120" width="120" height="120">
+  <rect width="120" height="120" rx="26" fill="#F0FDF4" stroke="#BBF7D0" stroke-width="2"/>
+  <defs>
+    <linearGradient id="gotoGrad" x1="0%" y1="0%" x2="100%" y2="100%">
+      <stop offset="0%" stop-color="#00AA13"/>
+      <stop offset="100%" stop-color="#00880F"/>
+    </linearGradient>
+  </defs>
+  <!-- Gojek Iconic Solv Mark -->
+  <circle cx="48" cy="60" r="28" fill="url(#gotoGrad)"/>
+  <circle cx="48" cy="60" r="16" fill="#F0FDF4"/>
+  <circle cx="48" cy="60" r="9" fill="url(#gotoGrad)"/>
+  <!-- Tokopedia Green Clover Dot -->
+  <circle cx="82" cy="50" r="14" fill="#03AC0E"/>
+  <circle cx="82" cy="50" r="7" fill="#FFFFFF"/>
+  <circle cx="86" cy="74" r="9" fill="#00AA13" opacity="0.85"/>
+</svg>
