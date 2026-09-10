@@ -1001,3 +1001,107 @@
   display: flex;
   gap: 10px;
 }
+
+/* 9. PROPORTIONAL JOB DETAIL MODAL (DESKTOP 2-COLUMN, MOBILE SCROLL) */
+.job-detail-container {
+  display: flex;
+  flex-direction: column;
+  gap: 20px;
+}
+
+.job-detail-top-card {
+  display: flex;
+  align-items: center;
+  gap: 16px;
+  padding-bottom: 18px;
+  border-bottom: 1px solid #E2E8F0;
+}
+
+.job-detail-top-card .company-badge-box {
+  background: transparent;
+  border: none;
+  width: 58px;
+  height: 58px;
+  padding: 0;
+  flex-shrink: 0;
+}
+
+.job-detail-top-info h3 {
+  font-size: 20px;
+  font-weight: 800;
+  color: #0F172A;
+  line-height: 1.3;
+}
+
+.job-detail-top-info p {
+  font-size: 14px;
+  font-weight: 600;
+  color: #64748B;
+  margin-top: 2px;
+}
+
+.job-detail-grid {
+  display: grid;
+  grid-template-columns: 1.2fr 0.95fr;
+  gap: 24px;
+  align-items: start;
+}
+
+.job-detail-left-col {
+  display: flex;
+  flex-direction: column;
+  gap: 18px;
+}
+
+.job-detail-right-col {
+  display: flex;
+  flex-direction: column;
+  gap: 18px;
+}
+
+.job-detail-block-title {
+  font-size: 12px;
+  font-weight: 800;
+  color: #475569;
+  text-transform: uppercase;
+  letter-spacing: 0.6px;
+  margin-bottom: 6px;
+}
+
+.job-detail-target-box {
+  background: #F8FAFC;
+  border: 1px solid #E2E8F0;
+  padding: 10px 14px;
+  border-radius: 10px;
+  font-weight: 600;
+  color: #059669;
+  font-size: 13.5px;
+}
+
+.job-detail-text {
+  font-size: 13.5px;
+  color: #475569;
+  line-height: 1.6;
+}
+
+.job-detail-card-panel {
+  background: #F8FAFC;
+  border: 1px solid #E2E8F0;
+  border-radius: 14px;
+  padding: 16px;
+}
+
+.job-detail-action-card {
+  background: #ffffff;
+  border: 1.5px solid #E2E8F0;
+  border-radius: 16px;
+  padding: 20px;
+  box-shadow: 0 4px 16px rgba(15, 23, 42, 0.04);
+}
+
+@media (max-width: 880px) {
+  .job-detail-grid {
+    grid-template-columns: 1fr;
+    gap: 20px;
+  }
+}

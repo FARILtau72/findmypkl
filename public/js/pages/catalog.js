@@ -963,16 +963,30 @@ Object.assign(window.App, {
         `;
         pagBtns.innerHTML = btnsHtml;
       }
+
+      if (typeof window !== 'undefined' && window.lenis) {
+        try { window.lenis.resize(); } catch (e) {}
+      }
     };
 
     App.changeCatalogPage = (page) => {
       currentPage = page;
       applyFiltersAndRender();
-      const grid = document.getElementById('mkt-jobs-grid');
-      if (grid) {
-        grid.scrollIntoView({ behavior: 'smooth', block: 'start' });
+      if (typeof window !== 'undefined' && window.lenis) {
+        try {
+          window.lenis.resize();
+          window.lenis.scrollTo(180, { duration: 0.5 });
+        } catch (e) {
+          const grid = document.getElementById('mkt-jobs-grid');
+          if (grid) grid.scrollIntoView({ behavior: 'smooth', block: 'start' });
+        }
       } else {
-        window.scrollTo({ top: 180, behavior: 'smooth' });
+        const grid = document.getElementById('mkt-jobs-grid');
+        if (grid) {
+          grid.scrollIntoView({ behavior: 'smooth', block: 'start' });
+        } else {
+          window.scrollTo({ top: 180, behavior: 'smooth' });
+        }
       }
     };
 
@@ -992,6 +1006,9 @@ Object.assign(window.App, {
       renderTags();
       currentPage = 1;
       applyFiltersAndRender();
+      if (typeof window !== 'undefined' && window.lenis) {
+        try { window.lenis.resize(); } catch (e) {}
+      }
     };
 
     App.openMobileFilterSheet = () => {
@@ -1374,15 +1391,16 @@ Object.assign(window.App, {
     const isPublic = !isSiswaLoggedIn || !student;
 
     const contentHtml = `
-      <div>
-        <div style="display: flex; align-items: center; gap: 16px; margin-bottom: 20px; padding-bottom: 16px; border-bottom: 1px solid var(--border-color);">
-          <div class="company-badge-box" style="background: transparent; border: none; width: 56px; height: 56px; padding: 0;">
-            ${renderCompanyLogo(job, { size: 56 })}
+      <div class="job-detail-container">
+        <!-- Top Header Info -->
+        <div class="job-detail-top-card">
+          <div class="company-badge-box">
+            ${renderCompanyLogo(job, { size: 58 })}
           </div>
-          <div>
-            <h3 style="font-size: 20px; font-weight: 700; color: var(--slate-900);">${job.judul}</h3>
-            <p style="font-size: 14px; font-weight: 600; color: var(--slate-600);">${job.company_nama} &bull; ${job.lokasi_kota}</p>
-            <div style="display: flex; gap: 8px; margin-top: 6px; flex-wrap: wrap; align-items: center;">
+          <div class="job-detail-top-info" style="flex: 1; min-width: 0;">
+            <h3>${job.judul}</h3>
+            <p>${job.company_nama} &bull; ${job.lokasi_kota}</p>
+            <div style="display: flex; gap: 8px; margin-top: 8px; flex-wrap: wrap; align-items: center;">
               <span class="mkt-badge-comp ${this.isJobPaid(job) ? 'paid' : 'unpaid'}">
                 ${this.isJobPaid(job) ? 'Paid' : 'Unpaid'}
               </span>
@@ -1393,90 +1411,118 @@ Object.assign(window.App, {
           </div>
         </div>
 
-        <div style="display: flex; flex-direction: column; gap: 18px;">
-          <div>
-            <h4 style="font-size: 14px; font-weight: 700; color: var(--slate-800); text-transform: uppercase; letter-spacing: 0.5px; margin-bottom: 6px;">Target Jurusan / Kejuruan SMK</h4>
-            <div style="background-color: var(--slate-50); border: 1px solid var(--slate-200); padding: 10px 14px; border-radius: var(--radius-md); font-weight: 600; color: var(--primary-700); font-size: 13px;">
-              ${job.jurusan_target}
-            </div>
-          </div>
-
-          <div>
-            <h4 style="font-size: 14px; font-weight: 700; color: var(--slate-800); text-transform: uppercase; letter-spacing: 0.5px; margin-bottom: 6px;">Deskripsi Tugas & Pekerjaan</h4>
-            <p style="font-size: 14px; color: var(--slate-600); line-height: 1.6;">${job.deskripsi}</p>
-          </div>
-
-          <div>
-            <h4 style="font-size: 14px; font-weight: 700; color: var(--slate-800); text-transform: uppercase; letter-spacing: 0.5px; margin-bottom: 6px;">Kualifikasi & Persyaratan Siswa</h4>
-            <p style="font-size: 14px; color: var(--slate-600); line-height: 1.6;">${job.kualifikasi}</p>
-          </div>
-
-          <div>
-            <h4 style="font-size: 14px; font-weight: 700; color: var(--slate-800); text-transform: uppercase; letter-spacing: 0.5px; margin-bottom: 6px;">Tipe Kompensasi & Fasilitas</h4>
-            <div style="display: flex; align-items: center; gap: 8px; margin-bottom: 6px;">
-              <span class="mkt-badge-comp ${this.isJobPaid(job) ? 'paid' : 'unpaid'}" style="font-size: 12px; padding: 4px 10px;">
-                ${this.isJobPaid(job) ? 'Paid Internship (Ada Uang Saku)' : 'Unpaid Internship (Magang Mandiri)'}
-              </span>
-            </div>
-            <p style="font-size: 14px; color: var(--slate-600); line-height: 1.6;">
-              ${job.benefit ? job.benefit.replace(/Rp\s*[\d\.,\s–-]+(jt|ribu|rb)?(\/bln)?/gi, 'kompensasi industri').replace(/Uang saku bulanan\s*[^,]+,/i, 'Kompensasi uang saku industri,') : (this.isJobPaid(job) ? 'Mendapatkan uang saku bulanan dari industri dan bimbingan mentor.' : 'Program magang kejuruan dengan sertifikat resmi industri.')}
-            </p>
-          </div>
-
-          <div style="background-color: var(--slate-50); border-radius: var(--radius-md); padding: 14px; border: 1px solid var(--border-color);">
-            <h5 style="font-size: 13px; font-weight: 700; color: var(--slate-800); margin-bottom: 4px;">Informasi Mitra DUDI & MoU</h5>
-            <p style="font-size: 13px; color: var(--slate-600);">
-              <strong>Alamat Kantor:</strong> ${job.company_alamat}<br>
-              <strong>PIC Industri:</strong> ${job.pic_nama} (${job.pic_kontak})<br>
-              <strong>Status Kerja Sama:</strong> <span class="badge badge-emerald" style="padding: 2px 6px; font-size: 11px;">MoU Aktif (${job.no_mou || 'Resmi Terdaftar'})</span>
-            </p>
-          </div>
-        </div>
-
-        <!-- Apply Form Area -->
-        <div style="margin-top: 24px; padding-top: 20px; border-top: 1px solid var(--border-color);">
-          ${isPublic ? `
-            <div style="background-color: var(--primary-50); border: 1px solid var(--primary-200); padding: 16px; border-radius: var(--radius-md); text-align: center;">
-              <h4 style="font-size: 15px; font-weight: 700; color: var(--primary-900); margin-bottom: 4px;">Tertarik untuk Melamar Posisi Ini?</h4>
-              <p style="font-size: 13px; color: var(--primary-800); margin-bottom: 14px;">Silakan masuk dengan akun siswa Anda atau daftarkan akun baru untuk mengajukan lamaran ke HUBIN.</p>
-              <div style="display: flex; gap: 10px; justify-content: center;">
-                <button class="btn btn-primary btn-sm" onclick="Modal.close(); App.setRole('LOGIN');">Masuk Akun Siswa</button>
-                <button class="btn btn-secondary btn-sm" onclick="Modal.close(); App.setRole('REGISTER');">Daftar Akun Baru</button>
+        <!-- 2-Column Responsive Layout -->
+        <div class="job-detail-grid">
+          <!-- Left Column: Job Info, Desc, Requirements, Benefits -->
+          <div class="job-detail-left-col">
+            <div>
+              <div class="job-detail-block-title">Target Jurusan / Kejuruan SMK</div>
+              <div class="job-detail-target-box">
+                ${job.jurusan_target}
               </div>
             </div>
-          ` : isVerified ? `
-            <h4 style="font-size: 16px; font-weight: 700; color: var(--slate-900); margin-bottom: 12px;">Formulir Pengajuan Lamaran PKL</h4>
-            <div class="form-group">
-              <label class="form-label">Tautan Berkas CV / Portofolio Siswa</label>
-              <input type="url" id="apply-portofolio-input" class="form-input" value="${student ? (student.cv_url || '') : ''}" placeholder="https://drive.google.com/... atau https://github.com/..." />
-              <div class="form-help">Pastikan akses link Google Drive / GitHub Anda telah diatur ke Publik.</div>
+
+            <div>
+              <div class="job-detail-block-title">Deskripsi Tugas & Pekerjaan</div>
+              <p class="job-detail-text">${job.deskripsi}</p>
             </div>
-            <div class="form-group">
-              <label class="form-label">Alasan & Motivasi Melamar</label>
-              <textarea id="apply-alasan-input" class="form-textarea" rows="3" placeholder="Jelaskan secara singkat ketertarikan Anda dan kompetensi yang relevan..."></textarea>
+
+            <div>
+              <div class="job-detail-block-title">Kualifikasi & Persyaratan Siswa</div>
+              <p class="job-detail-text">${job.kualifikasi}</p>
             </div>
-            <button class="btn btn-primary" style="width: 100%;" onclick="App.handleApplyJob(${job.id})">
-              Kirim Lamaran ke HUBIN untuk Diverifikasi
-            </button>
-          ` : `
-            <div class="account-state-banner ${student && student.status_verifikasi === 'Perlu Perbaikan' ? 'state-revision' : student && student.status_verifikasi === 'Ditolak' ? 'state-rejected' : 'state-pending'}" style="text-align: center; padding: 18px;">
-              <h4 style="font-size: 15px; font-weight: 700; margin-bottom: 6px;">
-                ${student && student.status_verifikasi === 'Perlu Perbaikan' ? '"HUBIN meminta kamu memperbaiki beberapa data."' : student && student.status_verifikasi === 'Ditolak' ? '"Verifikasi Akun Ditolak oleh HUBIN"' : '"Data kamu sedang diperiksa oleh HUBIN."'}
-              </h4>
-              <p style="font-size: 13px; margin-bottom: 12px;">
-                ${student && student.status_verifikasi === 'Perlu Perbaikan' ? (student.catatan_verifikasi || 'Perbaiki data kontak atau berkas Anda di profil.') : student && student.status_verifikasi === 'Ditolak' ? (student.catatan_verifikasi || 'Hubungi BKK/HUBIN sekolah.') : 'Kamu belum dapat mengajukan lamaran sampai akunmu berstatus Terverifikasi oleh HUBIN.'}
+
+            <div>
+              <div class="job-detail-block-title">Tipe Kompensasi & Fasilitas</div>
+              <div style="display: flex; align-items: center; gap: 8px; margin-bottom: 6px;">
+                <span class="mkt-badge-comp ${this.isJobPaid(job) ? 'paid' : 'unpaid'}" style="font-size: 12px; padding: 4px 10px;">
+                  ${this.isJobPaid(job) ? 'Paid Internship (Ada Uang Saku)' : 'Unpaid Internship (Magang Mandiri)'}
+                </span>
+              </div>
+              <p class="job-detail-text">
+                ${job.benefit ? job.benefit.replace(/Rp\s*[\d\.,\s–-]+(jt|ribu|rb)?(\/bln)?/gi, 'kompensasi industri').replace(/Uang saku bulanan\s*[^,]+,/i, 'Kompensasi uang saku industri,') : (this.isJobPaid(job) ? 'Mendapatkan uang saku bulanan dari industri dan bimbingan mentor.' : 'Program magang kejuruan dengan sertifikat resmi industri.')}
               </p>
-              ${student && student.status_verifikasi === 'Perlu Perbaikan' ? `
-                <button class="btn btn-primary btn-sm" style="background: #ea580c; border-color: #ea580c;" onclick="Modal.close(); App.setTab('profil'); App.showStudentEditModal(${student.id});">
-                  Perbaiki Data Sekarang ✍
+            </div>
+          </div>
+
+          <!-- Right Column: Industry Partnership Details & Application Action -->
+          <div class="job-detail-right-col">
+            <!-- DUDI Partnership Box -->
+            <div class="job-detail-card-panel">
+              <h5 style="font-size: 13px; font-weight: 700; color: #0F172A; margin-bottom: 10px; display: flex; align-items: center; gap: 6px;">
+                <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="#059669" stroke-width="2.2"><rect x="2" y="7" width="20" height="14" rx="2" ry="2"/><path d="M16 21V5a2 2 0 0 0-2-2h-4a2 2 0 0 0-2 2v16"/></svg>
+                Informasi Mitra DUDI & MoU
+              </h5>
+              <div style="font-size: 12.5px; color: #475569; display: flex; flex-direction: column; gap: 8px; line-height: 1.5;">
+                <div>
+                  <strong style="color: #1e293b;">Alamat Kantor:</strong><br>
+                  <span>${job.company_alamat}</span>
+                </div>
+                <div>
+                  <strong style="color: #1e293b;">PIC Industri:</strong><br>
+                  <span>${job.pic_nama} (${job.pic_kontak})</span>
+                </div>
+                <div>
+                  <strong style="color: #1e293b;">Status Kerja Sama:</strong><br>
+                  <span class="badge badge-emerald" style="padding: 2px 8px; font-size: 11px; margin-top: 2px; display: inline-block;">
+                    MoU Aktif (${job.no_mou || 'Resmi Terdaftar'})
+                  </span>
+                </div>
+              </div>
+            </div>
+
+            <!-- Apply Form / Action Area -->
+            <div class="job-detail-action-card">
+              ${isPublic ? `
+                <div style="text-align: center;">
+                  <h4 style="font-size: 15px; font-weight: 800; color: #0F172A; margin-bottom: 6px;">Tertarik Melamar Posisi Ini?</h4>
+                  <p style="font-size: 13px; color: #64748B; margin-bottom: 16px; line-height: 1.5;">
+                    Silakan masuk dengan akun siswa SMK Taruna Bangsa atau daftarkan akun baru untuk mengirim lamaran ke HUBIN.
+                  </p>
+                  <div style="display: flex; flex-direction: column; gap: 8px;">
+                    <button class="btn btn-primary" onclick="Modal.close(); App.setRole('LOGIN');" style="width: 100%; justify-content: center;">
+                      Masuk Akun Siswa
+                    </button>
+                    <button class="btn btn-secondary" onclick="Modal.close(); App.setRole('REGISTER');" style="width: 100%; justify-content: center;">
+                      Daftar Akun Baru
+                    </button>
+                  </div>
+                </div>
+              ` : isVerified ? `
+                <h4 style="font-size: 15px; font-weight: 800; color: #0F172A; margin-bottom: 12px;">Formulir Pengajuan Lamaran PKL</h4>
+                <div class="form-group" style="margin-bottom: 12px;">
+                  <label class="form-label" style="font-size: 12.5px;">Tautan Berkas CV / Portofolio Siswa</label>
+                  <input type="url" id="apply-portofolio-input" class="form-input" value="${student ? (student.cv_url || '') : ''}" placeholder="https://drive.google.com/... atau https://github.com/..." style="font-size: 13px; padding: 8px 12px;" />
+                  <div class="form-help" style="font-size: 11px;">Akses link Google Drive/GitHub harus disetel Publik.</div>
+                </div>
+                <div class="form-group" style="margin-bottom: 16px;">
+                  <label class="form-label" style="font-size: 12.5px;">Alasan & Motivasi Melamar</label>
+                  <textarea id="apply-alasan-input" class="form-textarea" rows="3" placeholder="Jelaskan ketertarikan dan kompetensi Anda..." style="font-size: 13px; padding: 8px 12px; resize: vertical;"></textarea>
+                </div>
+                <button class="btn btn-primary" style="width: 100%; justify-content: center; font-weight: 700; padding: 10px;" onclick="App.handleApplyJob(${job.id})">
+                  Kirim Lamaran ke HUBIN &rarr;
                 </button>
               ` : `
-                <button class="btn btn-secondary btn-sm" onclick="Modal.close(); App.setTab('profil');">
-                  Lihat Status Akun di Profil &rarr;
-                </button>
+                <div class="account-state-banner ${student && student.status_verifikasi === 'Perlu Perbaikan' ? 'state-revision' : student && student.status_verifikasi === 'Ditolak' ? 'state-rejected' : 'state-pending'}" style="text-align: center; padding: 16px;">
+                  <h4 style="font-size: 14px; font-weight: 700; margin-bottom: 6px;">
+                    ${student && student.status_verifikasi === 'Perlu Perbaikan' ? '"HUBIN meminta perbaikan data."' : student && student.status_verifikasi === 'Ditolak' ? '"Verifikasi Ditolak HUBIN"' : '"Data sedang diperiksa HUBIN."'}
+                  </h4>
+                  <p style="font-size: 12px; margin-bottom: 12px; line-height: 1.4;">
+                    ${student && student.status_verifikasi === 'Perlu Perbaikan' ? (student.catatan_verifikasi || 'Perbaiki data kontak atau berkas Anda.') : student && student.status_verifikasi === 'Ditolak' ? (student.catatan_verifikasi || 'Hubungi BKK/HUBIN sekolah.') : 'Kamu belum dapat melamar sampai akun terverifikasi.'}
+                  </p>
+                  ${student && student.status_verifikasi === 'Perlu Perbaikan' ? `
+                    <button class="btn btn-primary btn-sm" style="background: #ea580c; border-color: #ea580c; width: 100%; justify-content: center;" onclick="Modal.close(); App.setTab('profil'); App.showStudentEditModal(${student.id});">
+                      Perbaiki Data Sekarang ✍
+                    </button>
+                  ` : `
+                    <button class="btn btn-secondary btn-sm" style="width: 100%; justify-content: center;" onclick="Modal.close(); App.setTab('profil');">
+                      Lihat Profil &rarr;
+                    </button>
+                  `}
+                </div>
               `}
             </div>
-          `}
+          </div>
         </div>
       </div>
     `;

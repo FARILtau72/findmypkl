@@ -95,24 +95,32 @@ window.App = {
     if (typeof Lenis === 'undefined') return;
     try {
       window.lenis = new Lenis({
-        duration: 1.2,
+        duration: 0.9,
         easing: (t) => Math.min(1, 1.001 - Math.pow(2, -10 * t)),
         smoothWheel: true,
         smoothTouch: false,
-        autoRaf: false
-      });
-
-      const raf = (time) => {
-        if (window.lenis) {
-          window.lenis.raf(time);
+        autoRaf: true,
+        prevent: (node) => {
+          if (!node || !node.closest) return false;
+          return Boolean(node.closest('.modal-dialog, .modal-backdrop, .modal-body, .mkt-filter-sheet, .app-sidebar, [data-lenis-prevent]'));
         }
-        requestAnimationFrame(raf);
-      };
-      requestAnimationFrame(raf);
+      });
 
       window.lenis.on('scroll', () => {
         this.updateNavbarScroll();
       });
+
+      // Global observer for dynamic DOM height updates (SPA catalog, filters, tabs)
+      if (typeof ResizeObserver !== 'undefined' && typeof document !== 'undefined' && document.body) {
+        const ro = new ResizeObserver(() => {
+          if (window.lenis) {
+            try { window.lenis.resize(); } catch (e) {}
+          }
+        });
+        ro.observe(document.body);
+        const mainEl = document.querySelector('.app-main') || document.getElementById('app-container');
+        if (mainEl) ro.observe(mainEl);
+      }
     } catch (e) {
       console.warn('Failed to initialize Lenis smooth scroll:', e);
     }

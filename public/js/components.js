@@ -56,10 +56,11 @@ const Modal = {
     if (!this.backdrop) return;
 
     const dialog = this.backdrop.querySelector('.modal-dialog');
+    dialog.classList.remove('modal-lg', 'modal-md');
     if (size === 'lg') {
       dialog.classList.add('modal-lg');
-    } else {
-      dialog.classList.remove('modal-lg');
+    } else if (size === 'md') {
+      dialog.classList.add('modal-md');
     }
 
     const titleEl = this.backdrop.querySelector('#modal-title');
@@ -67,6 +68,7 @@ const Modal = {
 
     titleEl.textContent = title;
     bodyEl.innerHTML = contentHtml;
+    bodyEl.scrollTop = 0;
 
     this.backdrop.classList.add('active');
     document.body.style.overflow = 'hidden';
@@ -80,11 +82,30 @@ const Modal = {
     if (!this.backdrop) return;
     this.backdrop.classList.remove('active');
     document.body.style.overflow = '';
+    document.documentElement.style.overflow = '';
     if (typeof window !== 'undefined' && window.lenis) {
-      try { window.lenis.start(); } catch (e) {}
+      try {
+        window.lenis.start();
+        window.lenis.resize();
+      } catch (e) {}
     }
   }
 };
+
+// Global ESC key listener to safely dismiss modals and restore scroll
+if (typeof document !== 'undefined') {
+  document.addEventListener('keydown', (e) => {
+    if (e.key === 'Escape') {
+      Modal.close();
+      if (window.App && typeof window.App.closeMobileFilterSheet === 'function') {
+        window.App.closeMobileFilterSheet();
+      }
+      if (window.App && typeof window.App.closeSidebar === 'function') {
+        window.App.closeSidebar();
+      }
+    }
+  });
+}
 
 const Dialog = {
   confirm(title, message, confirmText = 'Lanjutkan', onConfirm) {
