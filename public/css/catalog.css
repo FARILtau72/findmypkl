@@ -1259,15 +1259,15 @@
 }
 
 .loker-step-item.active {
-  background: #2563EB;
+  background: #059669;
   color: #ffffff;
   padding: 6px 16px;
-  box-shadow: 0 2px 8px rgba(37, 99, 235, 0.25);
+  box-shadow: 0 2px 8px rgba(5, 150, 105, 0.25);
 }
 
 .loker-step-item.completed {
-  background: #EFF6FF;
-  color: #2563EB;
+  background: #ECFDF5;
+  color: #059669;
   cursor: pointer;
 }
 
@@ -1291,7 +1291,7 @@
 }
 
 .loker-step-item.completed .loker-step-badge {
-  background: #2563EB;
+  background: #059669;
   color: #ffffff;
 }
 
@@ -1561,7 +1561,7 @@
   width: 6px;
   height: 6px;
   border-radius: 50%;
-  background: #2563EB;
+  background: #059669;
   flex-shrink: 0;
   margin-top: 7px;
 }
@@ -1690,7 +1690,7 @@
 }
 
 .btn-loker-primary {
-  background: #2563EB;
+  background: #059669;
   color: #ffffff;
   font-size: 13.5px;
   font-weight: 700;
@@ -1702,36 +1702,181 @@
   align-items: center;
   gap: 8px;
   transition: all 0.2s ease;
-  box-shadow: 0 4px 12px rgba(37, 99, 235, 0.25);
+  box-shadow: 0 4px 12px rgba(5, 150, 105, 0.25);
 }
 
 .btn-loker-primary:hover {
-  background: #1D4ED8;
-  box-shadow: 0 6px 16px rgba(37, 99, 235, 0.35);
+  background: #047857;
+  box-shadow: 0 6px 16px rgba(5, 150, 105, 0.35);
   transform: translateY(-1px);
 }
 
-/* Mobile Responsive */
+/* ==========================================================================
+   Comprehensive Mobile & Tablet Responsiveness for Modal Loker
+   ========================================================================== */
 @media (max-width: 640px) {
+  .modal-dialog.modal-loker {
+    width: 100% !important;
+    max-width: 100% !important;
+    max-height: 94vh !important;
+    border-radius: 16px !important;
+    margin: 0 !important;
+  }
+
   .modal-loker-stepper {
-    padding: 12px 16px;
+    padding: 12px 14px;
   }
+
+  .modal-loker-stepper-nav {
+    gap: 4px;
+    flex: 1;
+    min-width: 0;
+  }
+
   .loker-step-item {
-    font-size: 11.5px;
+    font-size: 11px;
     padding: 4px 8px;
+    gap: 5px;
   }
+
   .loker-step-item.active {
-    padding: 5px 12px;
+    padding: 5px 11px;
   }
+
+  .loker-step-badge {
+    width: 18px;
+    height: 18px;
+    font-size: 10px;
+  }
+
+  .loker-step-sep {
+    font-size: 11px;
+    margin: 0 1px;
+  }
+
+  .btn-modal-loker-close {
+    width: 28px;
+    height: 28px;
+    font-size: 18px;
+    flex-shrink: 0;
+  }
+
   .modal-loker-body {
-    padding: 16px;
-    max-height: calc(85vh - 120px);
+    padding: 14px;
+    gap: 12px;
+    max-height: calc(94vh - 110px);
   }
+
+  .modal-loker-company-card {
+    gap: 12px;
+  }
+
+  .loker-logo-badge {
+    width: 42px;
+    height: 42px;
+    font-size: 14px;
+    border-radius: 10px;
+  }
+
+  .loker-company-title-row {
+    gap: 6px;
+    flex-wrap: wrap;
+  }
+
+  .loker-company-name {
+    font-size: 15.5px;
+  }
+
+  .modal-loker-desc-box {
+    padding: 12px 14px;
+    font-size: 12.5px;
+    line-height: 1.55;
+  }
+
   .modal-loker-info-grid {
-    grid-template-columns: 1fr;
+    grid-template-columns: 1fr 1fr;
+    gap: 8px;
+  }
+
+  .loker-info-box:first-child {
+    grid-column: span 2;
+  }
+
+  .loker-info-box {
+    padding: 10px 12px;
+  }
+
+  .loker-info-label {
+    font-size: 10px;
+    margin-bottom: 4px;
+  }
+
+  .loker-info-primary {
+    font-size: 13px;
+  }
+
+  .loker-info-sub {
+    font-size: 11px;
+  }
+
+  .modal-loker-tasks-card,
+  .modal-loker-review-card {
+    padding: 14px 15px;
+  }
+
+  .loker-section-title {
+    font-size: 11.5px;
+    margin-bottom: 10px;
+  }
+
+  .loker-tasks-item {
+    font-size: 12.5px;
+    gap: 8px;
+  }
+
+  .loker-review-quote {
+    font-size: 12px;
+    padding-left: 10px;
+  }
+
+  .modal-loker-footer {
+    padding: 12px 14px;
     gap: 10px;
   }
-  .modal-loker-footer {
-    padding: 14px 16px;
+
+  .btn-loker-primary {
+    padding: 9px 16px;
+    font-size: 12.5px;
+  }
+
+  .btn-loker-ghost {
+    padding: 8px 12px;
+    font-size: 12.5px;
+  }
+
+  .modal-loker-student-box {
+    padding: 12px 14px;
+  }
+}
+
+@media (max-width: 440px) {
+  .loker-step-item:not(.active) .step-label {
+    display: none;
+  }
+
+  .loker-step-item.active .step-label {
+    font-size: 11px;
+  }
+
+  .loker-company-name {
+    font-size: 14.5px;
+  }
+
+  .modal-loker-info-grid {
+    grid-template-columns: 1fr;
+  }
+
+  .loker-info-box:first-child {
+    grid-column: span 1;
   }
 }

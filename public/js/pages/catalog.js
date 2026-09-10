@@ -1472,17 +1472,17 @@ Object.assign(window.App, {
             <div class="modal-loker-stepper-nav">
               <div class="loker-step-item active">
                 <span class="loker-step-badge">1</span>
-                <span>Detail & Kualifikasi</span>
+                <span class="step-label">Detail &amp; Kualifikasi</span>
               </div>
               <span class="loker-step-sep">&gt;</span>
               <div class="loker-step-item">
                 <span class="loker-step-badge">2</span>
-                <span>Form Pengajuan</span>
+                <span class="step-label">Form Pengajuan</span>
               </div>
               <span class="loker-step-sep">&gt;</span>
               <div class="loker-step-item">
                 <span class="loker-step-badge">3</span>
-                <span>Selesai</span>
+                <span class="step-label">Selesai</span>
               </div>
             </div>
             <button type="button" class="btn-modal-loker-close" onclick="Modal.close()" aria-label="Tutup modal">&times;</button>
@@ -1492,8 +1492,7 @@ Object.assign(window.App, {
           <div class="modal-loker-body job-detail-left-col">
             <!-- Sub-tracker -->
             <div class="modal-loker-subtracker">
-              <span class="subtracker-pill">Langkah 1 dari 2</span>
-              <span class="subtracker-label">&bull; Informasi & Syarat Penempatan</span>
+              <span class="subtracker-label" style="font-size: 13px; font-weight: 600; color: #64748B;">Informasi &amp; Syarat Penempatan</span>
             </div>
 
             <!-- Company Header -->
@@ -1504,10 +1503,6 @@ Object.assign(window.App, {
               <div class="loker-company-details">
                 <div class="loker-company-title-row">
                   <span class="loker-company-name">${companyName}</span>
-                  <span class="badge-mitra-resmi">
-                    <svg width="13" height="13" viewBox="0 0 24 24" fill="#059669"><path d="M12 2C6.48 2 2 6.48 2 12s4.48 10 10 10 10-4.48 10-10S17.52 2 12 2zm-2 15l-5-5 1.41-1.41L10 14.17l7.59-7.59L19 8l-9 9z"/></svg>
-                    Mitra Resmi
-                  </span>
                   <span class="badge-kota-pill">
                     <svg width="12" height="12" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M21 10c0 7-9 13-9 13s-9-6-9-13a9 9 0 0 1 18 0z"/><circle cx="12" cy="10" r="3"/></svg>
                     ${cleanCity}
@@ -1533,7 +1528,7 @@ Object.assign(window.App, {
             <div class="modal-loker-info-grid job-detail-grid">
               <!-- Card 1: Jurusan Diterima -->
               <div class="loker-info-box">
-                <div class="loker-info-label">Jurusan Dibutuhkan</div>
+                <div class="loker-info-label">Jurusan Diterima</div>
                 <div class="loker-major-chips">
                   ${majorBadgesHtml}
                 </div>
@@ -1556,8 +1551,16 @@ Object.assign(window.App, {
 
             <!-- Detail Pekerjaan Tasks Card -->
             <div class="modal-loker-tasks-card">
+              <div style="display: flex; justify-content: space-between; align-items: center; margin-bottom: 8px; flex-wrap: wrap; gap: 8px;">
+                <span style="font-size: 11px; font-weight: 700; color: #64748B; text-transform: uppercase; letter-spacing: 0.5px;">POSISI MAGANG / ROLE</span>
+                <span style="font-size: 11.5px; font-weight: 600; color: #2563EB; background: #EFF6FF; border: 1px solid #BFDBFE; padding: 2px 10px; border-radius: 6px;">Departemen Engineering</span>
+              </div>
+              <h3 style="font-size: 17px; font-weight: 800; color: #0F172A; margin: 0 0 12px; display: flex; align-items: baseline; gap: 8px; flex-wrap: wrap;">
+                ${job.judul} <span style="font-size: 13.5px; font-weight: 500; color: #64748B;">(${job.tipe_kerja || 'Magang'})</span>
+              </h3>
+              <div style="height: 1px; background: #F1F5F9; margin-bottom: 12px;"></div>
               <div class="loker-section-title">
-                <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="#2563EB" stroke-width="2.2" stroke-linecap="round" stroke-linejoin="round">
+                <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="#059669" stroke-width="2.2" stroke-linecap="round" stroke-linejoin="round">
                   <path d="M16 4h2a2 2 0 0 1 2 2v14a2 2 0 0 1-2 2H6a2 2 0 0 1-2-2V6a2 2 0 0 1 2-2h2"/>
                   <rect x="8" y="2" width="8" height="4" rx="1" ry="1"/>
                 </svg>
@@ -1575,7 +1578,7 @@ Object.assign(window.App, {
                   <svg width="15" height="15" viewBox="0 0 24 24" fill="#F59E0B" stroke="#F59E0B" stroke-width="1">
                     <polygon points="12 2 15.09 8.26 22 9.27 17 14.14 18.18 21.02 12 17.77 5.82 21.02 7 14.14 2 9.27 8.91 8.26 12 2"/>
                   </svg>
-                  <span style="color: #475569;">DETAIL PEKERJAAN</span>
+                  <span style="color: #475569;">ULASAN TEMPAT PKL</span>
                 </div>
                 <div class="loker-rating-pill">
                   <span>★★★★★</span>
@@ -1608,17 +1611,17 @@ Object.assign(window.App, {
             <div class="modal-loker-stepper-nav">
               <div class="loker-step-item completed" onclick="App.renderLokerModalStep(${job.id}, 1)">
                 <span class="loker-step-badge">✓</span>
-                <span>Detail & Kualifikasi</span>
+                <span class="step-label">Detail &amp; Kualifikasi</span>
               </div>
               <span class="loker-step-sep">&gt;</span>
               <div class="loker-step-item active">
                 <span class="loker-step-badge">2</span>
-                <span>Form Pengajuan</span>
+                <span class="step-label">Form Pengajuan</span>
               </div>
               <span class="loker-step-sep">&gt;</span>
               <div class="loker-step-item">
                 <span class="loker-step-badge">3</span>
-                <span>Selesai</span>
+                <span class="step-label">Selesai</span>
               </div>
             </div>
             <button type="button" class="btn-modal-loker-close" onclick="Modal.close()" aria-label="Tutup modal">&times;</button>
@@ -1738,17 +1741,17 @@ Object.assign(window.App, {
             <div class="modal-loker-stepper-nav">
               <div class="loker-step-item completed">
                 <span class="loker-step-badge">✓</span>
-                <span>Detail & Kualifikasi</span>
+                <span class="step-label">Detail &amp; Kualifikasi</span>
               </div>
               <span class="loker-step-sep">&gt;</span>
               <div class="loker-step-item completed">
                 <span class="loker-step-badge">✓</span>
-                <span>Form Pengajuan</span>
+                <span class="step-label">Form Pengajuan</span>
               </div>
               <span class="loker-step-sep">&gt;</span>
-              <div class="loker-step-item active" style="background: #059669;">
+              <div class="loker-step-item active">
                 <span class="loker-step-badge">✓</span>
-                <span>Selesai</span>
+                <span class="step-label">Selesai</span>
               </div>
             </div>
             <button type="button" class="btn-modal-loker-close" onclick="Modal.close()" aria-label="Tutup modal">&times;</button>

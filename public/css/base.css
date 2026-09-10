@@ -512,7 +512,7 @@ html.modal-open {
   background-color: #ffffff;
   border-radius: var(--radius-xl);
   width: 100%;
-  max-width: 640px;
+  max-width: 580px;
   max-height: 92vh;
   box-shadow: var(--shadow-xl);
   transform: translateY(20px);
@@ -523,20 +523,20 @@ html.modal-open {
 }
 
 .modal-dialog.modal-lg {
-  max-width: 1060px;
+  max-width: 880px;
   width: 95%;
 }
 
 .modal-dialog.modal-md {
-  max-width: 680px;
+  max-width: 580px;
   width: 95%;
 }
 
 .modal-dialog.modal-loker {
-  max-width: 760px;
+  max-width: 620px;
   width: 95%;
   border-radius: 20px;
-  max-height: 92vh;
+  max-height: 90vh;
 }
 
 .modal-dialog.modal-loker .modal-body {
