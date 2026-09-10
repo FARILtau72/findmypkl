@@ -2187,7 +2187,7 @@ function getInitialData() {
       review_text: 'Pengalaman magang 6 bulan di Telkom Indonesia sangat luar biasa! Kami diajari langsung oleh senior engineer tentang arsitektur jaringan skala nasional dan CI/CD pipeline modern. Mentor sangat sabar membimbing bahkan ketika kami masih canggung dengan Git workflow. Uang saku Rp 2.5 jt/bulan cair tepat waktu.',
       pros: 'Uang saku tepat waktu, mentor senior sangat membimbing, fasilitas laptop & VPN enterprise.',
       cons: 'Ritme sprint cukup cepat, harus rajin mencatat istilah teknis baru.',
-      avatar_url: '/images/avatars/student-2.svg',
+      avatar_url: '/images/avatars/student-2.png',
       helpful_count: 38,
       verified_pkl: true,
       created_at: '2026-08-25T10:00:00.000Z'
@@ -2209,7 +2209,7 @@ function getInitialData() {
       review_text: 'Lingkungan kerja di GoTo sangat inklusif dan ramah untuk siswa SMK. Kami tidak diperlakukan sekadar anak magang fotokopi, melainkan dilibatkan langsung menulis manual test cases untuk modul checkout Tokopedia. Belajar Jira, React, dan tools modern.',
       pros: 'Dapat pinjaman laptop MacBook, voucher GoFood tiap Jumat, budaya kerja egaliter tanpa senioritas.',
       cons: 'Komunikasi full via Slack dan Notion jadi butuh adaptasi dokumentasi yang rapi.',
-      avatar_url: '/images/avatars/student-4.svg',
+      avatar_url: '/images/avatars/student-5.png',
       helpful_count: 45,
       verified_pkl: true,
       created_at: '2026-08-30T11:30:00.000Z'
@@ -2231,7 +2231,7 @@ function getInitialData() {
       review_text: 'Sangat menyenangkan untuk siswa yang ingin mendalami desain antarmuka digital dan creative agency. Klien-klien yang ditangani berskala nasional, sehingga portofolio saya setelah lulus langsung dilirik HRD.',
       pros: 'Jam kerja fleksibel (WFH friendly), akses akun Envato Elements & Figma Pro gratis.',
       cons: 'Revisi desain dari klien kadang mendadak di sore hari.',
-      avatar_url: '/images/avatars/student-3.svg',
+      avatar_url: '/images/avatars/student-4.png',
       helpful_count: 27,
       verified_pkl: true,
       created_at: '2026-07-15T09:15:00.000Z'
@@ -2253,7 +2253,7 @@ function getInitialData() {
       review_text: 'Bagi anak TAV dan Audio Visual, Kumata adalah tempat impian. Kita belajar standar pipeline produksi animasi dan editing video yang tayang di televisi internasional. Art Director selalu memberi feedback konstruktif setiap pagi saat daily standup.',
       pros: 'Display drawing pen tablet Wacom disediakan di studio, credit title di serial animasi resmi.',
       cons: 'Harus menjaga konsistensi color keying dan detail tinggi.',
-      avatar_url: '/images/avatars/student-5.svg',
+      avatar_url: '/images/avatars/student-2.png',
       helpful_count: 31,
       verified_pkl: true,
       created_at: '2026-08-18T14:20:00.000Z'
@@ -2275,7 +2275,7 @@ function getInitialData() {
       review_text: 'Selama 6 bulan di cabang Bank Mandiri, saya mengaplikasikan langsung rumus Excel tingkat lanjut, rekonsiliasi kas cabang, dan tata kelola arsip legal nasabah. Pembimbing sangat teliti dan selalu memotivasi kami untuk profesional.',
       pros: 'Sertifikat resmi bermaterai dari Bank Mandiri Corporate Secretary, uang saku stabil, lingkungan bank profesional.',
       cons: 'Standar ketelitian angka 100% tanpa toleransi selisih.',
-      avatar_url: '/images/avatars/student-3.svg',
+      avatar_url: '/images/avatars/student-3.png',
       helpful_count: 22,
       verified_pkl: true,
       created_at: '2026-07-28T16:00:00.000Z'
@@ -2297,7 +2297,7 @@ function getInitialData() {
       review_text: 'Standar 5R Astra benar-benar membentuk kedisiplinan kerja saya. Praktik langsung servis motor injeksi PGM-FI dan overhaul mesin bersama instruktur bersertifikasi Astra Honda. Setelah magang langsung ditawari kontrak kerja!',
       pros: 'Makan siang katering gratis, toolkit mekanik lengkap, peluang rekrutmen kerja tinggi.',
       cons: 'Fisik harus prima karena berdiri dan bergerak aktif di area bengkel.',
-      avatar_url: '/images/avatars/student-2.svg',
+      avatar_url: '/images/avatars/student-5.png',
       helpful_count: 34,
       verified_pkl: true,
       created_at: '2026-08-05T08:30:00.000Z'
@@ -2319,7 +2319,7 @@ function getInitialData() {
       review_text: 'Coding backend Laravel & Node.js yang selama ini cuma teori di sekolah, di sini bener-bener dipraktikkan untuk handle ratusan request per detik. Mentor tech lead meluangkan waktu 1 jam setiap hari untuk code review dan diskusi arsitektur API.',
       pros: 'Bimbingan 1-on-1 dengan Tech Lead, uang saku sangat kompetitif, kantor modern di Dago Cyber Hub.',
       cons: 'Perlu pemahaman logika basis data yang cukup kuat.',
-      avatar_url: '/images/avatars/student-4.svg',
+      avatar_url: '/images/avatars/student-2.png',
       helpful_count: 19,
       verified_pkl: true,
       created_at: '2026-09-02T13:45:00.000Z'
@@ -2341,7 +2341,7 @@ function getInitialData() {
       review_text: 'Kerja remote tapi komunikasi lancar banget lewat Discord. Bikin animasi reels dan bumper video untuk brand FMCG terkemuka. Hasil karya saya bisa langsung dipasang di portofolio Behance dan direspons sangat positif.',
       pros: 'Full remote WFH, jam kerja santai asal deadline terpenuhi, tim kreatif muda dan suportif.',
       cons: 'Render video butuh spesifikasi laptop yang cukup mumpuni.',
-      avatar_url: '/images/avatars/student-3.svg',
+      avatar_url: '/images/avatars/student-4.png',
       helpful_count: 16,
       verified_pkl: true,
       created_at: '2026-09-04T15:10:00.000Z'
@@ -2363,7 +2363,7 @@ function getInitialData() {
       review_text: 'Bangga banget bisa magang di pabrik pesawat terbang PTDI Bandung. Membantu cek dimensi komponen aerostruktur pesawat N219. Disiplin keselamatan kerja nomor satu dan fasilitas laboratorium aerodinamika sangat megah.',
       pros: 'Pengalaman langka di industri kedirgantaraan, ID card BUMN resmi, sertifikat berharga tinggi.',
       cons: 'Lokasi hanggar sangat luas, perlu stamina prima.',
-      avatar_url: '/images/avatars/student-5.svg',
+      avatar_url: '/images/avatars/student-5.png',
       helpful_count: 29,
       verified_pkl: true,
       created_at: '2026-08-12T10:00:00.000Z'
@@ -2385,7 +2385,7 @@ function getInitialData() {
       review_text: 'Lingkungan kerja Paragon sangat kekeluargaan dan islami. Belajar uji viskositas, pH, dan uji kestabilan produk kosmetik Wardah & Make Over di lab berstandar internasional CPKB BPOM.',
       pros: 'Goodie bag produk bulanan, uang saku memuaskan, kultur kerja sangat positif.',
       cons: 'Harus mengenakan jas lab dan APD lengkap sepanjang hari.',
-      avatar_url: '/images/avatars/student-3.svg',
+      avatar_url: '/images/avatars/student-3.png',
       helpful_count: 25,
       verified_pkl: true,
       created_at: '2026-08-20T11:00:00.000Z'
@@ -3017,7 +3017,7 @@ class Store {
       posisi: data.posisi || 'Siswa Praktik Kerja Lapangan (PKL)',
       alumni_label: data.alumni_label || `Alumni ${(data.student_jurusan || 'RPL').match(/RPL|TAV|TITL|TKRO/i)?.[0] || 'SMK'} ${new Date().getFullYear()}`,
       completion_period: data.completion_period || `Selesai ${new Date().toLocaleDateString('id-ID', { month: 'short', year: 'numeric' })}`,
-      avatar_url: data.avatar_url || '/images/avatars/student-2.svg',
+      avatar_url: data.avatar_url || '/images/avatars/student-2.png',
       rating: Number(data.rating) || 5.0,
       ratings: {
         culture: Number(data.rating_culture) || Number(data.rating) || 5.0,

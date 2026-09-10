@@ -399,7 +399,7 @@ function renderModernReviewCard(r, options = {}) {
   // 3. Avatar
   let avatarHtml = '';
   if (r.avatar_url) {
-    avatarHtml = `<img src="${r.avatar_url}" alt="${r.student_nama || 'Alumni'}" class="review-modern-avatar-img" onerror="this.onerror=null; this.src='/images/avatars/student-2.svg';" />`;
+    avatarHtml = `<img src="${r.avatar_url}" alt="${r.student_nama || 'Alumni'}" class="review-modern-avatar-img" onerror="this.onerror=null; this.src='/images/avatars/student-2.png';" />`;
   } else {
     const initials = (r.student_nama || 'SW').split(' ').map(w => w[0]).slice(0, 2).join('').toUpperCase();
     avatarHtml = `<div class="review-modern-avatar-fallback">${initials}</div>`;
@@ -410,9 +410,6 @@ function renderModernReviewCard(r, options = {}) {
   const roleText = r.posisi || 'Siswa Magang Industri';
   const companyName = r.company_nama || 'Mitra Industri DUDI';
 
-  // Optional footer elements
-  const showUpvote = Boolean(options.showUpvote);
-  const showProsCons = Boolean(options.showProsCons);
   const cardId = options.id ? `id="${options.id}"` : '';
   const extraClass = options.className || '';
 
@@ -442,7 +439,7 @@ function renderModernReviewCard(r, options = {}) {
       <div class="review-modern-meta-row">
         <span class="review-modern-rating-badge">${ratingNum} / 5.0</span>
         <span class="review-modern-meta-divider">|</span>
-        <span class="review-modern-role">${roleText}</span>
+        <span class="review-modern-role" title="${roleText}">${roleText}</span>
       </div>
 
       <!-- Quote Box -->
@@ -451,24 +448,6 @@ function renderModernReviewCard(r, options = {}) {
           ${r.review_text || 'Supervisor ramah dan aktif memberi arahan harian. Suasana kantor kondusif untuk siswa PKL, serta tugas yang diberikan terstruktur.'}
         </p>
       </div>
-
-      ${(showProsCons && (r.pros || r.cons)) ? `
-        <div class="review-modern-pros-cons">
-          ${r.pros ? `<div class="review-pill-pro"><strong>👍 Kelebihan:</strong> ${r.pros}</div>` : ''}
-          ${r.cons ? `<div class="review-pill-con"><strong>💡 Catatan:</strong> ${r.cons}</div>` : ''}
-        </div>
-      ` : ''}
-
-      ${showUpvote && r.id ? `
-        <div class="review-modern-footer">
-          <span class="review-modern-date">
-            📅 ${new Date(r.created_at || Date.now()).toLocaleDateString('id-ID', { day: 'numeric', month: 'short', year: 'numeric' })}
-          </span>
-          <button type="button" class="btn-review-upvote" id="btn-upvote-${r.id}" onclick="App.handleUpvoteReview(${r.id})">
-            <span>👍</span> Membantu (<span id="upvote-count-${r.id}">${r.helpful_count || 0}</span>)
-          </button>
-        </div>
-      ` : ''}
     </div>
   `;
 }

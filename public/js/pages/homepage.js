@@ -243,7 +243,7 @@ Object.assign(window.App, {
             completion_period: 'Selesai Agu 2025',
             rating: 5.0,
             review_text: 'Pengalaman magang yang sangat berharga. Senior engineer ramah membimbing arsitektur jaringan dan web portal modern, serta uang saku tepat waktu.',
-            avatar_url: '/images/avatars/student-2.svg'
+            avatar_url: '/images/avatars/student-2.png'
           }, { showUpvote: false, showProsCons: false })}
 
           ${renderModernReviewCard({
@@ -254,7 +254,7 @@ Object.assign(window.App, {
             completion_period: 'Selesai Jul 2025',
             rating: 4.8,
             review_text: 'Sangat menyenangkan untuk siswa yang mendalami desain antarmuka digital. Klien berskala nasional sehingga portofolio langsung dilirik industri.',
-            avatar_url: '/images/avatars/student-3.svg'
+            avatar_url: '/images/avatars/student-4.png'
           }, { showUpvote: false, showProsCons: false })}
         </div>
 

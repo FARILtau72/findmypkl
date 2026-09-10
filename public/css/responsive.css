@@ -1116,8 +1116,25 @@
     font-size: 12.5px !important;
   }
   .review-modern-meta-row {
-    gap: 6px !important;
+    gap: 8px !important;
+    margin-top: 10px !important;
     margin-bottom: 10px !important;
+    flex-wrap: nowrap !important;
+    min-width: 0 !important;
+  }
+  .review-modern-rating-badge {
+    flex-shrink: 0 !important;
+  }
+  .review-modern-meta-divider {
+    flex-shrink: 0 !important;
+  }
+  .review-modern-role {
+    font-size: 13px !important;
+    white-space: nowrap !important;
+    overflow: hidden !important;
+    text-overflow: ellipsis !important;
+    flex: 1 !important;
+    min-width: 0 !important;
   }
   .review-modern-quote-box {
     padding: 12px 14px !important;
