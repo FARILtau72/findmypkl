@@ -18,9 +18,9 @@ Object.assign(window.App, {
                 </button>
                 <div class="brand-logo-modern" style="cursor: pointer;" onclick="App.setRole('PUBLIC')">
                   <div class="brand-logo-icon" style="width: 32px; height: 32px;">
-                    <svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5"><path d="M22 10v6M2 10l10-5 10 5-10 5z"/><path d="M6 12v5c3 3 9 3 12 0v-5"/></svg>
+                    <img src="images/logo.png" alt="FindMyPKL Logo" />
                   </div>
-                  <div class="brand-logo-text" style="font-size: 18px;">FindMy<span>PKL</span></div>
+                  <div class="brand-logo-text" style="font-size: 18px;">FindMy<span style="color: #059669;">PKL</span></div>
                 </div>
                 <div style="width: 70px;"></div>
               </div>
@@ -242,9 +242,9 @@ Object.assign(window.App, {
               </button>
               <div class="brand-logo-modern" style="cursor: pointer;" onclick="App.setRole('PUBLIC')">
                 <div class="brand-logo-icon" style="width: 32px; height: 32px;">
-                  <svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5"><path d="M22 10v6M2 10l10-5 10 5-10 5z"/><path d="M6 12v5c3 3 9 3 12 0v-5"/></svg>
+                  <img src="images/logo.png" alt="FindMyPKL Logo" />
                 </div>
-                <div class="brand-logo-text" style="font-size: 18px;">FindMy<span>PKL</span></div>
+                <div class="brand-logo-text" style="font-size: 18px;">FindMy<span style="color: #059669;">PKL</span></div>
               </div>
               <button class="btn btn-ghost btn-sm" onclick="App.setRole('LOGIN')" style="font-size: 13px; padding: 6px 12px; color: var(--primary-600); font-weight: 700;">
                 Sudah Punya Akun? Masuk &rarr;

@@ -298,9 +298,9 @@
 }
 
 .brand-logo-icon {
-  width: 36px;
-  height: 36px;
-  border-radius: 9px;
+  width: 38px;
+  height: 38px;
+  border-radius: 10px;
   background: linear-gradient(135deg, #10b981, #059669);
   color: #ffffff;
   display: flex;
@@ -308,6 +308,14 @@
   justify-content: center;
   box-shadow: 0 2px 8px rgba(16, 185, 129, 0.25);
   flex-shrink: 0;
+  overflow: hidden;
+}
+
+.brand-logo-icon img {
+  width: 100%;
+  height: 100%;
+  object-fit: cover;
+  display: block;
 }
 
 .brand-logo-text {

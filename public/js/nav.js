@@ -116,7 +116,7 @@ Object.assign(window.App, {
         <div class="public-nav-container">
           <div class="brand-logo-modern" onclick="App.goToPortalTab('beranda')">
             <div class="brand-logo-icon">
-              <svg width="22" height="22" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5"><path d="M22 10v6M2 10l10-5 10 5-10 5z"/><path d="M6 12v5c3 3 9 3 12 0v-5"/></svg>
+              <img src="images/logo.png" alt="FindMyPKL Logo" />
             </div>
             <div>
               <div class="brand-logo-text" style="line-height: 1.1;">FindMy<span style="color: #059669;">PKL</span></div>
@@ -216,7 +216,7 @@ Object.assign(window.App, {
           <div class="mobile-drawer-header">
             <div class="brand-logo-modern" onclick="App.closeMobileDrawer(); App.goToPortalTab('beranda');">
               <div class="brand-logo-icon" style="width: 32px; height: 32px;">
-                <svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5"><path d="M22 10v6M2 10l10-5 10 5-10 5z"/><path d="M6 12v5c3 3 9 3 12 0v-5"/></svg>
+                <img src="images/logo.png" alt="FindMyPKL Logo" />
               </div>
               <div>
                 <div class="brand-logo-text" style="font-size: 16px;">FindMy<span style="color: #059669;">PKL</span></div>
@@ -359,9 +359,12 @@ Object.assign(window.App, {
         <div class="footer-inner-dark">
           <div class="footer-dark-top-grid">
             <div class="footer-brand-col">
-              <h4>
-                <span style="font-size: 20px;">🎓</span> FindMy<span>PKL</span>
-              </h4>
+              <div style="display: flex; align-items: center; gap: 10px; margin-bottom: 12px;">
+                <img src="images/logo.png" alt="FindMyPKL Logo" style="width: 36px; height: 36px; border-radius: 9px; object-fit: cover; box-shadow: 0 2px 10px rgba(0,0,0,0.35); flex-shrink: 0;" />
+                <h4 style="margin: 0; font-size: 20px; line-height: 1;">
+                  FindMy<span style="color: #10b981;">PKL</span>
+                </h4>
+              </div>
               <p>
                 Platform digital tata kelola dan penelusuran Praktik Kerja Lapangan (PKL) eksklusif bagi siswa <strong>SMK Taruna Bangsa Kota Bekasi</strong>, menghubungkan siswa, BKK/HUBIN sekolah, dan Dunia Usaha & Dunia Industri (DUDI).
               </p>
