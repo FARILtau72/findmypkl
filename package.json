@@ -6,7 +6,8 @@
   "scripts": {
     "start": "node server/index.js",
     "dev": "node server/index.js",
-    "test": "node db-test.js"
+    "test": "node db-test.js",
+    "benchmark": "node --no-warnings scripts/benchmark_sqlite.js"
   },
   "keywords": [
     "smk",
