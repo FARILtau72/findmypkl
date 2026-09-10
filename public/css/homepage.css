@@ -474,7 +474,7 @@
   gap: 24px;
   max-width: 1140px;
   margin: 0 auto;
-  align-items: start;
+  align-items: stretch;
 }
 
 .testimonial-card-modern {

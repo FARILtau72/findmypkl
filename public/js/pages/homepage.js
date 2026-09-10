@@ -247,7 +247,7 @@ Object.assign(window.App, {
           }, { showUpvote: false, showProsCons: false })}
 
           ${renderModernReviewCard({
-            student_nama: 'Siti Rahma Azzahra',
+            student_nama: 'Siti Rahma',
             alumni_label: 'Alumni TAV 2025',
             company_nama: 'CV Kreatif Digital',
             posisi: 'UI/UX & Creative Designer',
