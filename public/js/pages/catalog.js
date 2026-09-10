@@ -1364,6 +1364,23 @@ Object.assign(window.App, {
     await this.showJobDetailModal(jobId);
   },
 
+  async showCompanyDetailModalByName(companyName) {
+    if (typeof App.showCompanyDetailModal === 'function') {
+      const cleanName = String(companyName).replace(/PT|CV|Persero|Tbk/gi, '').trim().toLowerCase();
+      const companies = await API.getCompanies();
+      const found = companies.find(c => {
+        const cn = c.nama.toLowerCase();
+        return cn.includes(cleanName) || cleanName.includes(c.nama.replace(/PT|CV|Persero|Tbk/gi, '').trim().toLowerCase());
+      }) || companies[0];
+
+      if (found) {
+        await App.showCompanyDetailModal(found.id);
+        return;
+      }
+    }
+    App.showToast(`Profil ${companyName} sedang disiapkan.`, 'info');
+  },
+
   async showJobDetailModal(jobId) {
     const job = await API.getJobById(jobId);
     this.activeLokerModalJob = job;
@@ -1501,16 +1518,19 @@ Object.assign(window.App, {
 
             <!-- Company Header -->
             <div class="modal-loker-company-card">
-              <div class="loker-logo-badge">
+              <div class="loker-logo-badge" onclick="App.showCompanyDetailModalByName('${companyName.replace(/'/g, "\\'")}')" style="cursor: pointer;" title="Klik untuk lihat profil lengkap perusahaan">
                 ${logoInitials}
               </div>
               <div class="loker-company-details">
                 <div class="loker-company-title-row">
-                  <span class="loker-company-name">${companyName}</span>
+                  <span class="loker-company-name" onclick="App.showCompanyDetailModalByName('${companyName.replace(/'/g, "\\'")}')" style="cursor: pointer;" title="Klik untuk lihat profil lengkap perusahaan">${companyName}</span>
                   <span class="badge-kota-pill">
                     <svg width="12" height="12" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M21 10c0 7-9 13-9 13s-9-6-9-13a9 9 0 0 1 18 0z"/><circle cx="12" cy="10" r="3"/></svg>
                     ${cleanCity}
                   </span>
+                  <button type="button" class="btn-loker-view-company" onclick="App.showCompanyDetailModalByName('${companyName.replace(/'/g, "\\'")}')" title="Lihat profil lengkap dan legalitas perusahaan mitra ini">
+                    Profil Perusahaan ↗
+                  </button>
                 </div>
                 <div class="loker-company-industry">
                   <span>Industri: ${industryBidang}</span> &bull; 

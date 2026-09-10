@@ -1037,6 +1037,43 @@
     padding: 5px 9px !important;
     font-size: 12px !important;
   }
+
+  /* Company Profile Modal Mobile Optimization */
+  .comp-modal-container {
+    padding: 0 !important;
+    width: 100% !important;
+  }
+  .comp-modal-header {
+    flex-direction: column !important;
+    align-items: center !important;
+    text-align: center !important;
+    gap: 12px !important;
+  }
+  .comp-modal-title {
+    justify-content: center !important;
+    font-size: 17px !important;
+  }
+  .comp-modal-pills-row {
+    justify-content: center !important;
+  }
+  .comp-stats-grid {
+    grid-template-columns: repeat(2, 1fr) !important;
+    gap: 8px !important;
+  }
+  .comp-tabs-bar {
+    gap: 2px !important;
+  }
+  .comp-tab-button {
+    padding: 8px 10px !important;
+    font-size: 12px !important;
+  }
+  .comp-legal-grid {
+    grid-template-columns: 1fr !important;
+    gap: 10px !important;
+  }
+  .comp-culture-grid {
+    grid-template-columns: 1fr !important;
+  }
 }
 
 @media (max-width: 480px) {

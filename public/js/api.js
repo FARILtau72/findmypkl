@@ -64,6 +64,10 @@ const API = {
     return this.request(`/companies${q ? '?' + q : ''}`);
   },
 
+  getCompanyById(id) {
+    return this.request(`/companies/${id}`);
+  },
+
   addCompany(data) {
     return this.request('/companies', {
       method: 'POST',

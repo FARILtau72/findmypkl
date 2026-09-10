@@ -716,3 +716,374 @@
   color: #D97706;
   transform: translateY(-1px);
 }
+
+/* ==========================================================================
+   RICH COMPANY DETAIL MODAL (PROFIL PERUSAHAAN MITRA DUDI)
+   ========================================================================== */
+
+.comp-modal-container {
+  display: flex;
+  flex-direction: column;
+  gap: 0;
+  width: 100%;
+  box-sizing: border-box;
+}
+
+.comp-modal-header {
+  display: flex;
+  gap: 16px;
+  align-items: flex-start;
+  padding-bottom: 18px;
+  margin-bottom: 18px;
+  border-bottom: 1px solid #E2E8F0;
+  width: 100%;
+  box-sizing: border-box;
+}
+
+.comp-modal-logo-box {
+  width: 68px;
+  height: 68px;
+  border-radius: 16px;
+  background: #ffffff;
+  border: 1.5px solid #E2E8F0;
+  box-shadow: 0 2px 8px rgba(15, 23, 42, 0.06);
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  flex-shrink: 0;
+  overflow: hidden;
+  padding: 6px;
+}
+
+.comp-modal-title-area {
+  flex: 1;
+  min-width: 0;
+}
+
+.comp-modal-title {
+  font-size: 20px;
+  font-weight: 800;
+  color: #0F172A;
+  line-height: 1.3;
+  margin: 0 0 4px;
+  display: flex;
+  align-items: center;
+  gap: 8px;
+  flex-wrap: wrap;
+}
+
+.comp-modal-entity-badge {
+  font-size: 11px;
+  font-weight: 700;
+  color: #1D4ED8;
+  background: #EFF6FF;
+  border: 1px solid #BFDBFE;
+  padding: 2px 8px;
+  border-radius: 6px;
+}
+
+.comp-modal-subtitle {
+  font-size: 13px;
+  color: #64748B;
+  font-weight: 500;
+  margin-bottom: 8px;
+}
+
+.comp-modal-pills-row {
+  display: flex;
+  gap: 6px;
+  flex-wrap: wrap;
+  align-items: center;
+}
+
+.comp-pill {
+  font-size: 11.5px;
+  font-weight: 600;
+  padding: 2px 8px;
+  border-radius: 6px;
+  display: inline-flex;
+  align-items: center;
+  gap: 4px;
+}
+
+.comp-pill-emerald {
+  background: #ECFDF5;
+  color: #047857;
+  border: 1px solid #A7F3D0;
+}
+
+.comp-pill-slate {
+  background: #F1F5F9;
+  color: #475569;
+  border: 1px solid #E2E8F0;
+}
+
+.comp-pill-amber {
+  background: #FFFBEB;
+  color: #B45309;
+  border: 1px solid #FDE68A;
+}
+
+/* Quick Stats Row */
+.comp-stats-grid {
+  display: grid;
+  grid-template-columns: repeat(4, 1fr);
+  gap: 10px;
+  margin-bottom: 18px;
+  width: 100%;
+  box-sizing: border-box;
+}
+
+.comp-stat-box {
+  background: #F8FAFC;
+  border: 1px solid #E2E8F0;
+  border-radius: 12px;
+  padding: 10px 12px;
+  text-align: center;
+}
+
+.comp-stat-value {
+  font-size: 16px;
+  font-weight: 800;
+  color: #0F172A;
+  line-height: 1.2;
+}
+
+.comp-stat-label {
+  font-size: 11px;
+  color: #64748B;
+  font-weight: 600;
+  margin-top: 2px;
+}
+
+/* Tabs Bar */
+.comp-tabs-bar {
+  display: flex;
+  gap: 6px;
+  border-bottom: 2px solid #E2E8F0;
+  margin-bottom: 18px;
+  overflow-x: auto;
+  scrollbar-width: none;
+  width: 100%;
+  box-sizing: border-box;
+}
+
+.comp-tabs-bar::-webkit-scrollbar {
+  display: none;
+}
+
+.comp-tab-button {
+  background: transparent;
+  border: none;
+  border-bottom: 2.5px solid transparent;
+  padding: 10px 14px;
+  font-size: 13.5px;
+  font-weight: 600;
+  color: #64748B;
+  cursor: pointer;
+  white-space: nowrap;
+  transition: all 0.15s ease;
+  margin-bottom: -2px;
+  display: inline-flex;
+  align-items: center;
+  gap: 6px;
+}
+
+.comp-tab-button:hover {
+  color: #059669;
+}
+
+.comp-tab-button.active {
+  color: #059669;
+  font-weight: 700;
+  border-bottom-color: #059669;
+}
+
+.comp-tab-content {
+  display: none;
+  animation: fadeIn 0.18s ease-in-out;
+}
+
+.comp-tab-content.active {
+  display: block;
+}
+
+/* Section elements inside tabs */
+.comp-section-block {
+  margin-bottom: 18px;
+}
+
+.comp-section-title {
+  font-size: 12px;
+  font-weight: 800;
+  color: #334155;
+  text-transform: uppercase;
+  letter-spacing: 0.6px;
+  margin-bottom: 8px;
+  display: flex;
+  align-items: center;
+  gap: 6px;
+}
+
+.comp-visi-quote-box {
+  background: linear-gradient(135deg, #ECFDF5 0%, #F0FDF4 100%);
+  border: 1.5px solid #A7F3D0;
+  border-radius: 12px;
+  padding: 14px 16px;
+  font-size: 13.5px;
+  line-height: 1.6;
+  color: #065F46;
+  font-weight: 500;
+  margin-bottom: 12px;
+  position: relative;
+}
+
+.comp-misi-list {
+  display: flex;
+  flex-direction: column;
+  gap: 8px;
+  padding-left: 0;
+  list-style: none;
+}
+
+.comp-misi-item {
+  display: flex;
+  align-items: flex-start;
+  gap: 10px;
+  font-size: 13px;
+  color: #334155;
+  line-height: 1.5;
+}
+
+.comp-misi-dot {
+  width: 6px;
+  height: 6px;
+  border-radius: 50%;
+  background: #059669;
+  margin-top: 7px;
+  flex-shrink: 0;
+}
+
+/* Legal grid */
+.comp-legal-grid {
+  background: #F8FAFC;
+  border: 1px solid #E2E8F0;
+  border-radius: 12px;
+  padding: 14px 16px;
+  display: grid;
+  grid-template-columns: repeat(2, 1fr);
+  gap: 12px;
+  font-size: 12.5px;
+}
+
+.comp-legal-item-label {
+  color: #64748B;
+  font-size: 11px;
+  font-weight: 600;
+  text-transform: uppercase;
+  letter-spacing: 0.4px;
+}
+
+.comp-legal-item-val {
+  font-weight: 700;
+  color: #0F172A;
+  margin-top: 2px;
+  word-break: break-word;
+}
+
+/* Culture & facilities pills */
+.comp-culture-grid {
+  display: grid;
+  grid-template-columns: repeat(2, 1fr);
+  gap: 8px;
+  margin-bottom: 14px;
+}
+
+.comp-culture-card {
+  background: #ffffff;
+  border: 1px solid #E2E8F0;
+  border-radius: 10px;
+  padding: 10px 12px;
+  display: flex;
+  align-items: center;
+  gap: 8px;
+  font-size: 12.5px;
+  font-weight: 600;
+  color: #1E293B;
+}
+
+.comp-facilities-list {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 8px;
+}
+
+.comp-facility-badge {
+  background: #EFF6FF;
+  border: 1px solid #BFDBFE;
+  color: #1E40AF;
+  font-size: 12px;
+  font-weight: 600;
+  padding: 6px 12px;
+  border-radius: 8px;
+  display: inline-flex;
+  align-items: center;
+  gap: 6px;
+}
+
+/* Timeline steps */
+.comp-timeline-list {
+  display: flex;
+  flex-direction: column;
+  gap: 8px;
+}
+
+.comp-timeline-step {
+  display: flex;
+  align-items: center;
+  gap: 12px;
+  background: #F8FAFC;
+  border: 1px solid #E2E8F0;
+  border-radius: 10px;
+  padding: 10px 14px;
+  font-size: 12.5px;
+  font-weight: 600;
+  color: #334155;
+}
+
+.comp-step-num {
+  width: 24px;
+  height: 24px;
+  border-radius: 50%;
+  background: #059669;
+  color: #ffffff;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  font-size: 11px;
+  font-weight: 800;
+  flex-shrink: 0;
+}
+
+/* Modal Loker View Company button */
+.btn-loker-view-company {
+  background: #ECFDF5;
+  border: 1px solid #A7F3D0;
+  color: #047857;
+  font-size: 11.5px;
+  font-weight: 700;
+  padding: 3px 10px;
+  border-radius: 8px;
+  cursor: pointer;
+  display: inline-flex;
+  align-items: center;
+  gap: 4px;
+  transition: all 0.15s ease;
+  margin-left: auto;
+}
+
+.btn-loker-view-company:hover {
+  background: #D1FAE5;
+  border-color: #059669;
+  color: #065F46;
+}
