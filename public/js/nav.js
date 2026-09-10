@@ -6,10 +6,23 @@
 Object.assign(window.App, {
   toggleUserDropdown(e) {
     if (e) e.stopPropagation();
-    const dropdowns = document.querySelectorAll('.mkt-user-dropdown');
-    dropdowns.forEach(dropdown => {
-      dropdown.style.display = dropdown.style.display === 'block' ? 'none' : 'block';
-    });
+    const pill = e ? e.currentTarget : null;
+    const dropdown = pill ? pill.querySelector('.mkt-user-dropdown') : null;
+    if (dropdown) {
+      const isVisible = dropdown.style.display === 'block';
+      document.querySelectorAll('.mkt-user-dropdown').forEach(d => { d.style.display = 'none'; });
+      document.querySelectorAll('.mkt-user-profile-pill.active').forEach(p => p.classList.remove('active'));
+
+      if (!isVisible) {
+        dropdown.style.display = 'block';
+        pill.classList.add('active');
+      }
+    } else {
+      const dropdowns = document.querySelectorAll('.mkt-user-dropdown');
+      dropdowns.forEach(dropdown => {
+        dropdown.style.display = dropdown.style.display === 'block' ? 'none' : 'block';
+      });
+    }
   },
 
   showSwitchStudentModal() {
@@ -134,38 +147,39 @@ Object.assign(window.App, {
                   <div class="mkt-dropdown-header">
                     <div class="mkt-dropdown-avatar">${initials}</div>
                     <div class="mkt-dropdown-user-info">
-                      <div class="mkt-dropdown-name">${student.nama}</div>
+                      <div class="mkt-dropdown-name" title="${student.nama}">${student.nama}</div>
                       <div class="mkt-dropdown-sub">${student.kelas} &bull; NISN: ${student.nisn}</div>
-                      <div style="margin-top: 4px;">
-                        <span class="badge ${student.status_verifikasi === 'Terverifikasi' ? 'badge-emerald' : student.status_verifikasi === 'Perlu Perbaikan' ? 'badge-amber' : student.status_verifikasi === 'Ditolak' ? 'badge-rose' : 'badge-blue'}" style="font-size: 10px; padding: 2px 7px;">
-                          ${student.status_verifikasi === 'Terverifikasi' ? '✓ Terverifikasi' : student.status_verifikasi}
+                      <div class="mkt-dropdown-badge-wrap">
+                        <span class="mkt-dropdown-badge ${student.status_verifikasi === 'Terverifikasi' ? 'badge-verified' : ''}">
+                          <svg width="11" height="11" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5"><polyline points="20 6 9 17 4 12"/></svg>
+                          ${student.status_verifikasi === 'Terverifikasi' ? 'Terverifikasi' : student.status_verifikasi}
                         </span>
                       </div>
                     </div>
                   </div>
                   <div class="mkt-dropdown-links">
-                    <a onclick="App.setRole('SISWA', 'profil')">
+                    <a class="mkt-dropdown-item" onclick="App.setRole('SISWA', 'profil')">
                       <svg width="15" height="15" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M20 21v-2a4 4 0 0 0-4-4H8a4 4 0 0 0-4 4v2"/><circle cx="12" cy="7" r="4"/></svg>
-                      Profil Siswa & Berkas
+                      <span>Profil Siswa & Berkas</span>
                     </a>
-                    <a onclick="App.setRole('SISWA', 'lamaran')">
+                    <a class="mkt-dropdown-item" onclick="App.setRole('SISWA', 'lamaran')">
                       <svg width="15" height="15" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M14 2H6a2 2 0 0 0-2 2v16a2 2 0 0 0 2 2h12a2 2 0 0 0 2-2V8z"/><polyline points="14 2 14 8 20 8"/></svg>
-                      Lamaran PKL Saya
+                      <span>Lamaran PKL Saya</span>
                     </a>
-                    <a onclick="App.setRole('SISWA', 'jurnal')">
+                    <a class="mkt-dropdown-item" onclick="App.setRole('SISWA', 'jurnal')">
                       <svg width="15" height="15" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M11 4H4a2 2 0 0 0-2 2v16a2 2 0 0 0 2 2h14a2 2 0 0 0 2-2v-7"/><path d="M18.5 2.5a2.121 2.121 0 0 1 3 3L12 15l-4 1 1-4 9.5-9.5z"/></svg>
-                      Jurnal Kegiatan PKL
+                      <span>Jurnal Kegiatan PKL</span>
                     </a>
                   </div>
                   <div class="mkt-dropdown-divider"></div>
                   <div class="mkt-dropdown-links">
-                    <a onclick="App.showSwitchStudentModal()">
+                    <a class="mkt-dropdown-item" onclick="App.showSwitchStudentModal()">
                       <svg width="15" height="15" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M17 1l4 4-4 4"/><path d="M3 11V9a4 4 0 0 1 4-4h14"/><path d="M7 23l-4-4 4-4"/><path d="M21 13v2a4 4 0 0 1-4 4H3"/></svg>
-                      Ganti Akun Siswa (Demo)
+                      <span>Ganti Akun Siswa (Demo)</span>
                     </a>
-                    <a onclick="App.logout()" style="color: #ef4444;">
+                    <a class="mkt-dropdown-item mkt-item-danger" onclick="App.logout()">
                       <svg width="15" height="15" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M9 21H5a2 2 0 0 1-2-2V5a2 2 0 0 1 2-2h4"/><polyline points="16 17 21 12 16 7"/><line x1="21" y1="12" x2="9" y2="12"/></svg>
-                      Keluar (Logout)
+                      <span>Keluar (Logout)</span>
                     </a>
                   </div>
                 </div>

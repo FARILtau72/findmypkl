@@ -264,10 +264,13 @@ window.App = {
     }
 
     document.addEventListener('click', () => {
+      const dropdowns = document.querySelectorAll('.mkt-user-dropdown');
+      dropdowns.forEach(d => { d.style.display = 'none'; });
       const dropdown = document.getElementById('mkt-user-dropdown');
       if (dropdown) dropdown.style.display = 'none';
       const dropdownHome = document.getElementById('mkt-user-dropdown-home');
       if (dropdownHome) dropdownHome.style.display = 'none';
+      document.querySelectorAll('.mkt-user-profile-pill.active').forEach(p => p.classList.remove('active'));
     });
 
     const tidbPill = document.getElementById('tidb-pill');

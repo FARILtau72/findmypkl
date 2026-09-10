@@ -756,33 +756,40 @@
   background: #ffffff;
   border: 1px solid #E2E8F0;
   border-radius: 9999px;
-  padding: 4px 14px 4px 6px;
+  padding: 4px 12px 4px 5px;
   display: inline-flex;
   align-items: center;
-  gap: 10px;
+  gap: 8px;
   cursor: pointer;
-  transition: all 0.15s ease;
+  transition: all 0.2s cubic-bezier(0.4, 0, 0.2, 1);
   position: relative;
   user-select: none;
+  max-width: 240px;
 }
 
 .mkt-user-profile-pill:hover {
   border-color: #CBD5E1;
-  box-shadow: 0 2px 8px rgba(0, 0, 0, 0.06);
+  box-shadow: 0 2px 8px rgba(15, 23, 42, 0.06);
+}
+
+.mkt-user-profile-pill.active {
+  border-color: #10B981;
+  box-shadow: 0 0 0 2px rgba(16, 185, 129, 0.2);
 }
 
 .mkt-user-avatar {
   width: 34px;
   height: 34px;
   border-radius: 50%;
-  background: #10B981;
+  background: linear-gradient(135deg, #10B981, #059669);
   color: #ffffff;
   font-weight: 800;
-  font-size: 12.5px;
+  font-size: 13px;
   display: flex;
   align-items: center;
   justify-content: center;
   flex-shrink: 0;
+  box-shadow: 0 2px 5px rgba(16, 185, 129, 0.25);
 }
 
 .mkt-user-meta {
@@ -790,6 +797,8 @@
   flex-direction: column;
   text-align: left;
   line-height: 1.25;
+  min-width: 0;
+  max-width: 150px;
 }
 
 .mkt-user-name {
@@ -797,6 +806,8 @@
   font-weight: 700;
   color: #0F172A;
   white-space: nowrap;
+  overflow: hidden;
+  text-overflow: ellipsis;
 }
 
 .mkt-user-sub {
@@ -804,60 +815,97 @@
   color: #64748B;
   font-weight: 500;
   white-space: nowrap;
+  overflow: hidden;
+  text-overflow: ellipsis;
 }
 
 .mkt-user-chevron {
   color: #64748B;
   margin-left: 2px;
   flex-shrink: 0;
+  transition: transform 0.2s cubic-bezier(0.4, 0, 0.2, 1);
 }
 
+.mkt-user-profile-pill.active .mkt-user-chevron {
+  transform: rotate(180deg);
+}
+
+/* User Dropdown Menu Card */
 .mkt-user-dropdown {
   position: absolute;
-  top: calc(100% + 8px);
+  top: calc(100% + 10px);
   right: 0;
-  width: 270px;
+  width: 280px;
+  max-width: calc(100vw - 32px);
   background: #ffffff;
   border: 1px solid #E2E8F0;
-  border-radius: 14px;
-  box-shadow: 0 12px 30px -4px rgba(15, 23, 42, 0.15);
+  border-radius: 16px;
+  box-shadow: 0 20px 35px -5px rgba(15, 23, 42, 0.18), 0 0 0 1px rgba(15, 23, 42, 0.05);
   padding: 12px;
-  z-index: 1000;
-  animation: fadeInDropdown 0.15s ease;
+  z-index: 1200;
+  animation: fadeInDropdown 0.2s cubic-bezier(0.16, 1, 0.3, 1);
+  transform-origin: top right;
+  box-sizing: border-box;
+}
+
+/* Elegant Caret Arrow pointing to pill */
+.mkt-user-dropdown::before {
+  content: '';
+  position: absolute;
+  top: -6px;
+  right: 18px;
+  width: 11px;
+  height: 11px;
+  background: #ffffff;
+  border-left: 1px solid #E2E8F0;
+  border-top: 1px solid #E2E8F0;
+  transform: rotate(45deg);
+  border-radius: 2px;
+  z-index: 1;
 }
 
 @keyframes fadeInDropdown {
-  from { opacity: 0; transform: translateY(-4px); }
-  to { opacity: 1; transform: translateY(0); }
+  from {
+    opacity: 0;
+    transform: translateY(-8px) scale(0.97);
+  }
+  to {
+    opacity: 1;
+    transform: translateY(0) scale(1);
+  }
 }
 
 .mkt-dropdown-header {
   display: flex;
-  gap: 10px;
+  gap: 12px;
   align-items: center;
-  padding-bottom: 10px;
+  padding: 10px 12px;
+  background: #F8FAFC;
+  border-radius: 12px;
+  border: 1px solid #F1F5F9;
   margin-bottom: 8px;
-  border-bottom: 1px solid #F1F5F9;
 }
 
 .mkt-dropdown-avatar {
-  width: 38px;
-  height: 38px;
+  width: 40px;
+  height: 40px;
   border-radius: 50%;
-  background: #10B981;
+  background: linear-gradient(135deg, #10B981, #059669);
   color: #ffffff;
   font-weight: 800;
-  font-size: 13.5px;
+  font-size: 14px;
   display: flex;
   align-items: center;
   justify-content: center;
   flex-shrink: 0;
+  box-shadow: 0 2px 6px rgba(16, 185, 129, 0.25);
 }
 
 .mkt-dropdown-user-info {
   display: flex;
   flex-direction: column;
   min-width: 0;
+  flex: 1;
 }
 
 .mkt-dropdown-name {
@@ -867,12 +915,39 @@
   overflow: hidden;
   text-overflow: ellipsis;
   white-space: nowrap;
+  line-height: 1.25;
 }
 
 .mkt-dropdown-sub {
   font-size: 11px;
   color: #64748B;
   white-space: nowrap;
+  overflow: hidden;
+  text-overflow: ellipsis;
+  margin-top: 2px;
+  line-height: 1.2;
+}
+
+.mkt-dropdown-badge-wrap {
+  margin-top: 5px;
+}
+
+.mkt-dropdown-badge {
+  display: inline-flex;
+  align-items: center;
+  gap: 4px;
+  font-size: 10.5px;
+  font-weight: 700;
+  padding: 2px 8px;
+  border-radius: 9999px;
+  background: #E2E8F0;
+  color: #475569;
+}
+
+.mkt-dropdown-badge.badge-verified {
+  background: #ECFDF5;
+  color: #047857;
+  border: 1px solid #A7F3D0;
 }
 
 .mkt-dropdown-links {
@@ -881,12 +956,13 @@
   gap: 2px;
 }
 
-.mkt-dropdown-links a {
+.mkt-dropdown-links a,
+.mkt-dropdown-item {
   display: flex;
   align-items: center;
   gap: 10px;
-  padding: 8px 10px;
-  border-radius: 8px;
+  padding: 8.5px 10px;
+  border-radius: 10px;
   font-size: 13px;
   font-weight: 600;
   color: #334155;
@@ -895,15 +971,50 @@
   transition: all 0.15s ease;
 }
 
-.mkt-dropdown-links a:hover {
+.mkt-dropdown-links a:hover,
+.mkt-dropdown-item:hover {
   background: #F8FAFC;
   color: #0F172A;
+  transform: translateX(2px);
+}
+
+.mkt-dropdown-links a svg,
+.mkt-dropdown-item svg {
+  flex-shrink: 0;
+  color: #64748B;
+  transition: color 0.15s ease;
+}
+
+.mkt-dropdown-links a:hover svg,
+.mkt-dropdown-item:hover svg {
+  color: #0F172A;
+}
+
+.mkt-dropdown-links a.mkt-item-danger,
+.mkt-dropdown-item.mkt-item-danger {
+  color: #EF4444;
+}
+
+.mkt-dropdown-links a.mkt-item-danger svg,
+.mkt-dropdown-item.mkt-item-danger svg {
+  color: #EF4444;
+}
+
+.mkt-dropdown-links a.mkt-item-danger:hover,
+.mkt-dropdown-item.mkt-item-danger:hover {
+  background: #FEF2F2;
+  color: #DC2626;
+}
+
+.mkt-dropdown-links a.mkt-item-danger:hover svg,
+.mkt-dropdown-item.mkt-item-danger:hover svg {
+  color: #DC2626;
 }
 
 .mkt-dropdown-divider {
   height: 1px;
   background-color: #F1F5F9;
-  margin: 6px 0;
+  margin: 6px 4px;
 }
 
 .public-nav-link.nav-pill-active {

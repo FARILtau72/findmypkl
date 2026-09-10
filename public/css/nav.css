@@ -145,17 +145,24 @@
 /* User Profile Pill in transparent navbar */
 .public-navbar.navbar-transparent .mkt-user-profile-pill {
   background: rgba(255, 255, 255, 0.12);
-  border: 1px solid rgba(255, 255, 255, 0.3);
+  border: 1px solid rgba(255, 255, 255, 0.28);
   backdrop-filter: none !important;
   -webkit-backdrop-filter: none !important;
-  box-shadow: none;
+  box-shadow: 0 2px 6px rgba(0, 0, 0, 0.12);
   transition: all 0.2s ease;
+}
+.public-navbar.navbar-transparent .mkt-user-profile-pill:hover,
+.public-navbar.navbar-transparent .mkt-user-profile-pill.active {
+  background: rgba(255, 255, 255, 0.22);
+  border-color: rgba(255, 255, 255, 0.5);
 }
 .public-navbar.navbar-transparent .mkt-user-name {
   color: #ffffff;
+  text-shadow: 0 1px 3px rgba(0, 0, 0, 0.5);
 }
 .public-navbar.navbar-transparent .mkt-user-sub {
   color: rgba(255, 255, 255, 0.82);
+  text-shadow: 0 1px 2px rgba(0, 0, 0, 0.4);
 }
 .public-navbar.navbar-transparent .mkt-user-chevron {
   color: #ffffff;
@@ -243,12 +250,20 @@
 .public-navbar.navbar-transparent.navbar-scrolled .mkt-user-profile-pill {
   background: #ffffff;
   border: 1px solid #E2E8F0;
+  box-shadow: none;
+}
+.public-navbar.navbar-transparent.navbar-scrolled .mkt-user-profile-pill:hover,
+.public-navbar.navbar-transparent.navbar-scrolled .mkt-user-profile-pill.active {
+  background: #F8FAFC;
+  border-color: #10B981;
 }
 .public-navbar.navbar-transparent.navbar-scrolled .mkt-user-name {
   color: #0f172a;
+  text-shadow: none;
 }
 .public-navbar.navbar-transparent.navbar-scrolled .mkt-user-sub {
   color: #64748B;
+  text-shadow: none;
 }
 .public-navbar.navbar-transparent.navbar-scrolled .mkt-user-chevron {
   color: #64748B;
@@ -263,13 +278,14 @@
 .public-nav-container {
   max-width: 1240px;
   margin: 0 auto;
-  padding: 0 20px;
+  padding: 0 24px;
   height: 68px;
   display: flex;
   align-items: center;
   justify-content: space-between;
   gap: 16px;
   width: 100%;
+  box-sizing: border-box;
 }
 
 .brand-logo-modern {
@@ -565,3 +581,57 @@
   color: #334155;
   cursor: pointer;
 }
+
+/* ==========================================================================
+   RESPONSIVE NAVBAR BREAKPOINTS (Prevents horizontal overflow & clipping)
+   ========================================================================== */
+@media (max-width: 1300px) {
+  .public-nav-container {
+    padding: 0 18px;
+    gap: 12px;
+  }
+  .public-nav-link {
+    padding: 6px 11px;
+    font-size: 13px;
+  }
+  .btn-nav-hubin-pill {
+    padding: 6px 12px;
+    font-size: 12.5px;
+  }
+}
+
+@media (max-width: 1180px) {
+  .public-nav-links {
+    gap: 2px;
+  }
+  .public-nav-link {
+    padding: 6px 8px;
+    font-size: 12.5px;
+  }
+  .mkt-user-meta {
+    max-width: 125px;
+  }
+  .mkt-user-name {
+    font-size: 12.5px;
+  }
+  .mkt-user-sub {
+    font-size: 10px;
+  }
+}
+
+@media (max-width: 1080px) {
+  .btn-nav-hubin-pill span {
+    display: none;
+  }
+  .btn-nav-hubin-pill {
+    padding: 7px 10px;
+    border-radius: 9999px;
+  }
+  .mkt-user-sub {
+    display: none;
+  }
+  .mkt-user-meta {
+    max-width: 110px;
+  }
+}
+
