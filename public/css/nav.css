@@ -40,16 +40,18 @@
   border-bottom: 1px solid #eef2f6;
 }
 
-/* Glassmorphism Navbar (Floating over 100vh Hero on Landing Page) */
+/* Clean Transparent Navbar (Floating over 100vh Hero on Landing Page) */
 .public-navbar.navbar-transparent {
   position: fixed;
   top: 0;
   left: 0;
   right: 0;
   width: 100%;
-  background: linear-gradient(180deg, rgba(15, 23, 42, 0.48) 0%, rgba(15, 23, 42, 0.26) 75%, rgba(15, 23, 42, 0.12) 100%) !important;
-  backdrop-filter: blur(14px) saturate(160%);
-  -webkit-backdrop-filter: blur(14px) saturate(160%);
+  background: transparent !important;
+  background-color: transparent !important;
+  background-image: none !important;
+  backdrop-filter: none !important;
+  -webkit-backdrop-filter: none !important;
   border: none !important;
   border-bottom: none !important;
   box-shadow: none !important;
@@ -79,53 +81,52 @@
 }
 .public-navbar.navbar-transparent .public-nav-link:hover {
   color: #ffffff;
-  background: rgba(255, 255, 255, 0.16);
-  box-shadow: 0 2px 8px rgba(0, 0, 0, 0.15);
+  background: rgba(255, 255, 255, 0.15);
 }
 .public-navbar.navbar-transparent .public-nav-link.nav-pill-active,
 .public-navbar.navbar-transparent .public-nav-link.active {
-  background: rgba(255, 255, 255, 0.22);
+  background: rgba(255, 255, 255, 0.18);
   color: #ffffff !important;
-  border: 1px solid rgba(255, 255, 255, 0.3);
-  backdrop-filter: blur(8px);
-  -webkit-backdrop-filter: blur(8px);
-  box-shadow: 0 2px 10px rgba(0, 0, 0, 0.2);
+  border: 1px solid rgba(255, 255, 255, 0.25);
+  backdrop-filter: none !important;
+  -webkit-backdrop-filter: none !important;
+  box-shadow: none;
 }
 
 /* Hubin Pill in transparent navbar */
 .public-navbar.navbar-transparent .btn-nav-hubin-pill {
-  background: rgba(255, 255, 255, 0.14);
-  border: 1px solid rgba(255, 255, 255, 0.25);
+  background: rgba(255, 255, 255, 0.1);
+  border: 1px solid rgba(255, 255, 255, 0.3);
   border-radius: 9999px;
   color: #ffffff;
-  backdrop-filter: blur(8px);
-  -webkit-backdrop-filter: blur(8px);
+  backdrop-filter: none !important;
+  -webkit-backdrop-filter: none !important;
   text-shadow: 0 1px 3px rgba(0, 0, 0, 0.4);
-  box-shadow: 0 2px 10px rgba(0, 0, 0, 0.15);
+  box-shadow: none;
   transition: all 0.2s ease;
 }
 .public-navbar.navbar-transparent .btn-nav-hubin-pill:hover {
-  background: rgba(255, 255, 255, 0.25);
+  background: rgba(255, 255, 255, 0.2);
   border-color: rgba(255, 255, 255, 0.45);
   color: #ffffff;
-  box-shadow: 0 4px 14px rgba(0, 0, 0, 0.25);
+  box-shadow: 0 2px 8px rgba(0, 0, 0, 0.15);
 }
 
 /* Auth Buttons in transparent navbar */
 .public-navbar.navbar-transparent .btn-nav-login {
-  background: rgba(255, 255, 255, 0.14);
-  border: 1px solid rgba(255, 255, 255, 0.25);
+  background: rgba(255, 255, 255, 0.1);
+  border: 1px solid rgba(255, 255, 255, 0.3);
   border-radius: 9999px;
   padding: 7px 18px;
   color: #ffffff;
-  backdrop-filter: blur(8px);
-  -webkit-backdrop-filter: blur(8px);
+  backdrop-filter: none !important;
+  -webkit-backdrop-filter: none !important;
   text-shadow: 0 1px 3px rgba(0, 0, 0, 0.4);
-  box-shadow: 0 2px 10px rgba(0, 0, 0, 0.15);
+  box-shadow: none;
   transition: all 0.2s ease;
 }
 .public-navbar.navbar-transparent .btn-nav-login:hover {
-  background: rgba(255, 255, 255, 0.25);
+  background: rgba(255, 255, 255, 0.2);
   border-color: rgba(255, 255, 255, 0.45);
   color: #ffffff;
 }
@@ -133,21 +134,21 @@
   border-radius: 9999px;
 }
 .public-navbar.navbar-transparent .btn-mobile-login {
-  background: rgba(255, 255, 255, 0.14);
-  border: 1px solid rgba(255, 255, 255, 0.25);
+  background: rgba(255, 255, 255, 0.1);
+  border: 1px solid rgba(255, 255, 255, 0.3);
   border-radius: 9999px;
   color: #ffffff;
-  backdrop-filter: blur(8px);
-  -webkit-backdrop-filter: blur(8px);
+  backdrop-filter: none !important;
+  -webkit-backdrop-filter: none !important;
 }
 
 /* User Profile Pill in transparent navbar */
 .public-navbar.navbar-transparent .mkt-user-profile-pill {
-  background: rgba(255, 255, 255, 0.16);
+  background: rgba(255, 255, 255, 0.12);
   border: 1px solid rgba(255, 255, 255, 0.3);
-  backdrop-filter: blur(8px);
-  -webkit-backdrop-filter: blur(8px);
-  box-shadow: 0 2px 10px rgba(0, 0, 0, 0.15);
+  backdrop-filter: none !important;
+  -webkit-backdrop-filter: none !important;
+  box-shadow: none;
   transition: all 0.2s ease;
 }
 .public-navbar.navbar-transparent .mkt-user-name {
@@ -164,9 +165,9 @@
 .public-navbar.navbar-transparent .btn-mobile-drawer-toggle {
   border-color: rgba(255, 255, 255, 0.35);
   color: #ffffff;
-  background: rgba(255, 255, 255, 0.14);
-  backdrop-filter: blur(8px);
-  -webkit-backdrop-filter: blur(8px);
+  background: rgba(255, 255, 255, 0.1);
+  backdrop-filter: none !important;
+  -webkit-backdrop-filter: none !important;
   transition: all 0.2s ease;
 }
 
@@ -175,9 +176,10 @@
    Follows user when scrolling down, turns solid white with smooth animation
    ========================================================================== */
 .public-navbar.navbar-transparent.navbar-scrolled {
-  background-color: rgba(255, 255, 255, 0.97) !important;
-  backdrop-filter: blur(14px);
-  -webkit-backdrop-filter: blur(14px);
+  background-color: #ffffff !important;
+  background-image: none !important;
+  backdrop-filter: none !important;
+  -webkit-backdrop-filter: none !important;
   border-bottom: 1px solid #eef2f6 !important;
   box-shadow: 0 4px 20px rgba(15, 23, 42, 0.08) !important;
 }
