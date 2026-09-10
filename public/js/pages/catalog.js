@@ -499,9 +499,11 @@ Object.assign(window.App, {
                 </div>
                 <p>Pantau kehadiran, validasi jurnal harian siswa dengan tanda tangan digital, serta kirim surat pengantar resmi ke ratusan mitra industri tanpa ribet cetak kertas.</p>
               </div>
-              <button type="button" class="btn-cta-green" onclick="App.setRole('LOGIN', 'hubin')">
-                Masuk Portal HUBIN &rarr;
-              </button>
+              <div class="cta-actions-group">
+                <button type="button" class="btn-cta-green" onclick="App.setRole('LOGIN', 'hubin')">
+                  Masuk Portal HUBIN &rarr;
+                </button>
+              </div>
             </div>
 
             <div class="cta-box-dark">
@@ -517,9 +519,11 @@ Object.assign(window.App, {
                 </div>
                 <p>Pasang lowongan magang gratis, seleksi portofolio siswa bersertifikat kompetensi keahlian, dan bangun talent pool muda berkualitas sejak bangku sekolah.</p>
               </div>
-              <button type="button" class="btn-cta-dark-outline" onclick="App.showPartnerInfoModal()">
-                Daftar Sebagai Mitra Industri &rarr;
-              </button>
+              <div class="cta-actions-group">
+                <button type="button" class="btn-cta-dark-outline" onclick="App.showPartnerInfoModal()">
+                  Daftar Sebagai Mitra Industri &rarr;
+                </button>
+              </div>
             </div>
           </div>
         </div>

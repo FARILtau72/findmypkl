@@ -276,7 +276,7 @@ Object.assign(window.App, {
 
       <!-- 9. DUAL CTA SECTION -->
       <section class="dual-cta-section">
-        <div class="dual-cta-grid" style="grid-template-columns: repeat(auto-fit, minmax(320px, 1fr));">
+        <div class="dual-cta-grid">
           <div class="cta-box-light" style="background: linear-gradient(135deg, #ecfdf5 0%, #ffffff 100%); border: 1.5px solid #a7f3d0;">
             <div>
               <div class="cta-card-header">
@@ -291,7 +291,7 @@ Object.assign(window.App, {
               </div>
               <p>Daftarkan akun dengan data NISN aktif SMK Taruna Bangsa Kota Bekasi. Tunggu verifikasi tim HUBIN, lalu ajukan lowongan ke perusahaan mitra impian.</p>
             </div>
-            <div style="display: flex; gap: 10px; flex-wrap: wrap; margin-top: 18px;">
+            <div class="cta-actions-group">
               <button class="btn-cta-green" onclick="App.setRole('REGISTER')">
                 Daftar Siswa Baru &rarr;
               </button>
@@ -318,7 +318,7 @@ Object.assign(window.App, {
               </div>
               <p>Validasi berkas NISN pendaftaran siswa, setujui lamaran PKL, terbitkan Surat Pengantar resmi sekolah, dan pantau jurnal harian siswa magang.</p>
             </div>
-            <div style="margin-top: 18px;">
+            <div class="cta-actions-group">
               <button class="btn btn-primary" onclick="App.setRole('LOGIN', 'hubin')" style="padding: 12px 24px; font-weight: 700;">
                 Masuk Portal HUBIN &rarr;
               </button>

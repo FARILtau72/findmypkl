@@ -1033,6 +1033,10 @@ html.modal-open {
   transition: transform 0.2s cubic-bezier(0.4, 0, 0.2, 1), box-shadow 0.2s cubic-bezier(0.4, 0, 0.2, 1), border-color 0.2s ease;
   position: relative;
   box-sizing: border-box;
+  width: 100%;
+  max-width: 100%;
+  min-width: 0;
+  overflow: hidden;
 }
 
 .pkl-job-card:hover,
@@ -1048,6 +1052,8 @@ html.modal-open {
   display: flex;
   flex-direction: column;
   flex-grow: 1;
+  min-width: 0;
+  width: 100%;
 }
 
 /* Row 1: Title & Salary / Compensation Status */
@@ -1057,6 +1063,8 @@ html.modal-open {
   justify-content: space-between;
   gap: 12px;
   margin-bottom: 6px;
+  width: 100%;
+  min-width: 0;
 }
 
 .job-card-title {
@@ -1071,6 +1079,8 @@ html.modal-open {
   -webkit-line-clamp: 1;
   -webkit-box-orient: vertical;
   flex: 1;
+  min-width: 0;
+  word-break: break-word;
 }
 
 .job-card-salary-box {
@@ -1126,6 +1136,8 @@ html.modal-open {
   justify-content: space-between;
   gap: 10px;
   margin-bottom: 12px;
+  width: 100%;
+  min-width: 0;
 }
 
 .job-card-comp-verified {
@@ -1133,6 +1145,7 @@ html.modal-open {
   align-items: center;
   gap: 6px;
   min-width: 0;
+  flex: 1;
   overflow: hidden;
 }
 
@@ -1151,6 +1164,7 @@ html.modal-open {
   white-space: nowrap;
   overflow: hidden;
   text-overflow: ellipsis;
+  min-width: 0;
 }
 
 .job-card-dist-loc {
@@ -1167,6 +1181,8 @@ html.modal-open {
   flex-wrap: wrap;
   gap: 6px;
   margin-bottom: 14px;
+  width: 100%;
+  min-width: 0;
 }
 
 .job-tag-pill {
@@ -1192,6 +1208,8 @@ html.modal-open {
   padding-top: 12px;
   border-top: 1px solid #f1f5f9;
   margin-top: auto;
+  width: 100%;
+  min-width: 0;
 }
 
 .job-card-footer-company {
@@ -1200,6 +1218,7 @@ html.modal-open {
   gap: 10px;
   min-width: 0;
   flex: 1;
+  overflow: hidden;
 }
 
 .job-card-circle-logo {
@@ -1227,6 +1246,7 @@ html.modal-open {
 
 .job-card-company-text {
   min-width: 0;
+  flex: 1;
   overflow: hidden;
 }
 
@@ -1238,6 +1258,7 @@ html.modal-open {
   overflow: hidden;
   text-overflow: ellipsis;
   line-height: 1.35;
+  min-width: 0;
 }
 
 .job-card-action-box {
