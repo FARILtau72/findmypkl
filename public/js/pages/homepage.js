@@ -24,7 +24,7 @@ Object.assign(window.App, {
 
           <h1 class="hero-headline-modern">
             Cari Tempat PKL Sesuai
-            <span>JurusanMu</span>
+            <span>Jurusanmu</span>
           </h1>
 
           <p class="hero-subtitle-modern">

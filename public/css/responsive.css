@@ -622,7 +622,6 @@
   /* Padding bottom on all portal views so bottom nav doesn't cover elements */
   .mkt-page-wrapper,
   .page-body-container,
-  .hero-modern-section,
   .content-body {
     padding-bottom: 74px !important;
   }

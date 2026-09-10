@@ -985,12 +985,27 @@
   .hero-modern-section {
     min-height: 100vh;
     min-height: 100dvh;
-    padding: 82px 16px 88px !important;
-    background-position: center 25%;
+    height: 100vh;
+    height: 100dvh;
+    padding: 76px 16px 24px !important;
+    background-position: center center;
+    background-size: cover;
+    background-repeat: no-repeat;
     display: flex;
     flex-direction: column;
     justify-content: center;
     align-items: center;
+    overflow: hidden;
+    box-sizing: border-box;
+  }
+  .hero-modern-content {
+    width: 100%;
+    max-width: 100%;
+    margin: auto 0;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    justify-content: center;
   }
   .hero-pill-badge {
     font-size: 11.5px;
@@ -1038,28 +1053,7 @@
     font-weight: 700;
   }
   .hero-highlights-grid {
-    grid-template-columns: 1fr;
-    gap: 10px;
-    margin-top: 24px;
-    width: 100%;
-  }
-  .highlight-item-card {
-    padding: 12px 14px;
-    border-radius: 14px;
-    gap: 12px;
-  }
-  .highlight-icon-box {
-    width: 38px;
-    height: 38px;
-    border-radius: 10px;
-  }
-  .highlight-item-card h4 {
-    font-size: 13.5px;
-    margin-bottom: 2px;
-  }
-  .highlight-item-card p {
-    font-size: 11.5px;
-    line-height: 1.4;
+    display: none !important;
   }
   .public-navbar.navbar-solid {
     position: sticky;
