@@ -22,18 +22,13 @@ Object.assign(window.App, {
       <section class="hero-modern-section">
         <div class="hero-modern-content">
 
-          <div class="hero-pill-badge">
-            <span class="hero-badge-dot"></span>
-            <span>Portal Resmi PKL SMK Taruna Bangsa</span>
-          </div>
-
           <h1 class="hero-headline-modern">
             Cari Tempat PKL Sesuai
-            <span class="hero-highlight-word">Jurusanmu</span>
+            <span>JurusanMu</span>
           </h1>
 
           <p class="hero-subtitle-modern">
-            Platform resmi penelusuran dan pendaftaran Praktik Kerja Lapangan (PKL) terverifikasi khusus siswa-siswi <strong>SMK Taruna Bangsa Kota Bekasi</strong>.
+            Platform resmi penelusuran dan pengelolaan Praktik Kerja Lapangan (PKL) khusus bagi siswa-siswi <strong>SMK Taruna Bangsa Kota Bekasi</strong>.<br>
           </p>
 
           <!-- 3. Floating Unified Search Bar (3 Segments + Green Button) -->
@@ -78,52 +73,40 @@ Object.assign(window.App, {
 
             <button class="btn-search-green" onclick="App.handleUnifiedSearch()">
               <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5"><circle cx="11" cy="11" r="8"/><line x1="21" y1="21" x2="16.65" y2="16.65"/></svg>
-              Cari Lowongan
+              Cari
             </button>
           </div>
 
-          <!-- Quick Filter Tags -->
-          <div class="hero-quick-tags">
-            <span class="quick-tags-label">Jurusan Populer:</span>
-            <button type="button" class="quick-tag-pill" onclick="App.quickFilterMajor('RPL')">RPL</button>
-            <button type="button" class="quick-tag-pill" onclick="App.quickFilterMajor('TAV')">TAV</button>
-            <button type="button" class="quick-tag-pill" onclick="App.quickFilterMajor('TITL')">TITL</button>
-            <button type="button" class="quick-tag-pill" onclick="App.quickFilterMajor('TKRO')">TKRO</button>
-          </div>
+          <!-- 4. 3 Feature Highlights Under Hero -->
+          <div class="hero-highlights-grid">
+            <div class="highlight-item-card">
+              <div class="highlight-icon-box">
+                <svg width="22" height="22" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><rect x="3" y="3" width="18" height="18" rx="2"/><path d="M9 3v18"/><path d="M15 9h-6"/><path d="M15 15h-6"/></svg>
+              </div>
+              <div>
+                <h4>500+ Mitra DUDI Resmi</h4>
+                <p>Perusahaan rekanan telah menjalin MoU resmi dengan SMK Taruna Bangsa Kota Bekasi</p>
+              </div>
+            </div>
 
-        </div>
-      </section>
+            <div class="highlight-item-card">
+              <div class="highlight-icon-box">
+                <svg width="22" height="22" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M19 21l-7-5-7 5V5a2 2 0 0 1 2-2h10a2 2 0 0 1 2 2z"/></svg>
+              </div>
+              <div>
+                <h4>10rb+ Ulasan Siswa</h4>
+                <p>Testimoni jujur dan penilaian nyata dari alumni PKL SMK Taruna Bangsa</p>
+              </div>
+            </div>
 
-      <!-- 4. HIGHLIGHTS & STATS BAR (Bridge between Hero and Content) -->
-      <section class="hero-stats-bridge-section">
-        <div class="hero-highlights-grid">
-          <div class="highlight-item-card">
-            <div class="highlight-icon-box">
-              <svg width="22" height="22" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><rect x="3" y="3" width="18" height="18" rx="2"/><path d="M9 3v18"/><path d="M15 9h-6"/><path d="M15 15h-6"/></svg>
-            </div>
-            <div>
-              <h4>500+ Mitra DUDI Resmi</h4>
-              <p>Perusahaan rekanan telah menjalin MoU resmi dengan SMK Taruna Bangsa Kota Bekasi</p>
-            </div>
-          </div>
-
-          <div class="highlight-item-card">
-            <div class="highlight-icon-box">
-              <svg width="22" height="22" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M19 21l-7-5-7 5V5a2 2 0 0 1 2-2h10a2 2 0 0 1 2 2z"/></svg>
-            </div>
-            <div>
-              <h4>10rb+ Ulasan Siswa</h4>
-              <p>Testimoni jujur dan penilaian nyata dari alumni PKL SMK Taruna Bangsa</p>
-            </div>
-          </div>
-
-          <div class="highlight-item-card">
-            <div class="highlight-icon-box">
-              <svg width="22" height="22" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M12 22s8-4 8-10V5l-8-3-8 3v7c0 6 8 10 8 10z"/><polyline points="9 12 11 14 15 10"/></svg>
-            </div>
-            <div>
-              <h4>100% Terverifikasi HUBIN</h4>
-              <p>Program PKL resmi dan didampingi guru pembimbing SMK Taruna Bangsa</p>
+            <div class="highlight-item-card">
+              <div class="highlight-icon-box">
+                <svg width="22" height="22" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M12 22s8-4 8-10V5l-8-3-8 3v7c0 6 8 10 8 10z"/><polyline points="9 12 11 14 15 10"/></svg>
+              </div>
+              <div>
+                <h4>100% Terverifikasi HUBIN</h4>
+                <p>Program PKL resmi dan didampingi guru pembimbing SMK Taruna Bangsa</p>
+              </div>
             </div>
           </div>
         </div>

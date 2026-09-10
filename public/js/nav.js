@@ -120,7 +120,7 @@ Object.assign(window.App, {
             </div>
             <div>
               <div class="brand-logo-text" style="line-height: 1.1;">FindMy<span style="color: #059669;">PKL</span></div>
-              <div style="font-size: 9px; font-weight: 800; letter-spacing: 0.8px; color: #94A3B8; text-transform: uppercase;">SMK TARUNA BANGSA BEKASI</div>
+              <div style="font-size: 9px; font-weight: 800; letter-spacing: 0.8px; color: #94A3B8; text-transform: uppercase;">PKL HUB SMK INDONESIA</div>
             </div>
           </div>
 
