@@ -371,8 +371,113 @@ function renderPklJobCard(j, options = {}) {
 
 }
 
+function renderModernReviewCard(r, options = {}) {
+  if (!r) return '';
+
+  // 1. Alumni Label & Jurusan Tag
+  let alumniLabel = r.alumni_label;
+  if (!alumniLabel) {
+    let majorCode = 'SMK';
+    const text = (r.student_jurusan || r.student_kelas || '').toUpperCase();
+    if (text.includes('RPL')) majorCode = 'RPL';
+    else if (text.includes('TAV')) majorCode = 'TAV';
+    else if (text.includes('TITL')) majorCode = 'TITL';
+    else if (text.includes('TKRO')) majorCode = 'TKRO';
+    const year = r.created_at ? new Date(r.created_at).getFullYear() : 2025;
+    alumniLabel = `Alumni ${majorCode} ${year}`;
+  }
+
+  // 2. Completion Period & Status
+  let completionPeriod = r.completion_period;
+  if (!completionPeriod) {
+    const d = r.created_at ? new Date(r.created_at) : new Date();
+    const month = d.toLocaleDateString('id-ID', { month: 'short' });
+    const year = d.getFullYear();
+    completionPeriod = `Selesai ${month} ${year}`;
+  }
+
+  // 3. Avatar
+  let avatarHtml = '';
+  if (r.avatar_url) {
+    avatarHtml = `<img src="${r.avatar_url}" alt="${r.student_nama || 'Alumni'}" class="review-modern-avatar-img" onerror="this.onerror=null; this.src='/images/avatars/student-2.svg';" />`;
+  } else {
+    const initials = (r.student_nama || 'SW').split(' ').map(w => w[0]).slice(0, 2).join('').toUpperCase();
+    avatarHtml = `<div class="review-modern-avatar-fallback">${initials}</div>`;
+  }
+
+  // 4. Rating & Role
+  const ratingNum = typeof r.rating === 'number' ? r.rating.toFixed(1) : Number(r.rating || 5.0).toFixed(1);
+  const roleText = r.posisi || 'Siswa Magang Industri';
+  const companyName = r.company_nama || 'Mitra Industri DUDI';
+
+  // Optional footer elements
+  const showUpvote = options.showUpvote !== false;
+  const cardId = options.id ? `id="${options.id}"` : '';
+  const extraClass = options.className || '';
+
+  return `
+    <div class="review-card-modern ${extraClass}" ${cardId}>
+      <!-- Top Profile Header -->
+      <div class="review-modern-header">
+        <div class="review-modern-avatar-wrap">
+          ${avatarHtml}
+        </div>
+        <div class="review-modern-author-info">
+          <div class="review-modern-name-row">
+            <span class="review-modern-name">${r.student_nama || 'Alumni Taruna Bangsa'}</span>
+            <span class="review-modern-separator">—</span>
+            <span class="review-modern-alumni">${alumniLabel}</span>
+          </div>
+          <div class="review-modern-company" title="${companyName}">${companyName}</div>
+          <div class="review-modern-status-row">
+            <span class="review-modern-status-period">${completionPeriod}</span>
+            <span class="review-modern-status-bullet">&bull;</span>
+            <span class="review-modern-status-verified">Terverifikasi</span>
+          </div>
+        </div>
+      </div>
+
+      <!-- Rating & Role Row -->
+      <div class="review-modern-meta-row">
+        <span class="review-modern-rating-badge">${ratingNum} / 5.0</span>
+        <span class="review-modern-meta-divider">|</span>
+        <span class="review-modern-role">${roleText}</span>
+      </div>
+
+      <!-- Quote Box -->
+      <div class="review-modern-quote-box">
+        <p class="review-modern-quote-text">
+          ${r.review_text || 'Pengalaman magang yang sangat berharga dalam mengasah keterampilan teknis kejuruan dan etos kerja industri.'}
+        </p>
+      </div>
+
+      ${(options.showProsCons && (r.pros || r.cons)) ? `
+        <div class="review-modern-pros-cons">
+          ${r.pros ? `<div class="review-pill-pro"><strong>👍 Kelebihan:</strong> ${r.pros}</div>` : ''}
+          ${r.cons ? `<div class="review-pill-con"><strong>💡 Catatan:</strong> ${r.cons}</div>` : ''}
+        </div>
+      ` : ''}
+
+      ${showUpvote && r.id ? `
+        <div class="review-modern-footer">
+          <span class="review-modern-date">
+            📅 ${new Date(r.created_at || Date.now()).toLocaleDateString('id-ID', { day: 'numeric', month: 'short', year: 'numeric' })}
+          </span>
+          <button type="button" class="btn-review-upvote" id="btn-upvote-${r.id}" onclick="App.handleUpvoteReview(${r.id})">
+            <span>👍</span> Membantu (<span id="upvote-count-${r.id}">${r.helpful_count || 0}</span>)
+          </button>
+        </div>
+      ` : ''}
+    </div>
+  `;
+}
+
 window.getCompanyLogoUrl = getCompanyLogoUrl;
 window.renderCompanyLogo = renderCompanyLogo;
 window.renderPklJobCard = renderPklJobCard;
+window.renderModernReviewCard = renderModernReviewCard;
+if (window.App) {
+  window.App.renderModernReviewCard = renderModernReviewCard;
+}
 
 

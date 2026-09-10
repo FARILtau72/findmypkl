@@ -1074,6 +1074,33 @@
   .comp-culture-grid {
     grid-template-columns: 1fr !important;
   }
+
+  /* Modern Review Card Mobile Optimization */
+  .review-card-modern {
+    padding: 14px 16px !important;
+  }
+  .review-modern-header {
+    gap: 10px !important;
+  }
+  .review-modern-name {
+    font-size: 14px !important;
+  }
+  .review-modern-alumni {
+    font-size: 13px !important;
+  }
+  .review-modern-company {
+    font-size: 12.5px !important;
+  }
+  .review-modern-meta-row {
+    gap: 6px !important;
+    margin-bottom: 10px !important;
+  }
+  .review-modern-quote-box {
+    padding: 12px 14px !important;
+  }
+  .review-modern-quote-text {
+    font-size: 13px !important;
+  }
 }
 
 @media (max-width: 480px) {

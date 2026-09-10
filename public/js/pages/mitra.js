@@ -612,32 +612,7 @@ Object.assign(window.App, {
 
             ${compReviews.length > 0 ? `
               <div style="display: flex; flex-direction: column; gap: 12px; max-height: 320px; overflow-y: auto; padding-right: 4px;">
-                ${compReviews.map(r => `
-                  <div style="background: #ffffff; border: 1px solid #E2E8F0; border-radius: 12px; padding: 14px 16px;">
-                    <div style="display: flex; justify-content: space-between; align-items: flex-start; margin-bottom: 8px;">
-                      <div>
-                        <div style="font-size: 13.5px; font-weight: 700; color: #0F172A;">${r.student_nama}</div>
-                        <div style="font-size: 11.5px; color: #64748B;">${r.student_kelas || 'Alumni SMK'} &bull; Posisi: <strong style="color: #334155;">${r.posisi || 'Siswa Magang'}</strong></div>
-                      </div>
-                      <div style="background: #FEF3C7; color: #D97706; font-size: 12px; font-weight: 800; padding: 2px 8px; border-radius: 6px;">
-                        ⭐ ${r.rating ? r.rating.toFixed(1) : '5.0'}
-                      </div>
-                    </div>
-                    <p style="font-size: 13px; color: #334155; line-height: 1.6; margin-bottom: 8px; font-style: italic;">
-                      &ldquo;${r.review_text}&rdquo;
-                    </p>
-                    ${r.pros ? `
-                      <div style="font-size: 11.5px; color: #047857; margin-bottom: 4px;">
-                        <strong>Kelebihan:</strong> ${r.pros}
-                      </div>
-                    ` : ''}
-                    ${r.cons ? `
-                      <div style="font-size: 11.5px; color: #64748B;">
-                        <strong>Saran/Tantangan:</strong> ${r.cons}
-                      </div>
-                    ` : ''}
-                  </div>
-                `).join('')}
+                ${compReviews.map(r => renderModernReviewCard(r, { showUpvote: false, showProsCons: false })).join('')}
               </div>
             ` : `
               <div style="text-align: center; padding: 32px 16px; background: #F8FAFC; border-radius: 12px; border: 1px dashed #CBD5E1;">

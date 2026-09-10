@@ -1131,10 +1131,6 @@ Object.assign(window.App, {
     const html = `
       <form id="form-partner-inquiry" onsubmit="App.handlePartnerSubmit(event)">
         <div style="background: linear-gradient(135deg, #064e3b 0%, #065f46 100%); color: #ffffff; border-radius: 14px; padding: 20px; margin-bottom: 20px;">
-          <div style="display: flex; align-items: center; gap: 10px; margin-bottom: 6px;">
-            <span style="font-size: 24px;">🏢</span>
-            <h3 style="font-size: 18px; font-weight: 800; color: #ffffff; margin: 0;">Kemitraan DUDI & Industri SMK Taruna Bangsa</h3>
-          </div>
           <p style="font-size: 13px; color: #a7f3d0; margin: 0; line-height: 1.5;">
             Bergabunglah bersama 13+ mitra industri terkemuka. Dapatkan talenta muda siap kerja dengan keahlian Rekayasa Perangkat Lunak (RPL), Teknik Audio Video (TAV), Teknik Instalasi Tenaga Listrik (TITL), dan Teknik Kendaraan Ringan Otomotif (TKRO).
           </p>
@@ -1596,23 +1592,17 @@ Object.assign(window.App, {
             </div>
 
             <!-- Review / Rating Card -->
-            <div class="modal-loker-review-card">
-              <div class="loker-review-header">
-                <div class="loker-section-title" style="margin-bottom: 0;">
-                  <svg width="15" height="15" viewBox="0 0 24 24" fill="#F59E0B" stroke="#F59E0B" stroke-width="1">
-                    <polygon points="12 2 15.09 8.26 22 9.27 17 14.14 18.18 21.02 12 17.77 5.82 21.02 7 14.14 2 9.27 8.91 8.26 12 2"/>
-                  </svg>
-                  <span style="color: #475569;">ULASAN TEMPAT PKL</span>
-                </div>
-                <div class="loker-rating-pill">
-                  <span>★★★★★</span>
-                  <span>4.5 / 5</span>
-                </div>
-              </div>
-              <blockquote class="loker-review-quote">
-                "${reviewQuote}"
-              </blockquote>
-            </div>
+            <!-- Review / Rating Card (Modern Mockup Design) -->
+            ${renderModernReviewCard({
+              student_nama: 'Arga Kurniawan',
+              alumni_label: `Alumni ${(job.jurusan || 'RPL').match(/RPL|TAV|TITL|TKRO/i)?.[0] || 'RPL'} 2025`,
+              company_nama: job.company_nama || 'Mitra Industri DUDI',
+              posisi: job.judul || 'Frontend Web Developer',
+              completion_period: 'Selesai Nov 2025',
+              rating: 4.5,
+              review_text: 'Supervisor sangat membimbing dan aktif memberi arahan harian. Suasana kantor kondusif untuk siswa PKL, serta tugas yang diberikan terstruktur.',
+              avatar_url: '/images/avatars/arga-kurniawan.png'
+            }, { showUpvote: false, showProsCons: false })}
           </div>
 
           <!-- 3. Footer Bar -->

@@ -154,67 +154,7 @@ Object.assign(window.App, {
         return;
       }
 
-      grid.innerHTML = filtered.map(r => {
-        const initials = r.student_nama ? r.student_nama.split(' ').map(w => w[0]).slice(0, 2).join('') : 'SW';
-        const stars = '★'.repeat(Math.floor(r.rating || 5)) + '☆'.repeat(5 - Math.floor(r.rating || 5));
-        const ratings = r.ratings || { culture: 5, mentor: 5, allowance: 5, relevance: 5 };
-
-        return `
-          <div class="ulasan-card-item">
-            <div>
-              <div class="ulasan-author-row">
-                <div class="ulasan-avatar">${initials}</div>
-                <div class="ulasan-author-info">
-                  <div class="ulasan-author-name">
-                    <span>${r.student_nama}</span>
-                    ${r.verified_pkl ? `
-                      <span class="ulasan-verified-badge" title="Telah menyelesaikan PKL terverifikasi HUBIN">
-                        ✓ Terverifikasi PKL
-                      </span>
-                    ` : ''}
-                  </div>
-                  <div class="ulasan-author-meta">
-                    ${r.student_kelas || 'XII RPL 1'} &bull; ${r.student_sekolah || 'SMK Taruna Bangsa'}
-                  </div>
-                </div>
-              </div>
-
-              <div class="ulasan-comp-tag">
-                🏢 ${r.company_nama} &bull; <strong>${r.posisi || 'Siswa PKL'}</strong>
-              </div>
-
-              <div style="display: flex; align-items: center; gap: 8px; margin-bottom: 10px;">
-                <span style="color: #f59e0b; font-size: 16px; letter-spacing: 1px;">${stars}</span>
-                <strong style="font-size: 14px; color: #0f172a;">${Number(r.rating).toFixed(1)}</strong>
-              </div>
-
-              <div class="ulasan-rating-aspects-row">
-                <span class="ulasan-aspect-chip">🏢 Kultur: ${ratings.culture}</span>
-                <span class="ulasan-aspect-chip">👨‍🏫 Mentor: ${ratings.mentor}</span>
-                <span class="ulasan-aspect-chip">💰 Kompensasi: ${ratings.allowance}</span>
-              </div>
-
-              <p class="ulasan-text-body">
-                "${r.review_text}"
-              </p>
-
-              <div class="ulasan-pros-cons-box">
-                ${r.pros ? `<div class="ulasan-pro-pill"><strong>👍 Kelebihan:</strong> ${r.pros}</div>` : ''}
-                ${r.cons ? `<div class="ulasan-con-pill"><strong>💡 Catatan:</strong> ${r.cons}</div>` : ''}
-              </div>
-            </div>
-
-            <div class="ulasan-card-footer">
-              <div>
-                📅 ${new Date(r.created_at || Date.now()).toLocaleDateString('id-ID', { day: 'numeric', month: 'short', year: 'numeric' })}
-              </div>
-              <button type="button" class="btn-review-upvote" id="btn-upvote-${r.id}" onclick="App.handleUpvoteReview(${r.id})">
-                <span>👍</span> Membantu (<span id="upvote-count-${r.id}">${r.helpful_count || 0}</span>)
-              </button>
-            </div>
-          </div>
-        `;
-      }).join('');
+      grid.innerHTML = filtered.map(r => renderModernReviewCard(r, { showUpvote: true, showProsCons: true })).join('');
     };
 
     // Event listeners
