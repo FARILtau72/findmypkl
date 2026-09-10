@@ -95,10 +95,10 @@ window.App = {
     if (typeof Lenis === 'undefined') return;
     try {
       window.lenis = new Lenis({
-        duration: 0.9,
+        duration: 1.0,
         easing: (t) => Math.min(1, 1.001 - Math.pow(2, -10 * t)),
-        smoothWheel: true,
-        smoothTouch: false,
+        smoothWheel: false, // Let mouse wheel scroll naturally with zero hijacking or freezing
+        syncTouch: false,
         autoRaf: true,
         prevent: (node) => {
           if (!node || !node.closest) return false;
@@ -109,6 +109,11 @@ window.App = {
       window.lenis.on('scroll', () => {
         this.updateNavbarScroll();
       });
+
+      // Failsafe native scroll listener for navbar transparency & floating states
+      window.addEventListener('scroll', () => {
+        this.updateNavbarScroll();
+      }, { passive: true });
 
       // Global observer for dynamic DOM height updates (SPA catalog, filters, tabs)
       if (typeof ResizeObserver !== 'undefined' && typeof document !== 'undefined' && document.body) {
@@ -336,9 +341,6 @@ window.App = {
     if (document.body && document.body.classList) {
       document.body.classList.add('sidebar-drawer-open');
     }
-    if (typeof window !== 'undefined' && window.lenis) {
-      try { window.lenis.stop(); } catch (e) {}
-    }
   },
 
   closeSidebar() {
@@ -350,7 +352,7 @@ window.App = {
       document.body.classList.remove('sidebar-drawer-open');
     }
     if (typeof window !== 'undefined' && window.lenis) {
-      try { window.lenis.start(); } catch (e) {}
+      try { window.lenis.start(); window.lenis.resize(); } catch (e) {}
     }
   },
 
@@ -417,8 +419,14 @@ window.App = {
       this.currentRole = this.currentStudent ? 'SISWA' : 'PUBLIC';
     }
     this.saveSession();
+    if (typeof document !== 'undefined') {
+      if (document.body) document.body.style.overflow = '';
+      if (document.documentElement) document.documentElement.style.overflow = '';
+    }
     if (typeof window !== 'undefined' && window.lenis) {
       try {
+        window.lenis.start();
+        window.lenis.resize();
         window.lenis.scrollTo(0, { immediate: true });
       } catch (e) {
         window.scrollTo({ top: 0, behavior: 'smooth' });
@@ -730,6 +738,17 @@ window.App = {
   },
 
   async render() {
+    if (typeof document !== 'undefined') {
+      if (document.body) document.body.style.overflow = '';
+      if (document.documentElement) document.documentElement.style.overflow = '';
+    }
+    if (typeof window !== 'undefined' && window.lenis) {
+      try {
+        window.lenis.start();
+        window.lenis.resize();
+      } catch (e) {}
+    }
+
     const sidebar = document.getElementById('app-sidebar');
     const header = document.getElementById('main-header');
     const contentBody = document.getElementById('main-content-body');

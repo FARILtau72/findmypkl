@@ -1,4 +1,4 @@
-// ==========================================================================
+ // ==========================================================================
 // FIND MY PKL - CATALOG & MARKETPLACE MODULE
 // Marketplace Listing, Filters, Job Cards, Pagination, Apply Modal Flow
 // ==========================================================================
@@ -457,7 +457,7 @@ Object.assign(window.App, {
             <!-- Stats & Sort Bar -->
             <div class="mkt-top-stats-bar">
               <div class="mkt-stats-title">
-                <h3>Menampilkan <span id="mkt-count-highlight" style="font-weight: 800; color: #059669;">48</span> Tempat PKL Terbuka</h3>
+                <h3>Menampilkan <span id="mkt-count-highlight" style="font-weight: 800; color: #059669;">${jobs.length}</span> Tempat PKL Terbuka</h3>
                 <p>Daftar lowongan PKL terverifikasi dari mitra industri nasional & multinasional</p>
               </div>
 
@@ -472,7 +472,7 @@ Object.assign(window.App, {
               </div>
             </div>
 
-            <!-- Cards Grid (3 Columns) -->
+            <!-- Cards Grid (2 Columns on Standard Desktop, 1 Column on Mobile) -->
             <div id="mkt-jobs-grid" class="mkt-cards-grid">
               <!-- Rendered dynamically -->
             </div>
@@ -480,7 +480,7 @@ Object.assign(window.App, {
             <!-- Pagination Bar -->
             <div id="mkt-pagination-row" class="mkt-pagination-row">
               <div class="mkt-pagination-text" id="mkt-pagination-info">
-                Menampilkan 1 sampai 6 dari 48 lowongan tempat PKL
+                Menampilkan 1 sampai ${Math.min(pageSize, jobs.length)} dari ${jobs.length} lowongan tempat PKL
               </div>
               <div class="mkt-pagination-controls" id="mkt-pagination-buttons">
                 <!-- Pagination buttons -->
@@ -1031,9 +1031,6 @@ Object.assign(window.App, {
       const sheet = document.getElementById('mkt-mobile-filter-sheet-overlay');
       if (sheet) sheet.classList.add('active');
       document.body.style.overflow = 'hidden';
-      if (typeof window !== 'undefined' && window.lenis) {
-        try { window.lenis.stop(); } catch (e) {}
-      }
     };
 
     App.closeMobileFilterSheet = () => {
@@ -1041,7 +1038,7 @@ Object.assign(window.App, {
       if (sheet) sheet.classList.remove('active');
       document.body.style.overflow = '';
       if (typeof window !== 'undefined' && window.lenis) {
-        try { window.lenis.start(); } catch (e) {}
+        try { window.lenis.start(); window.lenis.resize(); } catch (e) {}
       }
     };
 

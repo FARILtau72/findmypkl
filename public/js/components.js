@@ -72,17 +72,14 @@ const Modal = {
 
     this.backdrop.classList.add('active');
     document.body.style.overflow = 'hidden';
-    if (typeof window !== 'undefined' && window.lenis) {
-      try { window.lenis.stop(); } catch (e) {}
-    }
   },
 
   close() {
     this.init();
     if (!this.backdrop) return;
     this.backdrop.classList.remove('active');
-    document.body.style.overflow = '';
-    document.documentElement.style.overflow = '';
+    if (document.body) document.body.style.overflow = '';
+    if (document.documentElement) document.documentElement.style.overflow = '';
     if (typeof window !== 'undefined' && window.lenis) {
       try {
         window.lenis.start();

@@ -87,8 +87,9 @@
 }
 
 html {
+  overflow-x: hidden;
   overflow-x: clip;
-  max-width: 100vw;
+  max-width: 100%;
 }
 
 /* ==========================================================================
@@ -107,7 +108,7 @@ html.lenis, html.lenis body {
 }
 
 .lenis.lenis-stopped {
-  overflow: hidden;
+  /* Prevent Lenis from locking root page scroll */
 }
 
 .lenis.lenis-scrolling iframe {
@@ -123,8 +124,9 @@ body {
   -webkit-font-smoothing: antialiased;
   -moz-osx-font-smoothing: grayscale;
   min-height: 100vh;
+  overflow-x: hidden;
   overflow-x: clip;
-  max-width: 100vw;
+  max-width: 100%;
 }
 
 a {
@@ -479,10 +481,9 @@ button, input, select, textarea {
 /* Modals */
 .modal-backdrop {
   position: fixed;
-  top: 0;
-  left: 0;
-  width: 100vw;
-  height: 100vh;
+  inset: 0;
+  width: 100%;
+  height: 100%;
   background-color: rgba(15, 23, 42, 0.6);
   backdrop-filter: blur(3px);
   z-index: 1000;
