@@ -74,11 +74,19 @@ Object.assign(window.App, {
     Modal.open(html, 'Ganti Akun Siswa (Simulasi Demo)', 'md');
   },
 
-  switchStudentAccount(studentId) {
+  async switchStudentAccount(studentId) {
     this.currentStudentId = Number(studentId);
     this.currentStudent = this.allStudents.find(s => s.id === this.currentStudentId) || this.allStudents[0];
     this.currentRole = 'SISWA';
     this.saveSession();
+    try {
+      if (typeof API !== 'undefined' && API.getFavorites) {
+        const favRes = await API.getFavorites(this.currentStudentId);
+        this.bookmarkedJobs = new Set((favRes && favRes.favorites) ? favRes.favorites : []);
+      }
+    } catch (e) {
+      this.bookmarkedJobs = new Set();
+    }
     Modal.close();
     Toast.show('Akun Diganti', `Anda sekarang masuk sebagai ${this.currentStudent.nama} (${this.currentStudent.status_verifikasi})`, 'success');
     this.render();
@@ -86,6 +94,7 @@ Object.assign(window.App, {
 
   switchToGuestMode() {
     this.currentRole = 'PUBLIC';
+    this.bookmarkedJobs = new Set();
     this.saveSession();
     Modal.close();
     Toast.show('Mode Tamu', 'Anda berada dalam mode pengunjung belum login.', 'info');
@@ -366,11 +375,10 @@ Object.assign(window.App, {
             <div class="footer-dark-col">
               <h5>JURUSAN POPULER</h5>
               <ul class="footer-dark-links">
-                <li><a onclick="App.viewCompanyJobs(null, 'RPL')">Rekayasa Perangkat Lunak (RPL)</a></li>
-                <li><a onclick="App.viewCompanyJobs(null, 'TKJ')">Teknik Komputer & Jaringan (TKJ)</a></li>
-                <li><a onclick="App.viewCompanyJobs(null, 'DKV')">Desain Komunikasi Visual (DKV)</a></li>
-                <li><a onclick="App.viewCompanyJobs(null, 'AKL')">Akuntansi & Keuangan (AKL)</a></li>
-                <li><a onclick="App.viewCompanyJobs(null, 'TKRO')">Teknik Kendaraan Ringan (TKRO)</a></li>
+                <li><a onclick="App.quickFilterMajor('RPL')">Rekayasa Perangkat Lunak (RPL)</a></li>
+                <li><a onclick="App.quickFilterMajor('TAV')">Teknik Audio Video (TAV)</a></li>
+                <li><a onclick="App.quickFilterMajor('TITL')">Teknik Instalasi Tenaga Listrik (TITL)</a></li>
+                <li><a onclick="App.quickFilterMajor('TKRO')">Teknik Kendaraan Ringan Otomotif (TKRO)</a></li>
               </ul>
             </div>
 

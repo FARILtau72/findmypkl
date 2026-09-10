@@ -478,6 +478,13 @@ button, input, select, textarea {
   background-color: var(--slate-50);
 }
 
+/* Modal Open Body Lock */
+body.modal-open,
+html.modal-open {
+  overflow: hidden !important;
+  touch-action: none;
+}
+
 /* Modals */
 .modal-backdrop {
   position: fixed;

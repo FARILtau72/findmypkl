@@ -117,9 +117,13 @@ window.App = {
 
       // Global observer for dynamic DOM height updates (SPA catalog, filters, tabs)
       if (typeof ResizeObserver !== 'undefined' && typeof document !== 'undefined' && document.body) {
+        let lenisResizeTimer = null;
         const ro = new ResizeObserver(() => {
           if (window.lenis) {
-            try { window.lenis.resize(); } catch (e) {}
+            clearTimeout(lenisResizeTimer);
+            lenisResizeTimer = setTimeout(() => {
+              try { window.lenis.resize(); } catch (e) {}
+            }, 100);
           }
         });
         ro.observe(document.body);
@@ -447,6 +451,26 @@ window.App = {
       kota: 'Semua'
     };
     this.goToPortalTab('katalog');
+  },
+
+  quickFilterMajor(majorCode) {
+    this.initialCatalogSearch = {
+      keyword: '',
+      jurusan: majorCode || 'Semua',
+      kota: 'Semua'
+    };
+    const targetRole = this.currentRole === 'SISWA' ? 'SISWA' : 'PUBLIC';
+    this.setRole(targetRole, 'katalog');
+  },
+
+  quickFilterCity(cityName) {
+    this.initialCatalogSearch = {
+      keyword: '',
+      jurusan: 'Semua',
+      kota: cityName || 'Semua'
+    };
+    const targetRole = this.currentRole === 'SISWA' ? 'SISWA' : 'PUBLIC';
+    this.setRole(targetRole, 'katalog');
   },
 
   renderSidebar() {

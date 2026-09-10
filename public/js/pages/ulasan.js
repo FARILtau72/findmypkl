@@ -99,10 +99,9 @@ Object.assign(window.App, {
             <select id="ulasan-select-jurusan" class="mitra-city-select">
               <option value="Semua">🎓 Semua Jurusan</option>
               <option value="RPL">RPL (Rekayasa Perangkat Lunak)</option>
-              <option value="TKJ">TKJ (Teknik Komputer Jaringan)</option>
-              <option value="DKV">DKV (Desain Komunikasi Visual)</option>
-              <option value="AKL">AKL (Akuntansi & Keuangan)</option>
-              <option value="TKRO">TKRO (Teknik Kendaraan Ringan)</option>
+              <option value="TAV">TAV (Teknik Audio Video)</option>
+              <option value="TITL">TITL (Teknik Instalasi Tenaga Listrik)</option>
+              <option value="TKRO">TKRO (Teknik Kendaraan Ringan Otomotif)</option>
             </select>
 
             <select id="ulasan-select-rating" class="mitra-city-select">
@@ -283,9 +282,8 @@ Object.assign(window.App, {
           <label class="form-label">Jurusan Keahlian *</label>
           <select id="rev-student-jurusan" class="form-control" required>
             <option value="Rekayasa Perangkat Lunak (RPL)" ${defaultJurusan.includes('RPL') ? 'selected' : ''}>Rekayasa Perangkat Lunak (RPL)</option>
-            <option value="Teknik Komputer & Jaringan (TKJ)" ${defaultJurusan.includes('TKJ') ? 'selected' : ''}>Teknik Komputer & Jaringan (TKJ)</option>
-            <option value="Desain Komunikasi Visual (DKV)" ${defaultJurusan.includes('DKV') ? 'selected' : ''}>Desain Komunikasi Visual (DKV)</option>
-            <option value="Akuntansi & Keuangan Lembaga (AKL)" ${defaultJurusan.includes('AKL') ? 'selected' : ''}>Akuntansi & Keuangan Lembaga (AKL)</option>
+            <option value="Teknik Audio Video (TAV)" ${defaultJurusan.includes('TAV') ? 'selected' : ''}>Teknik Audio Video (TAV)</option>
+            <option value="Teknik Instalasi Tenaga Listrik (TITL)" ${defaultJurusan.includes('TITL') ? 'selected' : ''}>Teknik Instalasi Tenaga Listrik (TITL)</option>
             <option value="Teknik Kendaraan Ringan Otomotif (TKRO)" ${defaultJurusan.includes('TKRO') ? 'selected' : ''}>Teknik Kendaraan Ringan Otomotif (TKRO)</option>
           </select>
         </div>

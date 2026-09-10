@@ -601,7 +601,7 @@ Object.assign(window.App, {
         <div class="grid-2">
           <div class="form-group">
             <label class="form-label">Target Jurusan</label>
-            <input type="text" id="new-job-jurusan" class="form-input" placeholder="Contoh: RPL, TKJ" />
+            <input type="text" id="new-job-jurusan" class="form-input" placeholder="Contoh: RPL, TAV, TITL, TKRO" />
           </div>
           <div class="form-group">
             <label class="form-label">Tipe Kerja</label>

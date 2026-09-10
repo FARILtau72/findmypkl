@@ -97,7 +97,7 @@ Object.assign(window.App, {
 
                     <div class="quick-test-pill" onclick="App.quickLoginStudent(6)">
                       <div>
-                        <strong>Reza Aditya Putra</strong> (XI TKJ 1)
+                        <strong>Reza Aditya Putra</strong> (XI TAV 1)
                         <div style="font-size: 11px; color: #64748b;">Status: Perlu Perbaikan (Koreksi Data)</div>
                       </div>
                       <span class="badge badge-orange" style="font-size: 10.5px;">Perlu Perbaikan</span>
@@ -105,7 +105,7 @@ Object.assign(window.App, {
 
                     <div class="quick-test-pill" onclick="App.quickLoginStudent(7)">
                       <div>
-                        <strong>Clara Anindya</strong> (XI AKL 1)
+                        <strong>Clara Anindya</strong> (XI TITL 1)
                         <div style="font-size: 11px; color: #64748b;">Status: Ditolak (Alasan Penolakan)</div>
                       </div>
                       <span class="badge badge-rose" style="font-size: 10.5px;">Ditolak</span>
@@ -293,20 +293,18 @@ Object.assign(window.App, {
                     <div class="form-group">
                       <label class="form-label" style="font-weight: 700;">Kelas & Rombel *</label>
                       <input type="text" id="step-kelas" class="form-input" placeholder="Contoh: XI RPL 1" value="${state.data.kelas || ''}" required />
-                      <span style="font-size: 12px; color: var(--slate-500); margin-top: 3px; display: block;">Format contoh: XI RPL 1 atau XI TKJ 2</span>
+                      <span style="font-size: 12px; color: var(--slate-500); margin-top: 3px; display: block;">Format contoh: XI RPL 1 atau XI TAV 1</span>
                     </div>
 
                     <div class="form-group">
                       <label class="form-label" style="font-weight: 700;">Kompetensi Keahlian (Jurusan) *</label>
                       <select id="step-jurusan" class="form-select" required>
-                        <option value="Rekayasa Perangkat Lunak" ${state.data.jurusan === 'Rekayasa Perangkat Lunak' ? 'selected' : ''}>Rekayasa Perangkat Lunak</option>
-                        <option value="Teknik Komputer dan Jaringan" ${state.data.jurusan === 'Teknik Komputer dan Jaringan' ? 'selected' : ''}>Teknik Komputer dan Jaringan</option>
-                        <option value="Teknik Kendaraan Ringan" ${state.data.jurusan === 'Teknik Kendaraan Ringan' ? 'selected' : ''}>Teknik Kendaraan Ringan</option>
-                        <option value="Akuntansi" ${state.data.jurusan === 'Akuntansi' ? 'selected' : ''}>Akuntansi</option>
-                        <option value="Manajemen Perkantoran" ${state.data.jurusan === 'Manajemen Perkantoran' ? 'selected' : ''}>Manajemen Perkantoran</option>
-                        <option value="Multimedia" ${state.data.jurusan === 'Multimedia' ? 'selected' : ''}>Multimedia</option>
+                        <option value="Rekayasa Perangkat Lunak" ${state.data.jurusan === 'Rekayasa Perangkat Lunak' ? 'selected' : ''}>Rekayasa Perangkat Lunak (RPL)</option>
+                        <option value="Teknik Audio Video" ${state.data.jurusan === 'Teknik Audio Video' ? 'selected' : ''}>Teknik Audio Video (TAV)</option>
+                        <option value="Teknik Instalasi Tenaga Listrik" ${state.data.jurusan === 'Teknik Instalasi Tenaga Listrik' ? 'selected' : ''}>Teknik Instalasi Tenaga Listrik (TITL)</option>
+                        <option value="Teknik Kendaraan Ringan Otomotif" ${state.data.jurusan === 'Teknik Kendaraan Ringan Otomotif' ? 'selected' : ''}>Teknik Kendaraan Ringan Otomotif (TKRO)</option>
                       </select>
-                      <span style="font-size: 12px; color: var(--slate-500); margin-top: 3px; display: block;">Pilih 1 dari 6 program keahlian Taruna Bangsa</span>
+                      <span style="font-size: 12px; color: var(--slate-500); margin-top: 3px; display: block;">Pilih 1 dari 4 program keahlian resmi SMK Taruna Bangsa</span>
                     </div>
                   </div>
 

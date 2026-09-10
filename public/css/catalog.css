@@ -532,16 +532,14 @@
   color: #047857;
 }
 
+.mkt-major-chip.tav,
 .mkt-major-chip.dkv {
   background: #F5F3FF;
   color: #7C3AED;
 }
 
-.mkt-major-chip.tkj {
-  background: #EFF6FF;
-  color: #1D4ED8;
-}
-
+.mkt-major-chip.titl,
+.mkt-major-chip.tkj,
 .mkt-major-chip.akl {
   background: #FEF3C7;
   color: #B45309;

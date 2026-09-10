@@ -49,9 +49,9 @@ Object.assign(window.App, {
               <select id="unified-search-jurusan">
                 <option value="Semua">Semua Jurusan</option>
                 <option value="RPL">Rekayasa Perangkat Lunak (RPL)</option>
-                <option value="TKJ">Teknik Kendaraan Ringan (TKR)</option>
-                <option value="DKV">Teknik Industri Tenaga Listrik(TITL)</option>
                 <option value="TAV">Teknik Audio Video (TAV)</option>
+                <option value="TITL">Teknik Instalasi Tenaga Listrik (TITL)</option>
+                <option value="TKRO">Teknik Kendaraan Ringan Otomotif (TKRO)</option>
               </select>
             </div>
 
@@ -251,7 +251,7 @@ Object.assign(window.App, {
               <div class="testi-avatar" style="background: #ecfdf5; color: #047857;">SR</div>
               <div class="testi-author-info">
                 <h5>Siti Rahma Azzahra</h5>
-                <p>SMK Taruna Bangsa Bekasi (XII TKJ 2) &bull; PKL di GoTo Gojek Tokopedia</p>
+                <p>SMK Taruna Bangsa Bekasi (XII TAV 1) &bull; PKL di GoTo Gojek Tokopedia</p>
               </div>
             </div>
           </div>
@@ -264,10 +264,10 @@ Object.assign(window.App, {
               </p>
             </div>
             <div class="testi-author-row">
-              <div class="testi-avatar" style="background: #fef3c7; color: #92400e;">RH</div>
+              <div class="testi-avatar" style="background: #fef3c7; color: #92400e;">FP</div>
               <div class="testi-author-info">
-                <h5>Rian Hidayat</h5>
-                <p>SMK Taruna Bangsa Bekasi (XII DKV 1) &bull; PKL di Kumata Animation Studio</p>
+                <h5>Farhan Pratama</h5>
+                <p>SMK Taruna Bangsa Bekasi (XII TITL 1) &bull; PKL di PT Len Industri</p>
               </div>
             </div>
           </div>
@@ -371,7 +371,7 @@ Object.assign(window.App, {
               <svg class="faq-chevron" width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5"><polyline points="6 9 12 15 18 9"/></svg>
             </button>
             <div class="faq-body-collapse">
-              <p>Tersedia lowongan untuk seluruh jurusan di SMK Taruna Bangsa Kota Bekasi: Rekayasa Perangkat Lunak (RPL), Teknik Komputer & Jaringan (TKJ), Desain Komunikasi Visual (DKV), Teknik Kendaraan Ringan Otomotif (TKRO), Teknik Bisnis Sepeda Motor (TBSM), serta Akuntansi & Keuangan Lembaga (AKL).</p>
+              <p>Tersedia lowongan untuk 4 program keahlian unggulan di SMK Taruna Bangsa Kota Bekasi: Rekayasa Perangkat Lunak (RPL), Teknik Audio Video (TAV), Teknik Instalasi Tenaga Listrik (TITL), dan Teknik Kendaraan Ringan Otomotif (TKRO).</p>
             </div>
           </div>
 
@@ -404,9 +404,9 @@ Object.assign(window.App, {
               <h5>JURUSAN TARUNA BANGSA</h5>
               <ul class="footer-dark-links">
                 <li><a onclick="App.quickFilterMajor('RPL')">Rekayasa Perangkat Lunak (RPL)</a></li>
-                <li><a onclick="App.quickFilterMajor('TKJ')">Teknik Kendaraan Ringan (TKRO)</a></li>
-                <li><a onclick="App.quickFilterMajor('DKV')">Teknik Industri Tenaga Listrik (TITL)</a></li>
-                <li><a onclick="App.quickFilterMajor('TKRO')">Teknik Audio Video (TKRO)</a></li>
+                <li><a onclick="App.quickFilterMajor('TAV')">Teknik Audio Video (TAV)</a></li>
+                <li><a onclick="App.quickFilterMajor('TITL')">Teknik Instalasi Tenaga Listrik (TITL)</a></li>
+                <li><a onclick="App.quickFilterMajor('TKRO')">Teknik Kendaraan Ringan Otomotif (TKRO)</a></li>
               </ul>
             </div>
 

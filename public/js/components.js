@@ -80,7 +80,17 @@ const Modal = {
     bodyEl.scrollTop = 0;
 
     this.backdrop.classList.add('active');
-    if (document.body) document.body.style.overflow = 'hidden';
+    if (document.body) {
+      document.body.classList.add('modal-open');
+      document.body.style.overflow = 'hidden';
+    }
+    if (document.documentElement) {
+      document.documentElement.classList.add('modal-open');
+      document.documentElement.style.overflow = 'hidden';
+    }
+    if (typeof window !== 'undefined' && window.lenis) {
+      try { window.lenis.stop(); } catch (e) {}
+    }
   },
 
   close() {
@@ -91,8 +101,14 @@ const Modal = {
     const headerEl = this.backdrop.querySelector('.modal-header');
     if (headerEl) headerEl.style.display = '';
 
-    if (document.body) document.body.style.overflow = '';
-    if (document.documentElement) document.documentElement.style.overflow = '';
+    if (document.body) {
+      document.body.classList.remove('modal-open');
+      document.body.style.overflow = '';
+    }
+    if (document.documentElement) {
+      document.documentElement.classList.remove('modal-open');
+      document.documentElement.style.overflow = '';
+    }
     if (typeof window !== 'undefined' && window.lenis) {
       try {
         window.lenis.start();

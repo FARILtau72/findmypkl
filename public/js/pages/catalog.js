@@ -48,14 +48,17 @@ Object.assign(window.App, {
   },
 
   getJobMajorCode(job) {
-    if (job.major_code) return job.major_code;
-    const t = (job.jurusan_target || '') + ' ' + (job.judul || '');
-    if (/RPL|Perangkat Lunak/i.test(t)) return 'RPL';
-    if (/DKV|Desain Komunikasi|Multimedia|Animasi/i.test(t)) return 'DKV';
-    if (/TKJ|Jaringan|Komputer/i.test(t)) return 'TKJ';
-    if (/AKL|Akuntansi|Keuangan/i.test(t)) return 'AKL';
-    if (/TKRO|Otomotif|Mekanik|Kendaraan/i.test(t)) return 'TKRO';
-    if (/MP|Perkantoran|Administrasi/i.test(t)) return 'MP';
+    if (job.major_code) {
+      const mc = String(job.major_code).toUpperCase().trim();
+      if (['RPL', 'TAV', 'TITL', 'TKRO'].includes(mc)) return mc;
+      if (mc === 'DKV') return 'TAV';
+      if (mc === 'TKJ' || mc === 'AKL') return 'TITL';
+    }
+    const t = (job.jurusan_target || '') + ' ' + (job.judul || '') + ' ' + (job.deskripsi || '');
+    if (/RPL|Perangkat Lunak|Software|Frontend|Backend|Web|Programmer/i.test(t)) return 'RPL';
+    if (/TAV|Audio Video|Audio|Video|Broadcasting|Elektronika|Multimedia|Animasi|DKV/i.test(t)) return 'TAV';
+    if (/TITL|Tenaga Listrik|Instalasi Listrik|Ketenagalistrikan|Panel Surya|Listrik|TKJ|AKL/i.test(t)) return 'TITL';
+    if (/TKRO|Otomotif|Mekanik|Kendaraan|Mesin/i.test(t)) return 'TKRO';
     return 'RPL';
   },
 
@@ -112,6 +115,11 @@ Object.assign(window.App, {
     let checkedSistem = new Set();
     let checkedTunjangan = new Set();
     let checkedDurasi = new Set();
+
+    const countRpl = jobs.filter(j => this.getJobMajorCode(j) === 'RPL').length;
+    const countTav = jobs.filter(j => this.getJobMajorCode(j) === 'TAV').length;
+    const countTitl = jobs.filter(j => this.getJobMajorCode(j) === 'TITL').length;
+    const countTkro = jobs.filter(j => this.getJobMajorCode(j) === 'TKRO').length;
 
     let warningBanner = '';
     if (student && student.status_verifikasi !== 'Terverifikasi') {
@@ -230,11 +238,10 @@ Object.assign(window.App, {
               </span>
               <select id="mkt-select-jurusan" class="mkt-search-select">
                 <option value="Semua" ${selectedJurusan === 'Semua' ? 'selected' : ''}>Semua Jurusan</option>
-                <option value="RPL" ${selectedJurusan === 'RPL' ? 'selected' : ''}>RPL & TI</option>
-                <option value="TKJ" ${selectedJurusan === 'TKJ' ? 'selected' : ''}>Teknik Jaringan (TKJ)</option>
-                <option value="DKV" ${selectedJurusan === 'DKV' ? 'selected' : ''}>DKV & Animasi</option>
-                <option value="AKL" ${selectedJurusan === 'AKL' ? 'selected' : ''}>Akuntansi (AKL)</option>
-                <option value="TKRO" ${selectedJurusan === 'TKRO' ? 'selected' : ''}>Otomotif (TKRO)</option>
+                <option value="RPL" ${selectedJurusan === 'RPL' ? 'selected' : ''}>Rekayasa Perangkat Lunak (RPL)</option>
+                <option value="TAV" ${selectedJurusan === 'TAV' ? 'selected' : ''}>Teknik Audio Video (TAV)</option>
+                <option value="TITL" ${selectedJurusan === 'TITL' ? 'selected' : ''}>Teknik Instalasi Tenaga Listrik (TITL)</option>
+                <option value="TKRO" ${selectedJurusan === 'TKRO' ? 'selected' : ''}>Teknik Kendaraan Ringan Otomotif (TKRO)</option>
               </select>
             </div>
 
@@ -289,42 +296,28 @@ Object.assign(window.App, {
                       <input type="checkbox" class="cb-filter-jurusan" value="RPL" />
                       <span>Rekayasa Perangkat Lunak (RPL)</span>
                     </div>
-                    <span class="mkt-count-badge">24</span>
+                    <span class="mkt-count-badge" id="badge-count-rpl">${countRpl}</span>
                   </label>
                   <label class="mkt-checkbox-item">
                     <div class="mkt-checkbox-left">
-                      <input type="checkbox" class="cb-filter-jurusan" value="DKV" />
-                      <span>Desain Komunikasi Visual (DKV)</span>
+                      <input type="checkbox" class="cb-filter-jurusan" value="TAV" />
+                      <span>Teknik Audio Video (TAV)</span>
                     </div>
-                    <span class="mkt-count-badge">18</span>
+                    <span class="mkt-count-badge" id="badge-count-tav">${countTav}</span>
                   </label>
                   <label class="mkt-checkbox-item">
                     <div class="mkt-checkbox-left">
-                      <input type="checkbox" class="cb-filter-jurusan" value="TKJ" />
-                      <span>Teknik Komputer Jaringan (TKJ)</span>
+                      <input type="checkbox" class="cb-filter-jurusan" value="TITL" />
+                      <span>Teknik Instalasi Tenaga Listrik (TITL)</span>
                     </div>
-                    <span class="mkt-count-badge">12</span>
-                  </label>
-                  <label class="mkt-checkbox-item">
-                    <div class="mkt-checkbox-left">
-                      <input type="checkbox" class="cb-filter-jurusan" value="Animasi" />
-                      <span>Multimedia / Animasi</span>
-                    </div>
-                    <span class="mkt-count-badge">9</span>
-                  </label>
-                  <label class="mkt-checkbox-item">
-                    <div class="mkt-checkbox-left">
-                      <input type="checkbox" class="cb-filter-jurusan" value="AKL" />
-                      <span>Akuntansi & Keuangan</span>
-                    </div>
-                    <span class="mkt-count-badge">7</span>
+                    <span class="mkt-count-badge" id="badge-count-titl">${countTitl}</span>
                   </label>
                   <label class="mkt-checkbox-item">
                     <div class="mkt-checkbox-left">
                       <input type="checkbox" class="cb-filter-jurusan" value="TKRO" />
-                      <span>Otomotif & Pemesinan</span>
+                      <span>Teknik Kendaraan Ringan Otomotif (TKRO)</span>
                     </div>
-                    <span class="mkt-count-badge">5</span>
+                    <span class="mkt-count-badge" id="badge-count-tkro">${countTkro}</span>
                   </label>
                 </div>
               </div>
@@ -555,32 +548,20 @@ Object.assign(window.App, {
                   </label>
                   <label class="mkt-checkbox-item">
                     <div class="mkt-checkbox-left">
-                      <input type="checkbox" class="cb-filter-jurusan-mob" value="DKV" />
-                      <span>Desain Komunikasi Visual (DKV)</span>
+                      <input type="checkbox" class="cb-filter-jurusan-mob" value="TAV" />
+                      <span>Teknik Audio Video (TAV)</span>
                     </div>
                   </label>
                   <label class="mkt-checkbox-item">
                     <div class="mkt-checkbox-left">
-                      <input type="checkbox" class="cb-filter-jurusan-mob" value="TKJ" />
-                      <span>Teknik Komputer Jaringan (TKJ)</span>
-                    </div>
-                  </label>
-                  <label class="mkt-checkbox-item">
-                    <div class="mkt-checkbox-left">
-                      <input type="checkbox" class="cb-filter-jurusan-mob" value="Animasi" />
-                      <span>Multimedia / Animasi</span>
-                    </div>
-                  </label>
-                  <label class="mkt-checkbox-item">
-                    <div class="mkt-checkbox-left">
-                      <input type="checkbox" class="cb-filter-jurusan-mob" value="AKL" />
-                      <span>Akuntansi & Keuangan</span>
+                      <input type="checkbox" class="cb-filter-jurusan-mob" value="TITL" />
+                      <span>Teknik Instalasi Tenaga Listrik (TITL)</span>
                     </div>
                   </label>
                   <label class="mkt-checkbox-item">
                     <div class="mkt-checkbox-left">
                       <input type="checkbox" class="cb-filter-jurusan-mob" value="TKRO" />
-                      <span>Otomotif & Pemesinan</span>
+                      <span>Teknik Kendaraan Ringan Otomotif (TKRO)</span>
                     </div>
                   </label>
                 </div>
@@ -695,11 +676,10 @@ Object.assign(window.App, {
               <div class="footer-dark-col">
                 <h5>JURUSAN POPULER</h5>
                 <ul class="footer-dark-links">
-                  <li><a onclick="App.setRole('SISWA', 'katalog')">Rekayasa Perangkat Lunak</a></li>
-                  <li><a onclick="App.setRole('SISWA', 'katalog')">Teknik Komputer & Jaringan</a></li>
-                  <li><a onclick="App.setRole('SISWA', 'katalog')">Desain Komunikasi Visual</a></li>
-                  <li><a onclick="App.setRole('SISWA', 'katalog')">Akuntansi & Bisnis Digital</a></li>
-                  <li><a onclick="App.setRole('SISWA', 'katalog')">Teknik Kendaraan Ringan</a></li>
+                  <li><a onclick="App.quickFilterMajor('RPL')">Rekayasa Perangkat Lunak (RPL)</a></li>
+                  <li><a onclick="App.quickFilterMajor('TAV')">Teknik Audio Video (TAV)</a></li>
+                  <li><a onclick="App.quickFilterMajor('TITL')">Teknik Instalasi Tenaga Listrik (TITL)</a></li>
+                  <li><a onclick="App.quickFilterMajor('TKRO')">Teknik Kendaraan Ringan Otomotif (TKRO)</a></li>
                 </ul>
               </div>
 
@@ -1152,7 +1132,7 @@ Object.assign(window.App, {
             <h3 style="font-size: 18px; font-weight: 800; color: #ffffff; margin: 0;">Kemitraan DUDI & Industri SMK Taruna Bangsa</h3>
           </div>
           <p style="font-size: 13px; color: #a7f3d0; margin: 0; line-height: 1.5;">
-            Bergabunglah bersama 13+ mitra industri terkemuka. Dapatkan talenta muda siap kerja dengan keahlian Rekayasa Perangkat Lunak, Jaringan Komputer, DKV, Akuntansi, dan Otomotif.
+            Bergabunglah bersama 13+ mitra industri terkemuka. Dapatkan talenta muda siap kerja dengan keahlian Rekayasa Perangkat Lunak (RPL), Teknik Audio Video (TAV), Teknik Instalasi Tenaga Listrik (TITL), dan Teknik Kendaraan Ringan Otomotif (TKRO).
           </p>
         </div>
 
@@ -1413,13 +1393,12 @@ Object.assign(window.App, {
 
     // Majors
     const majorChips = [];
-    const targetStr = (job.jurusan_target || '') + ' ' + (job.judul || '');
-    if (/RPL|Perangkat Lunak/i.test(targetStr)) majorChips.push('RPL');
-    if (/DKV|Desain Komunikasi|Multimedia/i.test(targetStr)) majorChips.push('DKV');
-    if (/AKL|Akuntansi|Keuangan/i.test(targetStr)) majorChips.push('AKL');
-    if (/TKJ|Jaringan/i.test(targetStr)) majorChips.push('TKJ');
-    if (/TKRO|Otomotif/i.test(targetStr)) majorChips.push('TKRO');
-    if (majorChips.length === 0) majorChips.push('RPL', 'DKV', 'AKL');
+    const targetStr = (job.jurusan_target || '') + ' ' + (job.judul || '') + ' ' + (job.major_code || '');
+    if (/RPL|Perangkat Lunak|Software|Web|Frontend|Backend/i.test(targetStr)) majorChips.push('RPL');
+    if (/TAV|Audio Video|Audio|Video|Broadcasting|Elektronika|Multimedia|Animasi|DKV/i.test(targetStr)) majorChips.push('TAV');
+    if (/TITL|Tenaga Listrik|Instalasi Listrik|Ketenagalistrikan|Panel Surya|Listrik|TKJ|AKL/i.test(targetStr)) majorChips.push('TITL');
+    if (/TKRO|Otomotif|Mekanik|Kendaraan|Mesin/i.test(targetStr)) majorChips.push('TKRO');
+    if (majorChips.length === 0) majorChips.push(App.getJobMajorCode(job));
 
     const majorBadgesHtml = majorChips.map(m => `<span class="loker-major-badge">${m}</span>`).join('');
 
@@ -1435,26 +1414,26 @@ Object.assign(window.App, {
       tasksList = job.kualifikasi.split('\n').map(s => s.trim().replace(/^[-•*]\s*/, '')).filter(Boolean);
     }
     if (tasksList.length < 2) {
-      if (/RPL|Web|Frontend|Software/i.test(targetStr)) {
+      if (/RPL|Web|Frontend|Backend|Software/i.test(targetStr)) {
         tasksList = [
           'Slicing desain UI dari Figma ke komponen Next.js & Tailwind CSS',
           'Membuat & mengintegrasikan REST API Backend',
           'Kolaborasi manajemen kode menggunakan Git & GitHub',
           'Pengujian (testing), debugging, dan dokumentasi fitur web'
         ];
-      } else if (/DKV|Desain|Multimedia|Animasi/i.test(targetStr)) {
+      } else if (/TAV|Audio Video|Audio|Video|Broadcasting|Elektronika|Multimedia|Animasi|DKV/i.test(targetStr)) {
         tasksList = [
-          'Membuat aset visual grafis, banner digital, dan konten media sosial',
-          'Mengembangkan storyboard, animasi gerak, dan video editing',
-          'Mengikuti panduan brand identity dan wireframe klien',
-          'Revisi desain bersama art director dan tim kreatif'
+          'Pengoperasian kamera broadcast, audio mixer, dan perangkat sound system',
+          'Editing konten audio video, mixing suara, dan color grading',
+          'Pemeliharaan & kalibrasi perangkat audio visual dan display studio',
+          'Pengujian kualitas sinyal audio dan transmisi siaran digital'
         ];
-      } else if (/TKJ|Jaringan|Infrastruktur/i.test(targetStr)) {
+      } else if (/TITL|Tenaga Listrik|Instalasi Listrik|Ketenagalistrikan|Panel Surya|Listrik/i.test(targetStr)) {
         tasksList = [
-          'Konfigurasi perangkat router, switch, dan access point jaringan',
-          'Monitoring kestabilan lalu lintas data server lokal dan cloud',
-          'Pemeliharaan kabel UTP, fiber optic, dan pengujian throughput',
-          'Troubleshooting hardware dan perakitan workstation kantor'
+          'Pemasangan instalasi penerangan dan tenaga listrik standar PUIL',
+          'Perakitan, wiring, dan pemeliharaan panel daya distribusi listrik',
+          'Pengukuran parameter tegangan, arus, dan pengujian tahanan isolasi',
+          'Pemeriksaan sistem proteksi kelistrikan, genset, dan panel surya'
         ];
       } else if (/Otomotif|TKRO|TBSM/i.test(targetStr)) {
         tasksList = [
@@ -1465,10 +1444,10 @@ Object.assign(window.App, {
         ];
       } else {
         tasksList = [
-          'Pencatatan transaksi kas masuk, kas keluar, dan arsip digital kantor',
-          'Penyusunan jurnal umum, rekonsiliasi bank, dan laporan keuangan',
-          'Pengoperasian software spreadsheet dan software akuntansi terintegrasi',
-          'Verifikasi faktur pajak dan administrasi pembukuan berkala'
+          'Pemeriksaan kepatuhan SOP teknik dan kelayakan operasional peralatan',
+          'Pencatatan logbook pemeliharaan dan pelaporan berkala ke pembimbing industri',
+          'Pengoperasian instrumen pengujian kejuruan terstandarisasi',
+          'Penerapan keselamatan dan kesehatan kerja (K3) industri'
         ];
       }
     }
@@ -1554,7 +1533,7 @@ Object.assign(window.App, {
             <div class="modal-loker-info-grid job-detail-grid">
               <!-- Card 1: Jurusan Diterima -->
               <div class="loker-info-box">
-                <div class="loker-info-label">JURUSAN DITERIMA</div>
+                <div class="loker-info-label">Jurusan Dibutuhkan</div>
                 <div class="loker-major-chips">
                   ${majorBadgesHtml}
                 </div>
@@ -1698,7 +1677,7 @@ Object.assign(window.App, {
                 <p style="font-size: 12.5px; line-height: 1.5; margin-bottom: 14px;">
                   ${student.status_verifikasi === 'Perlu Perbaikan' ? (student.catatan_verifikasi || 'Perbaiki data profil Anda sebelum mengajukan lamaran.') : 'Pengajuan hanya dapat dilakukan setelah akun disahkan oleh Koordinator HUBIN.'}
                 </p>
-                <button type="button" class="btn btn-secondary btn-sm" onclick="Modal.close(); App.setTab('profil');">
+                <button type="button" class="btn btn-secondary btn-sm" onclick="Modal.close(); App.setRole('SISWA', 'profil');">
                   Buka Halaman Profil &rarr;
                 </button>
               </div>
@@ -1806,7 +1785,7 @@ Object.assign(window.App, {
             <button type="button" class="btn-loker-ghost" onclick="Modal.close()">
               Tutup
             </button>
-            <button type="button" class="btn-loker-primary" style="background: #059669;" onclick="Modal.close(); App.setTab('lamaran');">
+            <button type="button" class="btn-loker-primary" style="background: #059669;" onclick="Modal.close(); App.setRole('SISWA', 'lamaran');">
               Lihat Status Lamaran Saya &rarr;
             </button>
           </div>
@@ -1821,13 +1800,15 @@ Object.assign(window.App, {
   },
 
   async executeApplyLoker(jobId) {
+    if (this.isSubmittingApply) return;
+
     if (!this.currentStudent) {
       Modal.close();
       this.setRole('LOGIN');
       return;
     }
-    const portofolio_url = document.getElementById('apply-portofolio-input')?.value || '';
-    const alasan_melamar = document.getElementById('apply-alasan-input')?.value || '';
+    let portofolio_url = (document.getElementById('apply-portofolio-input')?.value || '').trim();
+    const alasan_melamar = (document.getElementById('apply-alasan-input')?.value || '').trim();
     const consentCheck = document.getElementById('apply-consent-check');
 
     if (consentCheck && !consentCheck.checked) {
@@ -1835,9 +1816,32 @@ Object.assign(window.App, {
       return;
     }
 
-    if (!alasan_melamar.trim()) {
+    if (!alasan_melamar) {
       Toast.show('Perhatian', 'Mohon isi alasan & motivasi melamar terlebih dahulu', 'error');
       return;
+    }
+
+    // Bug 5 fix: auto-prefix https:// if protocol is omitted
+    if (portofolio_url && !/^https?:\/\//i.test(portofolio_url)) {
+      portofolio_url = 'https://' + portofolio_url;
+      const portInput = document.getElementById('apply-portofolio-input');
+      if (portInput) portInput.value = portofolio_url;
+    }
+
+    // Bug 3 fix: Loading state & double submit prevention
+    this.isSubmittingApply = true;
+    const submitBtn = document.querySelector('.modal-loker-footer .btn-loker-primary');
+    const origBtnHtml = submitBtn ? submitBtn.innerHTML : 'Kirim Pengajuan Lamaran &rarr;';
+    if (submitBtn) {
+      submitBtn.disabled = true;
+      submitBtn.style.opacity = '0.75';
+      submitBtn.style.cursor = 'not-allowed';
+      submitBtn.innerHTML = `
+        <span style="display: inline-flex; align-items: center; gap: 8px;">
+          <svg style="animation: spin 1s linear infinite;" width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5"><path d="M21 12a9 9 0 1 1-6.219-8.56"/></svg>
+          Mengirim Pengajuan...
+        </span>
+      `;
     }
 
     try {
@@ -1852,6 +1856,14 @@ Object.assign(window.App, {
       this.renderLokerModalStep(jobId, 3);
     } catch (err) {
       Toast.show('Gagal Mengajukan Lamaran', err.message, 'error');
+      if (submitBtn) {
+        submitBtn.disabled = false;
+        submitBtn.style.opacity = '1';
+        submitBtn.style.cursor = 'pointer';
+        submitBtn.innerHTML = origBtnHtml;
+      }
+    } finally {
+      this.isSubmittingApply = false;
     }
   },
 
