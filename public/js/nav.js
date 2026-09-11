@@ -3,6 +3,7 @@
 // Top Navigation, Mobile Bottom Nav, Mobile Drawer, User Dropdown, Shared Footer
 // ==========================================================================
 
+window.App = window.App || {};
 Object.assign(window.App, {
   toggleUserDropdown(e) {
     if (e) e.stopPropagation();

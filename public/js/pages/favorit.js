@@ -3,6 +3,7 @@
 // Saved Jobs Manager, Bookmark Toggling, Quick Apply
 // ==========================================================================
 
+window.App = window.App || {};
 Object.assign(window.App, {
   async toggleBookmark(jobId) {
     jobId = Number(jobId);

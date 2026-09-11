@@ -10,8 +10,9 @@
 </p>
 
 <p align="center">
+  <img src="https://img.shields.io/badge/Next.js-14.2+-000000?style=for-the-badge&logo=next.js&logoColor=white" alt="Next.js" />
+  <img src="https://img.shields.io/badge/React-18.3+-61DAFB?style=for-the-badge&logo=react&logoColor=black" alt="React" />
   <img src="https://img.shields.io/badge/Node.js-v18+-339933?style=for-the-badge&logo=node.js&logoColor=white" alt="Node.js" />
-  <img src="https://img.shields.io/badge/Express-4.19+-000000?style=for-the-badge&logo=express&logoColor=white" alt="Express" />
   <img src="https://img.shields.io/badge/Smooth_Scroll-Lenis_v1.1-059669?style=for-the-badge" alt="Lenis" />
   <img src="https://img.shields.io/badge/Design_System-Modular_CSS-2563EB?style=for-the-badge" alt="CSS" />
   <img src="https://img.shields.io/badge/Status-Production_Ready-10b981?style=for-the-badge" alt="Status" />
@@ -203,13 +204,20 @@ FINDMYPKL/
    npm install
    ```
 
-3. **Jalankan server aplikasi:**
-   ```bash
-   npm start
-   ```
+3. **Jalankan server aplikasi (Next.js):**
+   * Mode Development:
+     ```bash
+     npm run dev
+     ```
+   * Mode Production:
+     ```bash
+     npm run build
+     npm start
+     ```
 
 4. **Buka di peramban web:**
    Kunjungi [http://localhost:3000](http://localhost:3000) pada browser Anda.
+
 
 ---
 

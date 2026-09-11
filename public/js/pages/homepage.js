@@ -3,6 +3,7 @@
 // Hero Section, Unified Search, Recommendation Cards, Features, Testimonials, FAQ
 // ==========================================================================
 
+window.App = window.App || {};
 Object.assign(window.App, {
   async renderPublicHomepage(container) {
     if (!this.cachedJobs || this.cachedJobs.length === 0) {

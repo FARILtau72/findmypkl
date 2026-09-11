@@ -4,8 +4,10 @@
   "description": "Platform Terpusat Penemuan dan Manajemen PKL SMK Indonesia",
   "main": "server/index.js",
   "scripts": {
-    "start": "node server/index.js",
-    "dev": "node server/index.js",
+    "dev": "next dev",
+    "build": "next build",
+    "start": "next start",
+    "server": "node server/index.js",
     "test": "node db-test.js",
     "benchmark": "node --no-warnings scripts/benchmark_sqlite.js"
   },
@@ -14,7 +16,8 @@
     "pkl",
     "internship",
     "kemendikbud",
-    "tidb-zero"
+    "tidb-zero",
+    "nextjs"
   ],
   "author": "Find My PKL Team",
   "license": "ISC",
@@ -22,6 +25,9 @@
     "cors": "^2.8.5",
     "dotenv": "^16.4.7",
     "express": "^4.21.2",
-    "mysql2": "^3.12.0"
+    "mysql2": "^3.12.0",
+    "next": "^14.2.24",
+    "react": "^18.3.1",
+    "react-dom": "^18.3.1"
   }
 }

@@ -924,7 +924,18 @@ window.App = {
   }
 };
 
-// Start application when DOM is loaded
-document.addEventListener('DOMContentLoaded', () => {
-  App.init();
-});
+// Start application when DOM is loaded or if already loaded
+if (document.readyState === 'complete' || document.readyState === 'interactive') {
+  if (window.App && !window.App._initialized) {
+    window.App._initialized = true;
+    window.App.init();
+  }
+} else {
+  document.addEventListener('DOMContentLoaded', () => {
+    if (window.App && !window.App._initialized) {
+      window.App._initialized = true;
+      window.App.init();
+    }
+  });
+}
+

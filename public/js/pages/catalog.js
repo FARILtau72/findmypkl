@@ -3,6 +3,7 @@
 // Marketplace Listing, Filters, Job Cards, Pagination, Apply Modal Flow
 // ==========================================================================
 
+window.App = window.App || {};
 Object.assign(window.App, {
   getCompanyBadgeMeta(job) {
     const name = (job.company_nama || '').toLowerCase();

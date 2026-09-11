@@ -1,4 +1,3 @@
-// API Client for Find My PKL backend
 const API = {
   baseUrl: '/api',
 

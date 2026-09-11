@@ -3,6 +3,7 @@
 // Login Switcher, Multi-step Registration Wizard, Verification States
 // ==========================================================================
 
+window.App = window.App || {};
 Object.assign(window.App, {
   renderLoginPage(container, defaultTab = 'siswa') {
     let activeTab = defaultTab;

@@ -3,6 +3,7 @@
 // Student & Alumni Reviews, Rating Stars, Upvoting, New Review Submission
 // ==========================================================================
 
+window.App = window.App || {};
 Object.assign(window.App, {
   async renderUlasanPerusahaanPage(container) {
     const reviews = await API.getReviews();

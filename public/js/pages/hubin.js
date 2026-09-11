@@ -3,6 +3,7 @@
 // Student Verification, Application Approval, Monitoring, Job & Company Management
 // ==========================================================================
 
+window.App = window.App || {};
 Object.assign(window.App, {
   async renderHubinDashboard(container) {
     const [students, companies, jobs, applications, placements] = await Promise.all([

@@ -3,6 +3,7 @@
 // Company Directory, Industry Sectors, Partner Profile Modal
 // ==========================================================================
 
+window.App = window.App || {};
 Object.assign(window.App, {
   async renderMitraIndustriPage(container) {
     const companies = await API.getCompanies();

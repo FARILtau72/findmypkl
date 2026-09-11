@@ -3,6 +3,7 @@
 // Student Profile, Application Tracking, Daily PKL Journal / Logbook
 // ==========================================================================
 
+window.App = window.App || {};
 Object.assign(window.App, {
   async renderSiswaLamaran(container) {
     const student = this.currentStudent;

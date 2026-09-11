@@ -1,6 +1,10 @@
 # Dependencies
 node_modules/
 
+# Next.js Build Output
+.next/
+out/
+
 # Environment Variables
 .env
 .env.local
