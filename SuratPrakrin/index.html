@@ -1,0 +1,272 @@
+<!DOCTYPE html>
+<html lang="id">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Generator Surat PRAKRIN</title>
+    <script src="https://cdn.tailwindcss.com"></script>
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
+    <style>
+        @media print {
+            @page {
+                size: A4 portrait;
+                margin: 0;
+            }
+            body {
+                background-color: white;
+                padding: 0;
+                margin: 0;
+            }
+            .no-print {
+                display: none !important;
+            }
+            .paper-preview {
+                box-shadow: none !important;
+                margin: 0 auto !important;
+                padding: 10mm 15mm !important;
+                width: 210mm !important;
+                min-height: 297mm !important;
+            }
+        }
+        .font-paper {
+            font-family: "Times New Roman", Times, serif;
+        }
+    </style>
+    <script>
+        (function(){
+            const u = localStorage.getItem('user');
+            if(u){
+                const user = JSON.parse(u);
+                document.addEventListener('DOMContentLoaded', () => {
+                    const g = document.getElementById('userGreeting');
+                    if(g) g.textContent = 'Halo, ' + user.username + '!';
+                });
+            } else {
+                // User dummy untuk testing
+                localStorage.setItem('user', JSON.stringify({ username: 'Admin', role: 'admin' }));
+            }
+        })();
+    </script>
+</head>
+<body class="bg-gray-200 font-sans text-gray-900 pb-10">
+
+    <!-- HEADER CONTROL PANEL -->
+    <div class="bg-white shadow-md sticky top-0 z-50 no-print">
+        <div class="max-w-7xl mx-auto px-4 py-4 flex flex-col sm:flex-row justify-between items-center gap-4">
+            <div class="flex items-center gap-3">
+                <div class="bg-blue-600 p-2 rounded-lg">
+                    <i class="fa-solid fa-file-lines text-white text-xl"></i>
+                </div>
+                <div>
+                    <h1 class="text-xl font-bold text-gray-800">Generator Surat PRAKRIN</h1>
+                    <p class="text-sm text-gray-500">SMK Taruna Bangsa Bekasi</p>
+                </div>
+            </div>
+            <div class="flex gap-3 items-center">
+                <span id="userGreeting" class="text-sm font-semibold text-gray-600 mr-2"></span>
+                <button onclick="resetForm()" class="flex items-center gap-2 px-4 py-2 bg-red-50 text-red-600 hover:bg-red-100 rounded-lg transition-colors font-medium border border-red-200">
+                    <i class="fa-solid fa-trash-can"></i> Reset Data
+                </button>
+                <button onclick="saveAndPrint()" class="flex items-center gap-2 px-4 py-2 bg-blue-600 text-white hover:bg-blue-700 rounded-lg shadow-sm transition-colors font-medium">
+                    <i class="fa-solid fa-print"></i> Simpan & Cetak
+                </button>
+                <button onclick="doLogout()" class="flex items-center gap-2 px-4 py-2 bg-gray-100 text-gray-700 hover:bg-gray-200 rounded-lg transition-colors font-medium border border-gray-300">
+                    <i class="fa-solid fa-right-from-bracket"></i> Logout
+                </button>
+            </div>
+        </div>
+    </div>
+
+    <div class="max-w-7xl mx-auto px-4 py-8 flex flex-col lg:flex-row gap-8">
+        
+        <!-- PANEL INPUT DATA (Kiri) -->
+        <div class="w-full lg:w-1/3 space-y-6 no-print">
+            
+            <!-- Card Pengaturan Kelas -->
+            <div class="bg-white p-6 rounded-xl shadow-sm border border-gray-200">
+                <h2 class="text-lg font-bold mb-4 flex items-center gap-2 text-gray-800 border-b pb-2">
+                    <i class="fa-solid fa-gear text-blue-600"></i> Pengaturan Kelas & Pejabat
+                </h2>
+                <div class="space-y-4">
+                    <div class="grid grid-cols-1 gap-4">
+                        <div>
+                            <label class="block text-sm font-semibold text-gray-700 mb-1">Pilih Jurusan</label>
+                            <select id="jurusanUtama" class="w-full p-2 border border-gray-300 rounded-lg bg-gray-50 focus:ring-2 focus:ring-blue-500 outline-none">
+                                <option value="">-- Memuat Jurusan... --</option>
+                            </select>
+                        </div>
+                        <div>
+                            <label class="block text-sm font-semibold text-gray-700 mb-1">Pilih Kelas</label>
+                            <select id="kelasUtama" class="w-full p-2 border border-gray-300 rounded-lg bg-gray-50 focus:ring-2 focus:ring-blue-500 outline-none" disabled>
+                                <option value="">-- Pilih Kelas --</option>
+                            </select>
+                            <p class="text-xs text-gray-500 mt-2 italic">Pejabat sekolah otomatis menyesuaikan kelas.</p>
+                        </div>
+                    </div>
+
+                    <div id="pejabatInfo" class="hidden bg-blue-50 p-3 rounded-lg border border-blue-100 text-sm space-y-1">
+                        <p><strong>Wali Kelas:</strong> <span id="infoWali"></span></p>
+                        <p><strong>Kaprodi:</strong> <span id="infoKaprodi"></span></p>
+                        <p><strong>Pembina:</strong> <span id="infoPembina"></span></p>
+                    </div>
+                </div>
+            </div>
+
+            <!-- Card Surat & Perusahaan -->
+            <div class="bg-white p-6 rounded-xl shadow-sm border border-gray-200">
+                <h2 class="text-lg font-bold mb-4 flex items-center gap-2 text-gray-800 border-b pb-2">
+                    <i class="fa-solid fa-building text-blue-600"></i> Detail Surat & Perusahaan
+                </h2>
+                <div class="space-y-4">
+                    <div class="grid grid-cols-2 gap-4">
+                        <div>
+                            <label class="block text-sm font-semibold text-gray-700 mb-1">No Surat</label>
+                            <input type="text" id="noSurat" placeholder="Misal: 001/..." class="w-full p-2 border border-gray-300 rounded-lg outline-none focus:ring-2 focus:ring-blue-500" />
+                        </div>
+                        <div>
+                            <label class="block text-sm font-semibold text-gray-700 mb-1">Tanggal</label>
+                            <input type="text" id="tanggal" placeholder="Misal: 2026-05-10" class="w-full p-2 border border-gray-300 rounded-lg outline-none focus:ring-2 focus:ring-blue-500" />
+                        </div>
+                    </div>
+                    <div>
+                        <label class="block text-sm font-semibold text-gray-700 mb-1">Nama Perusahaan (PT)</label>
+                        <input type="text" id="perusahaan" placeholder="PT. Sukses Makmur" class="w-full p-2 border border-gray-300 rounded-lg outline-none focus:ring-2 focus:ring-blue-500" />
+                    </div>
+                    <div>
+                        <label class="block text-sm font-semibold text-gray-700 mb-1">Alamat Perusahaan</label>
+                        <textarea id="alamatPerusahaan" rows="3" placeholder="Jl. Raya Industri No..." class="w-full p-2 border border-gray-300 rounded-lg outline-none focus:ring-2 focus:ring-blue-500"></textarea>
+                    </div>
+                </div>
+            </div>
+
+            <!-- Card Data Siswa -->
+            <div class="bg-white p-6 rounded-xl shadow-sm border border-gray-200">
+                <div class="flex justify-between items-center mb-4 border-b pb-2">
+                    <h2 class="text-lg font-bold flex items-center gap-2 text-gray-800">
+                        <i class="fa-solid fa-user-plus text-blue-600"></i> Data Siswa
+                    </h2>
+                    <button onclick="addStudent()" class="text-sm bg-blue-100 text-blue-700 px-2 py-1 rounded hover:bg-blue-200 transition">
+                        + Tambah
+                    </button>
+                </div>
+                
+                <div id="studentsContainer" class="space-y-4">
+                    <!-- Form input siswa akan di-render di sini oleh JS -->
+                </div>
+            </div>
+        </div>
+
+        <!-- AREA PREVIEW KERTAS (Kanan) -->
+        <div class="w-full lg:w-2/3 flex justify-center print:w-full print:block">
+            <!-- Container Kertas A4 -->
+            <div class="bg-white shadow-2xl paper-preview w-[210mm] min-h-[297mm] p-[10mm] sm:p-[15mm] text-black font-paper print:m-0 mx-auto bg-white relative">
+                
+                <!-- KOP SURAT -->
+                <div class="flex items-center mb-2">
+                    <div class="w-24 flex justify-center items-center">
+                        <img style="background-color: black;" width="80" height="80" src="img/logotb2.png">
+                    </div>
+                    <div class="flex-1 text-center pr-12">
+                        <h3 class="text-[14px] font-normal tracking-wide">YAYASAN PENDIDIKAN NASIONAL TARUNA BANGSA</h3>
+                        <h1 class="text-[20px] font-bold tracking-wider uppercase mt-1">SMK TARUNA BANGSA, KOTA BEKASI</h1>
+                        <p class="text-[13px] mt-1">Jl. Lingkar Utara Kaliabang Tengah Bekasi Utara</p>
+                    </div>
+                </div>
+
+                <!-- Garis Pembatas -->
+                <div class="border-b-[3px] border-black mb-[2px]"></div>
+                <div class="border-b-[1px] border-black mb-6"></div>
+
+                <!-- Judul & Nomor Surat -->
+                <div class="flex justify-between items-start mb-4">
+                    <h2 class="text-[15px] font-bold uppercase w-1/2 pt-2">FORMAT PENGAJUAN PRAKRIN</h2>
+                    <div class="w-1/2 border border-black p-0 text-[13px]">
+                        <div class="flex border-b border-black">
+                            <div class="w-32 px-2 py-1 border-r border-black">No Surat</div>
+                            <div class="px-2 py-1 flex-1">: <span id="prevNoSurat">..................</span></div>
+                        </div>
+                        <div class="flex">
+                            <div class="w-32 px-2 py-1 border-r border-black">Tanggal Pengajuan</div>
+                            <div class="px-2 py-1 flex-1">: <span id="prevTanggal">...........................</span></div>
+                        </div>
+                    </div>
+                </div>
+
+                <!-- Tabel Siswa -->
+                <table class="w-full border-collapse border border-black mb-6 text-[13px]">
+                    <thead>
+                        <tr>
+                            <th class="border border-black py-2 px-1 w-8 text-center font-bold">No</th>
+                            <th class="border border-black py-2 px-2 text-center font-bold">Nama Siswa</th>
+                            <th class="border border-black py-2 px-2 w-28 text-center font-bold">NIS</th>
+                            <th class="border border-black py-2 px-2 w-32 text-center font-bold">No Telepon</th>
+                            <th class="border border-black py-2 px-2 w-24 text-center font-bold">Kelas</th>
+                        </tr>
+                    </thead>
+                    <tbody id="prevStudentsBody">
+                        <!-- Baris siswa di-render JS -->
+                    </tbody>
+                </table>
+
+                <!-- Nama & Alamat Perusahaan -->
+                <div class="border border-black mb-6 text-[13px]">
+                    <div class="border-b border-black bg-gray-50/50 px-2 py-1 font-bold">
+                        Nama Perusahaan
+                    </div>
+                    <div class="border-b border-black px-2 py-3 min-h-[40px]" id="prevPerusahaan"></div>
+                    
+                    <div class="border-b border-black bg-gray-50/50 px-2 py-1 font-bold">
+                        Alamat Perusahaan
+                    </div>
+                    <div class="px-2 py-4 h-16 align-top whitespace-pre-wrap" id="prevAlamat"></div>
+                </div>
+
+                <!-- Tabel Catatan -->
+                <table class="w-full border-collapse border border-black mb-2 text-[13px]">
+                    <thead>
+                        <tr>
+                            <th class="border border-black py-1 px-2 w-1/2 text-left font-bold bg-gray-50/50">Catatan Pembina Kesiswaan</th>
+                            <th class="border border-black py-1 px-2 w-1/2 text-left font-bold bg-gray-50/50">Catatan Wali Kelas</th>
+                        </tr>
+                    </thead>
+                    <tbody id="prevCatatanBody">
+                        <!-- Baris catatan di-render JS -->
+                    </tbody>
+                </table>
+
+                <!-- Area Tanda Tangan -->
+                <table class="w-full border-collapse border border-black text-[13px] text-center table-fixed h-32 mt-6">
+                    <tbody>
+                        <tr>
+                            <td class="border border-black pt-2 pb-12 px-2 align-top w-1/3">Pembina Kesiswaan</td>
+                            <td class="border border-black pt-2 pb-12 px-2 align-top w-1/3">Wali Kelas</td>
+                            <td class="border border-black pt-2 pb-12 px-2 align-top w-1/3">Kepala Program</td>
+                        </tr>
+                        <tr>
+                            <td class="border border-black pb-2 px-2 align-bottom font-bold">
+                                <div class="border-b border-black border-dotted mx-4 px-2 pb-1 inline-block min-w-[150px]" id="prevPembina">
+                                    ........................................
+                                </div>
+                            </td>
+                            <td class="border border-black pb-2 px-2 align-bottom font-bold">
+                                <div class="border-b border-black border-dotted mx-4 px-2 pb-1 inline-block min-w-[150px]" id="prevWali">
+                                    ........................................
+                                </div>
+                            </td>
+                            <td class="border border-black pb-2 px-2 align-bottom font-bold">
+                                <div class="border-b border-black border-dotted mx-4 px-2 pb-1 inline-block min-w-[150px]" id="prevKaprodi">
+                                    ........................................
+                                </div>
+                            </td>
+                        </tr>
+                    </tbody>
+                </table>
+            </div>
+        </div>
+    </div>
+
+    <!-- SCRIPTS -->
+    <script src="data.js"></script>
+    <script src="app.js"></script>
+</body>
+</html>

@@ -581,6 +581,12 @@ window.App = {
             <span>Persetujuan Lamaran</span>
           </div>
         </a>
+        <a class="nav-item ${this.currentTab === 'surat' ? 'active' : ''}" onclick="App.setTab('surat')">
+          <div class="nav-item-left">
+            <svg class="nav-icon" width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M14 2H6a2 2 0 0 0-2 2v16a2 2 0 0 0 2 2h12a2 2 0 0 0 2-2V8z"/><polyline points="14 2 14 8 20 8"/><line x1="16" y1="13" x2="8" y2="13"/><line x1="16" y1="17" x2="8" y2="17"/><polyline points="10 9 9 9 8 9"/></svg>
+            <span>Surat PRAKRIN (A4)</span>
+          </div>
+        </a>
         <a class="nav-item ${this.currentTab === 'lowongan' ? 'active' : ''}" onclick="App.setTab('lowongan')">
           <div class="nav-item-left">
             <svg class="nav-icon" width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><rect x="2" y="7" width="20" height="14" rx="2" ry="2"/><path d="M16 21V5a2 2 0 0 0-2-2h-4a2 2 0 0 0-2 2v16"/></svg>
@@ -691,6 +697,16 @@ window.App = {
         titleEl.textContent = 'Persetujuan Lamaran PKL Siswa';
         descEl.textContent = 'Tinjau kesesuaian kompetensi keahlian dan terbitkan Surat Pengantar resmi ke mitra industri.';
         actionsEl.innerHTML = logoutBtnHtml;
+      } else if (this.currentTab === 'surat') {
+        titleEl.textContent = 'Generator Surat PRAKRIN (A4)';
+        descEl.textContent = 'Format resmi pengajuan Praktik Kerja Industri berstandar dokumen dinas A4 SMK Taruna Bangsa Kota Bekasi.';
+        actionsEl.innerHTML = `
+          <button class="btn btn-primary btn-sm" onclick="window.print()">
+            <svg width="15" height="15" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><polyline points="6 9 6 2 18 2 18 9"/><path d="M6 18H4a2 2 0 0 1-2-2v-5a2 2 0 0 1 2-2h16a2 2 0 0 1 2 2v5a2 2 0 0 1-2 2h-2"/><rect x="6" y="14" width="12" height="8"/></svg>
+            Cetak Dokumen A4
+          </button>
+          ${logoutBtnHtml}
+        `;
       } else if (this.currentTab === 'lowongan') {
         titleEl.textContent = 'Kelola Lowongan PKL';
         descEl.textContent = 'Kelola kuota, jurusan target, dan penawaran PKL dari perusahaan mitra DUDI.';
@@ -746,6 +762,7 @@ window.App = {
         if (this.currentTab === 'dashboard') await this.renderHubinDashboard(container);
         else if (this.currentTab === 'verifikasi') await this.renderHubinVerifikasi(container);
         else if (this.currentTab === 'persetujuan') await this.renderHubinPersetujuan(container);
+        else if (this.currentTab === 'surat') await this.renderSuratPrakerinPage(container);
         else if (this.currentTab === 'lowongan') await this.renderHubinLowongan(container);
         else if (this.currentTab === 'mitra') await this.renderHubinMitra(container);
         else if (this.currentTab === 'monitoring') await this.renderHubinMonitoring(container);

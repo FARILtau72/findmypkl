@@ -10,6 +10,7 @@ Object.assign(window.App, {
     if (!student) return;
 
     const applications = await API.getApplications({ student_id: student.id });
+    this.cachedStudentApplications = applications;
 
     if (applications.length === 0) {
       container.innerHTML = renderEmptyState(
@@ -110,8 +111,21 @@ Object.assign(window.App, {
                 </div>
               ` : ''}
 
+              ${(app.status === 'Disetujui HUBIN' || app.status === 'Diterima Perusahaan' || app.nomor_surat_pengantar) ? `
+                <div style="margin-top: 16px; padding-top: 14px; border-top: 1px dashed var(--border-color); display: flex; justify-content: space-between; align-items: center; flex-wrap: wrap; gap: 10px;">
+                  <div style="font-size: 13px; color: var(--slate-600);">
+                    <strong style="color: var(--slate-800);">Surat Pengantar Magang:</strong>
+                    <span style="color: var(--primary-700); font-weight: 600;"> ${app.nomor_surat_pengantar || 'Telah Diterbitkan Sekolah'}</span>
+                  </div>
+                  <button class="btn btn-secondary btn-sm" onclick="App.openSuratPrakerinModal(App.cachedStudentApplications.find(a => a.id === ${app.id}))" style="display: flex; align-items: center; gap: 6px;">
+                    <svg width="15" height="15" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M14 2H6a2 2 0 0 0-2 2v16a2 2 0 0 0 2 2h12a2 2 0 0 0 2-2V8z"/><polyline points="14 2 14 8 20 8"/><line x1="16" y1="13" x2="8" y2="13"/><line x1="16" y1="17" x2="8" y2="17"/><polyline points="10 9 9 9 8 9"/></svg>
+                    Lihat &amp; Cetak Dokumen Resmi (A4)
+                  </button>
+                </div>
+              ` : ''}
+
               ${app.status === 'Diterima Perusahaan' ? `
-                <div style="margin-top: 16px; display: flex; justify-content: flex-end;">
+                <div style="margin-top: 12px; display: flex; justify-content: flex-end;">
                   <button class="btn btn-primary btn-sm" onclick="App.setTab('penempatan')">
                     Buka Dashboard Penempatan PKL Aktif &rarr;
                   </button>

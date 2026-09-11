@@ -119,6 +119,17 @@ export async function GET(request, { params }) {
       return NextResponse.json({ success: true, student_id: Number(studentId), favorites: favJobIds });
     }
 
+    // GET /api/classes & GET /api/classes/:id
+    if (resource === 'classes') {
+      if (id) {
+        const cls = store.getClassById(id);
+        if (!cls) return NextResponse.json({ error: 'Kelas tidak ditemukan' }, { status: 404 });
+        return NextResponse.json(cls);
+      }
+      const rows = store.getClasses(query);
+      return NextResponse.json(rows);
+    }
+
     return NextResponse.json({ error: 'Endpoint tidak ditemukan' }, { status: 404 });
   } catch (err) {
     return NextResponse.json({ error: err.message }, { status: 500 });

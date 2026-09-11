@@ -192,5 +192,15 @@ const API = {
   // Reset dummy store to default
   resetData() {
     return this.request('/reset', { method: 'POST' });
+  },
+
+  // Master Classes & School Officials
+  getClasses(params = {}) {
+    const q = new URLSearchParams(params).toString();
+    return this.request(`/classes${q ? '?' + q : ''}`);
+  },
+
+  getClassById(id) {
+    return this.request(`/classes/${id}`);
   }
 };

@@ -38,6 +38,7 @@ export default function RootLayout({ children }) {
         <Script src="/js/pages/auth.js?v=2.2" strategy="beforeInteractive" />
         <Script src="/js/pages/siswa.js?v=2.2" strategy="beforeInteractive" />
         <Script src="/js/pages/hubin.js?v=2.2" strategy="beforeInteractive" />
+        <Script src="/js/pages/surat.js?v=2.2" strategy="beforeInteractive" />
       </body>
     </html>
   );

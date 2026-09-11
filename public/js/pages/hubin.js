@@ -373,6 +373,7 @@ Object.assign(window.App, {
 
   async renderHubinPersetujuan(container) {
     const applications = await API.getApplications();
+    this.cachedApplications = applications;
 
     container.innerHTML = `
       <div class="card">
@@ -381,6 +382,10 @@ Object.assign(window.App, {
             <h3 style="font-size: 17px; font-weight: 700; color: var(--slate-900);">Tinjauan & Persetujuan Lamaran PKL</h3>
             <p style="font-size: 13px; color: var(--slate-500);">Review permohonan siswa, terbitkan surat pengantar sekolah, dan koordinasikan dengan DUDI.</p>
           </div>
+          <button class="btn btn-secondary btn-sm" onclick="App.setTab('surat')">
+            <svg width="15" height="15" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M14 2H6a2 2 0 0 0-2 2v16a2 2 0 0 0 2 2h12a2 2 0 0 0 2-2V8z"/><polyline points="14 2 14 8 20 8"/><line x1="16" y1="13" x2="8" y2="13"/><line x1="16" y1="17" x2="8" y2="17"/><polyline points="10 9 9 9 8 9"/></svg>
+            Buka Generator Surat Mandiri &rarr;
+          </button>
         </div>
 
         <div class="table-responsive">
@@ -410,7 +415,18 @@ Object.assign(window.App, {
                   <td>${app.tanggal_daftar ? app.tanggal_daftar.substring(0,10) : ''}</td>
                   <td>${renderBadge(app.status)}</td>
                   <td>
-                    ${app.nomor_surat_pengantar ? `<span style="font-size: 12px; font-weight: 600; color: var(--primary-700);">${app.nomor_surat_pengantar}</span>` : '<span style="font-size: 12px; color: var(--slate-400);">Belum terbit</span>'}
+                    ${app.nomor_surat_pengantar ? `
+                      <div style="display: flex; flex-direction: column; gap: 4px;">
+                        <span style="font-size: 12px; font-weight: 600; color: var(--primary-700);">${app.nomor_surat_pengantar}</span>
+                        <button class="btn btn-secondary btn-sm" style="font-size: 11px; padding: 2px 8px; width: fit-content;" onclick="App.openSuratPrakerinModal(App.cachedApplications.find(a => a.id === ${app.id}))">
+                          📄 Cetak Surat A4
+                        </button>
+                      </div>
+                    ` : (app.status === 'Disetujui HUBIN' || app.status === 'Diterima Perusahaan') ? `
+                      <button class="btn btn-secondary btn-sm" style="font-size: 11px; padding: 2px 8px;" onclick="App.openSuratPrakerinModal(App.cachedApplications.find(a => a.id === ${app.id}))">
+                        📄 Terbitkan &amp; Cetak
+                      </button>
+                    ` : '<span style="font-size: 12px; color: var(--slate-400);">Belum terbit</span>'}
                   </td>
                   <td style="text-align: right;">
                     ${app.status === 'Menunggu Verifikasi HUBIN' ? `
