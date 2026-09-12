@@ -57,6 +57,17 @@ const API = {
     });
   },
 
+  getStudentPrintStatus(id, type = 'surat') {
+    return this.request(`/students/${id}/print-status?type=${encodeURIComponent(type)}`);
+  },
+
+  recordStudentPrint(id, data = {}) {
+    return this.request(`/students/${id}/print-log`, {
+      method: 'POST',
+      body: JSON.stringify(data)
+    });
+  },
+
   // Companies
   getCompanies(params = {}) {
     const q = new URLSearchParams(params).toString();

@@ -111,18 +111,49 @@ Object.assign(window.App, {
                 </div>
               ` : ''}
 
-              ${(app.status === 'Disetujui HUBIN' || app.status === 'Diterima Perusahaan' || app.nomor_surat_pengantar) ? `
-                <div style="margin-top: 16px; padding-top: 14px; border-top: 1px dashed var(--border-color); display: flex; justify-content: space-between; align-items: center; flex-wrap: wrap; gap: 10px;">
-                  <div style="font-size: 13px; color: var(--slate-600);">
-                    <strong style="color: var(--slate-800);">Surat Pengantar Magang:</strong>
-                    <span style="color: var(--primary-700); font-weight: 600;"> ${app.nomor_surat_pengantar || 'Telah Diterbitkan Sekolah'}</span>
-                  </div>
-                  <button class="btn btn-secondary btn-sm" onclick="App.openSuratPrakerinModal(App.cachedStudentApplications.find(a => a.id === ${app.id}))" style="display: flex; align-items: center; gap: 6px;">
-                    <svg width="15" height="15" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M14 2H6a2 2 0 0 0-2 2v16a2 2 0 0 0 2 2h12a2 2 0 0 0 2-2V8z"/><polyline points="14 2 14 8 20 8"/><line x1="16" y1="13" x2="8" y2="13"/><line x1="16" y1="17" x2="8" y2="17"/><polyline points="10 9 9 9 8 9"/></svg>
-                    Lihat &amp; Cetak Dokumen Resmi (A4)
-                  </button>
-                </div>
-              ` : ''}
+              ${(app.status === 'Disetujui HUBIN' || app.status === 'Diterima Perusahaan' || app.nomor_surat_pengantar) ? (() => {
+                const printStatus = (typeof App.getStudentPrintStatus === 'function') 
+                  ? App.getStudentPrintStatus(student.id, 'surat') 
+                  : { canPrint: true, daysLeft: 0 };
+                
+                if (printStatus.canPrint) {
+                  return `
+                    <div class="print-quota-box quota-available">
+                      <div>
+                        <div style="font-size: 13px; font-weight: 700; color: #166534; display: flex; align-items: center; gap: 6px;">
+                          <span>📄 Surat Pengantar Magang Resmi Diterbitkan</span>
+                          <span class="print-quota-badge badge-available">✓ Kuota Cetak Tersedia</span>
+                        </div>
+                        <div style="font-size: 12px; color: #15803d; margin-top: 2px;">
+                          No: <strong>${app.nomor_surat_pengantar || 'Telah Diterbitkan BKK'}</strong> &bull; Ketentuan sekolah: Maksimal 1x cetak per minggu
+                        </div>
+                      </div>
+                      <button class="btn btn-primary btn-sm" onclick="App.openSuratPrakerinModal(App.cachedStudentApplications.find(a => a.id === ${app.id}))" style="display: flex; align-items: center; gap: 6px; box-shadow: 0 2px 8px rgba(16, 185, 129, 0.28);">
+                        <svg width="15" height="15" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><polyline points="6 9 6 2 18 2 18 9"/><path d="M6 18H4a2 2 0 0 1-2-2v-5a2 2 0 0 1 2-2h16a2 2 0 0 1 2 2v5a2 2 0 0 1-2 2h-2"/><rect x="6" y="14" width="12" height="8"/></svg>
+                        Cetak Surat Resmi (A4)
+                      </button>
+                    </div>
+                  `;
+                } else {
+                  return `
+                    <div class="print-quota-box quota-cooldown">
+                      <div>
+                        <div style="font-size: 13px; font-weight: 700; color: #92400e; display: flex; align-items: center; gap: 6px;">
+                          <span>📄 Surat Pengantar Magang Resmi</span>
+                          <span class="print-quota-badge badge-cooldown">⏳ Cooldown: ${printStatus.daysLeft} Hari Lagi</span>
+                        </div>
+                        <div style="font-size: 12px; color: #b45309; margin-top: 2px;">
+                          Telah dicetak pada ${new Date(printStatus.lastPrintedAt).toLocaleDateString('id-ID', { day: 'numeric', month: 'short', year: 'numeric' })} &bull; Sesuai ketentuan: Cetak ulang fisik diizinkan 1 minggu 1x
+                        </div>
+                      </div>
+                      <button class="btn btn-secondary btn-sm" onclick="App.openSuratPrakerinModal(App.cachedStudentApplications.find(a => a.id === ${app.id}))" style="display: flex; align-items: center; gap: 6px;">
+                        <svg width="15" height="15" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M1 12s4-8 11-8 11 8 11 8-4 8-11 8-11-8-11-8z"/><circle cx="12" cy="12" r="3"/></svg>
+                        Pratinjau Layar (Read-only)
+                      </button>
+                    </div>
+                  `;
+                }
+              })() : ''}
 
               ${app.status === 'Diterima Perusahaan' ? `
                 <div style="margin-top: 12px; display: flex; justify-content: flex-end;">
@@ -216,10 +247,28 @@ Object.assign(window.App, {
               <h3 style="font-size: 17px; font-weight: 700; color: var(--slate-900);">Jurnal / Logbook Kegiatan Harian PKL</h3>
               <p style="font-size: 13px; color: var(--slate-500);">Wajib diisi setiap hari kerja untuk pemantauan oleh Guru Pembimbing & Mentor DUDI.</p>
             </div>
-            <button class="btn btn-primary btn-sm" onclick="App.showAddLogbookModal(${p.id})">
-              <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><line x1="12" y1="5" x2="12" y2="19"/><line x1="5" y1="12" x2="19" y2="12"/></svg>
-              Tulis Logbook Baru
-            </button>
+            <div style="display: flex; gap: 10px; align-items: center; flex-wrap: wrap;">
+              ${(() => {
+                const logbookPrintStatus = (typeof App.getStudentPrintStatus === 'function')
+                  ? App.getStudentPrintStatus(student.id, 'logbook')
+                  : { canPrint: true, daysLeft: 0 };
+                return `
+                  <button class="btn btn-secondary btn-sm" onclick="App.openLogbookWeeklyPrintModal(${p.id})" style="display: flex; align-items: center; gap: 6px;">
+                    <svg width="15" height="15" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><polyline points="6 9 6 2 18 2 18 9"/><path d="M6 18H4a2 2 0 0 1-2-2v-5a2 2 0 0 1 2-2h16a2 2 0 0 1 2 2v5a2 2 0 0 1-2 2h-2"/><rect x="6" y="14" width="12" height="8"/></svg>
+                    <span>Cetak Jurnal Mingguan (A4)</span>
+                    ${logbookPrintStatus.canPrint ? `
+                      <span class="print-quota-badge badge-available" style="font-size: 10px; padding: 1px 6px;">1x / Minggu</span>
+                    ` : `
+                      <span class="print-quota-badge badge-cooldown" style="font-size: 10px; padding: 1px 6px;">${logbookPrintStatus.daysLeft}h lagi</span>
+                    `}
+                  </button>
+                `;
+              })()}
+              <button class="btn btn-primary btn-sm" onclick="App.showAddLogbookModal(${p.id})">
+                <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><line x1="12" y1="5" x2="12" y2="19"/><line x1="5" y1="12" x2="19" y2="12"/></svg>
+                Tulis Logbook Baru
+              </button>
+            </div>
           </div>
 
           ${logbooks.length === 0 ? `

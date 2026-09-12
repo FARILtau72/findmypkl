@@ -255,7 +255,7 @@ button, input, select, textarea {
   margin-bottom: 6px;
 }
 
-.form-input, .form-select, .form-textarea {
+.form-input, .form-select, .form-textarea, .form-control {
   width: 100%;
   padding: 10px 14px;
   background-color: #ffffff;
@@ -263,16 +263,27 @@ button, input, select, textarea {
   border-radius: var(--radius-md);
   color: var(--slate-900);
   font-size: 14px;
+  font-family: inherit;
+  box-sizing: border-box;
   transition: border-color var(--transition-fast), box-shadow var(--transition-fast);
   outline: none;
 }
 
-.form-input:focus, .form-select:focus, .form-textarea:focus {
+.form-select {
+  cursor: pointer;
+}
+
+.form-textarea {
+  min-height: 80px;
+  resize: vertical;
+}
+
+.form-input:focus, .form-select:focus, .form-textarea:focus, .form-control:focus {
   border-color: var(--primary-500);
   box-shadow: 0 0 0 3px rgba(59, 130, 246, 0.15);
 }
 
-.form-input::placeholder, .form-textarea::placeholder {
+.form-input::placeholder, .form-textarea::placeholder, .form-control::placeholder {
   color: var(--slate-400);
 }
 

@@ -216,6 +216,90 @@
 }
 
 /* ==========================================================================
+   RATE LIMIT & COOLDOWN CETAK SISWA (MINIMAL 1 MINGGU 1X)
+   ========================================================================== */
+.print-quota-box {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  background: #f8fafc;
+  border: 1px solid #e2e8f0;
+  border-radius: var(--radius-md);
+  padding: 12px 16px;
+  margin-top: 14px;
+  flex-wrap: wrap;
+  gap: 12px;
+}
+
+.print-quota-box.quota-available {
+  background: #f0fdf4;
+  border-color: #bbf7d0;
+}
+
+.print-quota-box.quota-cooldown {
+  background: #fffbeb;
+  border-color: #fde68a;
+}
+
+.print-quota-badge {
+  display: inline-flex;
+  align-items: center;
+  gap: 6px;
+  font-size: 11.5px;
+  font-weight: 700;
+  padding: 3px 10px;
+  border-radius: var(--radius-full);
+}
+
+.print-quota-badge.badge-available {
+  background: #dcfce7;
+  color: #15803d;
+  border: 1px solid #86efac;
+}
+
+.print-quota-badge.badge-cooldown {
+  background: #fef3c7;
+  color: #b45309;
+  border: 1px solid #fcd34d;
+}
+
+.print-cooldown-alert {
+  background: #fffbeb;
+  border-left: 4px solid #f59e0b;
+  border-radius: var(--radius-sm);
+  padding: 12px 16px;
+  font-size: 13px;
+  color: #92400e;
+  line-height: 1.5;
+  margin-bottom: 16px;
+}
+
+/* Lembar Logbook Mingguan (A4) */
+.logbook-print-meta {
+  display: grid;
+  grid-template-columns: 1fr 1fr;
+  gap: 8px 24px;
+  font-size: 12.5px;
+  margin-bottom: 14px;
+  border: 1px solid #000000;
+  padding: 10px 14px;
+  background: #ffffff;
+}
+
+.logbook-meta-item {
+  display: flex;
+}
+
+.logbook-meta-label {
+  width: 130px;
+  font-weight: 600;
+}
+
+.logbook-meta-val {
+  flex: 1;
+}
+
+/* ==========================================================================
    PRINT MEDIA RULES (@media print)
    Menghilangkan seluruh elemen UI browser, menyisakan kertas A4 murni
    ========================================================================== */

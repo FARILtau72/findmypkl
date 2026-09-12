@@ -1140,12 +1140,12 @@ Object.assign(window.App, {
         <div style="display: grid; grid-template-columns: repeat(auto-fit, minmax(220px, 1fr)); gap: 14px; margin-bottom: 14px;">
           <div class="form-group">
             <label class="form-label">Nama Perusahaan / Institusi *</label>
-            <input type="text" id="partner-company-nama" class="form-control" required placeholder="Contoh: PT Teknologi Nusantara" />
+            <input type="text" id="partner-company-nama" class="form-input" required placeholder="Contoh: PT Teknologi Nusantara" />
           </div>
 
           <div class="form-group">
             <label class="form-label">Bidang Industri / Sektor *</label>
-            <select id="partner-industri" class="form-control" required>
+            <select id="partner-industri" class="form-select" required>
               <option value="Teknologi Informasi & Software">Teknologi Informasi & Software</option>
               <option value="Desain Kreatif & Multimedia">Desain Kreatif & Multimedia</option>
               <option value="Manufaktur & Otomotif">Manufaktur & Otomotif</option>
@@ -1159,36 +1159,36 @@ Object.assign(window.App, {
         <div style="display: grid; grid-template-columns: repeat(auto-fit, minmax(220px, 1fr)); gap: 14px; margin-bottom: 14px;">
           <div class="form-group">
             <label class="form-label">Nama PIC / Kontak Person *</label>
-            <input type="text" id="partner-pic-nama" class="form-control" required placeholder="Nama lengkap PIC HRD/Divisi" />
+            <input type="text" id="partner-pic-nama" class="form-input" required placeholder="Nama lengkap PIC HRD/Divisi" />
           </div>
 
           <div class="form-group">
             <label class="form-label">Jabatan PIC *</label>
-            <input type="text" id="partner-pic-jabatan" class="form-control" required placeholder="Contoh: HR Manager / Lead Tech" />
+            <input type="text" id="partner-pic-jabatan" class="form-input" required placeholder="Contoh: HR Manager / Lead Tech" />
           </div>
         </div>
 
         <div style="display: grid; grid-template-columns: repeat(auto-fit, minmax(220px, 1fr)); gap: 14px; margin-bottom: 14px;">
           <div class="form-group">
             <label class="form-label">Email Resmi Perusahaan *</label>
-            <input type="email" id="partner-email" class="form-control" required placeholder="recruitment@perusahaan.com" />
+            <input type="email" id="partner-email" class="form-input" required placeholder="recruitment@perusahaan.com" />
           </div>
 
           <div class="form-group">
             <label class="form-label">Nomor WhatsApp PIC *</label>
-            <input type="tel" id="partner-phone" class="form-control" required placeholder="Contoh: 081234567890" />
+            <input type="tel" id="partner-phone" class="form-input" required placeholder="Contoh: 081234567890" />
           </div>
         </div>
 
         <div style="display: grid; grid-template-columns: repeat(auto-fit, minmax(220px, 1fr)); gap: 14px; margin-bottom: 14px;">
           <div class="form-group">
             <label class="form-label">Kota / Lokasi Kantor *</label>
-            <input type="text" id="partner-kota" class="form-control" required placeholder="Contoh: Kota Bekasi / DKI Jakarta" />
+            <input type="text" id="partner-kota" class="form-input" required placeholder="Contoh: Kota Bekasi / DKI Jakarta" />
           </div>
 
           <div class="form-group">
             <label class="form-label">Kebutuhan Kuota Siswa PKL *</label>
-            <select id="partner-kuota" class="form-control" required>
+            <select id="partner-kuota" class="form-select" required>
               <option value="2-4">2 - 4 Siswa (Tim Kecil)</option>
               <option value="5-10" selected>5 - 10 Siswa (Batch Reguler)</option>
               <option value="11-20">11 - 20 Siswa (Batch Besar)</option>
@@ -1199,7 +1199,7 @@ Object.assign(window.App, {
 
         <div class="form-group" style="margin-bottom: 18px;">
           <label class="form-label">Catatan / Posisi Magang yang Dibutuhkan</label>
-          <textarea id="partner-catatan" class="form-control" rows="3" placeholder="Sebutkan posisi yang dibuka (misal: Junior Web Developer, UI Designer, IT Support) dan jadwal pelaksanaan PKL..."></textarea>
+          <textarea id="partner-catatan" class="form-textarea" rows="3" placeholder="Sebutkan posisi yang dibuka (misal: Junior Web Developer, UI Designer, IT Support) dan jadwal pelaksanaan PKL..."></textarea>
         </div>
 
         <div style="display: flex; justify-content: flex-end; gap: 10px;">

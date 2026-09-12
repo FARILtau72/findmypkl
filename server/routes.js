@@ -52,6 +52,24 @@ router.get('/students/:id', (req, res) => {
   }
 });
 
+router.get('/students/:id/print-status', (req, res) => {
+  try {
+    const status = store.getStudentPrintStatus(req.params.id, req.query.type || 'surat');
+    res.json(status);
+  } catch (err) {
+    res.status(500).json({ error: err.message });
+  }
+});
+
+router.post('/students/:id/print-log', (req, res) => {
+  try {
+    const result = store.recordStudentPrint(req.params.id, req.body);
+    res.status(201).json(result);
+  } catch (err) {
+    res.status(500).json({ error: err.message });
+  }
+});
+
 router.post('/students', (req, res) => {
   try {
     const { nisn, nama, email, jurusan, kelas, no_hp, password, cv_url } = req.body;

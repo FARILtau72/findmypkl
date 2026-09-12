@@ -203,25 +203,25 @@ Object.assign(window.App, {
 
     const html = `
       <form id="form-tulis-ulasan" onsubmit="App.handleReviewSubmit(event)">
-        <p style="font-size: 13px; color: #64748b; margin-bottom: 18px;">
+        <p style="font-size: 13.5px; color: var(--slate-600); margin-bottom: 18px; line-height: 1.5;">
           Bagikan pengalaman nyata Anda selama melaksanakan Praktik Kerja Lapangan (PKL) untuk membantu adik kelas dan sesama siswa SMK Taruna Bangsa Kota Bekasi dalam memilih tempat PKL yang tepat.
         </p>
 
-        <div style="display: grid; grid-template-columns: repeat(auto-fit, minmax(220px, 1fr)); gap: 14px; margin-bottom: 14px;">
-          <div class="form-group">
+        <div style="display: grid; grid-template-columns: 1fr 1fr; gap: 16px; margin-bottom: 14px;">
+          <div class="form-group" style="margin-bottom: 0;">
             <label class="form-label">Nama Siswa *</label>
-            <input type="text" id="rev-student-nama" class="form-control" value="${defaultName}" required placeholder="Nama lengkap Anda" />
+            <input type="text" id="rev-student-nama" class="form-input" value="${defaultName}" required placeholder="Nama lengkap Anda" />
           </div>
 
-          <div class="form-group">
+          <div class="form-group" style="margin-bottom: 0;">
             <label class="form-label">Kelas *</label>
-            <input type="text" id="rev-student-kelas" class="form-control" value="${defaultKelas}" required placeholder="Contoh: XII RPL 1" />
+            <input type="text" id="rev-student-kelas" class="form-input" value="${defaultKelas}" required placeholder="Contoh: XII RPL 1" />
           </div>
         </div>
 
         <div class="form-group" style="margin-bottom: 14px;">
           <label class="form-label">Jurusan Keahlian *</label>
-          <select id="rev-student-jurusan" class="form-control" required>
+          <select id="rev-student-jurusan" class="form-select" required>
             <option value="Rekayasa Perangkat Lunak (RPL)" ${defaultJurusan.includes('RPL') ? 'selected' : ''}>Rekayasa Perangkat Lunak (RPL)</option>
             <option value="Teknik Audio Video (TAV)" ${defaultJurusan.includes('TAV') ? 'selected' : ''}>Teknik Audio Video (TAV)</option>
             <option value="Teknik Instalasi Tenaga Listrik (TITL)" ${defaultJurusan.includes('TITL') ? 'selected' : ''}>Teknik Instalasi Tenaga Listrik (TITL)</option>
@@ -229,25 +229,25 @@ Object.assign(window.App, {
           </select>
         </div>
 
-        <div style="display: grid; grid-template-columns: repeat(auto-fit, minmax(220px, 1fr)); gap: 14px; margin-bottom: 14px;">
-          <div class="form-group">
+        <div style="display: grid; grid-template-columns: 1.2fr 1fr; gap: 16px; margin-bottom: 16px;">
+          <div class="form-group" style="margin-bottom: 0;">
             <label class="form-label">Perusahaan Tempat PKL *</label>
-            <select id="rev-company-id" class="form-control" required>
+            <select id="rev-company-id" class="form-select" required>
               <option value="" disabled selected>Pilih Perusahaan Mitra</option>
               ${companies.map(c => `<option value="${c.id}">${c.nama}</option>`).join('')}
             </select>
           </div>
 
-          <div class="form-group">
+          <div class="form-group" style="margin-bottom: 0;">
             <label class="form-label">Posisi / Peran PKL *</label>
-            <input type="text" id="rev-posisi" class="form-control" required placeholder="Contoh: Frontend Web Developer" />
+            <input type="text" id="rev-posisi" class="form-input" required placeholder="Contoh: Frontend Web Developer" />
           </div>
         </div>
 
-        <div style="background: #f8fafc; border: 1px solid #e2e8f0; border-radius: 12px; padding: 16px; margin-bottom: 16px;">
+        <div style="background: #f8fafc; border: 1px solid #e2e8f0; border-radius: 12px; padding: 16px; margin-bottom: 18px;">
           <div style="display: flex; justify-content: space-between; align-items: center; margin-bottom: 12px; flex-wrap: wrap; gap: 8px;">
-            <label class="form-label" style="margin: 0; font-weight: 700;">Penilaian & Rating Bintang *</label>
-            <div class="star-rating-selector" id="rev-star-picker">
+            <label class="form-label" style="margin: 0; font-weight: 700; color: var(--slate-900);">Penilaian & Rating Bintang *</label>
+            <div class="star-rating-selector" id="rev-star-picker" style="margin: 0;">
               <button type="button" class="star-btn" onclick="App.setReviewRating(1)" data-star="1">★</button>
               <button type="button" class="star-btn" onclick="App.setReviewRating(2)" data-star="2">★</button>
               <button type="button" class="star-btn" onclick="App.setReviewRating(3)" data-star="3">★</button>
@@ -257,26 +257,26 @@ Object.assign(window.App, {
           </div>
           <input type="hidden" id="rev-rating" value="5.0" />
 
-          <div style="display: grid; grid-template-columns: repeat(auto-fit, minmax(180px, 1fr)); gap: 12px; padding-top: 10px; border-top: 1px dashed #e2e8f0;">
+          <div style="display: grid; grid-template-columns: repeat(auto-fit, minmax(180px, 1fr)); gap: 12px; padding-top: 12px; border-top: 1px dashed #e2e8f0;">
             <div>
-              <span style="font-size: 12px; color: #64748b;">🏢 Kultur & Lingkungan:</span>
-              <select id="rev-rating-culture" class="form-control" style="margin-top: 4px;">
+              <label class="form-label" style="font-size: 11.5px; color: #64748b; margin-bottom: 4px; font-weight: 600;">🏢 Kultur & Lingkungan:</label>
+              <select id="rev-rating-culture" class="form-select" style="font-size: 12.5px; padding: 8px 10px;">
                 <option value="5.0">5.0 - Sangat Positif</option>
                 <option value="4.8">4.8 - Positif</option>
                 <option value="4.5">4.5 - Cukup</option>
               </select>
             </div>
             <div>
-              <span style="font-size: 12px; color: #64748b;">👨‍🏫 Bimbingan Mentor:</span>
-              <select id="rev-rating-mentor" class="form-control" style="margin-top: 4px;">
+              <label class="form-label" style="font-size: 11.5px; color: #64748b; margin-bottom: 4px; font-weight: 600;">👨‍🏫 Bimbingan Mentor:</label>
+              <select id="rev-rating-mentor" class="form-select" style="font-size: 12.5px; padding: 8px 10px;">
                 <option value="5.0">5.0 - Sangat Membimbing</option>
                 <option value="4.8">4.8 - Membimbing Baik</option>
                 <option value="4.5">4.5 - Cukup Membimbing</option>
               </select>
             </div>
             <div>
-              <span style="font-size: 12px; color: #64748b;">💰 Kompensasi & Fasilitas:</span>
-              <select id="rev-rating-allowance" class="form-control" style="margin-top: 4px;">
+              <label class="form-label" style="font-size: 11.5px; color: #64748b; margin-bottom: 4px; font-weight: 600;">💰 Kompensasi & Fasilitas:</label>
+              <select id="rev-rating-allowance" class="form-select" style="font-size: 12.5px; padding: 8px 10px;">
                 <option value="5.0">5.0 - Memuaskan & Tepat Waktu</option>
                 <option value="4.8">4.8 - Cukup Baik</option>
                 <option value="4.5">4.5 - Standar</option>
@@ -285,26 +285,26 @@ Object.assign(window.App, {
           </div>
         </div>
 
-        <div class="form-group" style="margin-bottom: 14px;">
+        <div class="form-group" style="margin-bottom: 16px;">
           <label class="form-label">Ulasan & Cerita Pengalaman PKL *</label>
-          <textarea id="rev-review-text" class="form-control" rows="3" required placeholder="Ceritakan bagaimana alur kerja sehari-hari, proyek yang dikerjakan, dan ilmu baru yang didapatkan..."></textarea>
+          <textarea id="rev-review-text" class="form-textarea" rows="4" required placeholder="Ceritakan bagaimana alur kerja sehari-hari, proyek yang dikerjakan, dan ilmu baru yang didapatkan..." style="min-height: 95px;"></textarea>
         </div>
 
-        <div style="display: grid; grid-template-columns: repeat(auto-fit, minmax(220px, 1fr)); gap: 14px; margin-bottom: 20px;">
-          <div class="form-group">
+        <div style="display: grid; grid-template-columns: 1fr 1fr; gap: 16px; margin-bottom: 22px;">
+          <div class="form-group" style="margin-bottom: 0;">
             <label class="form-label">👍 Kelebihan (Pros)</label>
-            <input type="text" id="rev-pros" class="form-control" placeholder="Contoh: Uang saku tepat waktu, mentor sabar" />
+            <input type="text" id="rev-pros" class="form-input" placeholder="Contoh: Uang saku tepat waktu, mentor sabar" />
           </div>
 
-          <div class="form-group">
+          <div class="form-group" style="margin-bottom: 0;">
             <label class="form-label">💡 Catatan / Tantangan (Cons)</label>
-            <input type="text" id="rev-cons" class="form-control" placeholder="Contoh: Sprint deadline padat, butuh fisik prima" />
+            <input type="text" id="rev-cons" class="form-input" placeholder="Contoh: Sprint deadline padat, butuh fisik prima" />
           </div>
         </div>
 
-        <div style="display: flex; justify-content: flex-end; gap: 10px;">
+        <div style="display: flex; justify-content: flex-end; gap: 12px;">
           <button type="button" class="btn btn-secondary" onclick="Modal.close()">Batal</button>
-          <button type="submit" class="btn btn-primary" style="padding: 10px 20px; font-weight: 700; background: #059669; border-color: #059669;">
+          <button type="submit" class="btn btn-primary" style="padding: 10px 22px; font-weight: 700; background: #059669; border-color: #059669; box-shadow: 0 4px 12px rgba(5, 150, 105, 0.25);">
             Kirim Ulasan Siswa &rarr;
           </button>
         </div>

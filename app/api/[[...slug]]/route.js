@@ -39,6 +39,9 @@ export async function GET(request, { params }) {
     // GET /api/students & GET /api/students/:id
     if (resource === 'students') {
       if (id) {
+        if (subResource === 'print-status') {
+          return NextResponse.json(store.getStudentPrintStatus(id, query.type || 'surat'));
+        }
         const student = store.getStudentById(id);
         if (!student) return NextResponse.json({ error: 'Siswa tidak ditemukan' }, { status: 404 });
         return NextResponse.json(student);
@@ -161,8 +164,12 @@ export async function POST(request, { params }) {
       });
     }
 
-    // POST /api/students
+    // POST /api/students & POST /api/students/:id/print-log
     if (resource === 'students') {
+      if (id && subResource === 'print-log') {
+        const result = store.recordStudentPrint(id, body);
+        return NextResponse.json(result, { status: 201 });
+      }
       const { nisn, nama, email, jurusan, kelas, no_hp, password, cv_url } = body;
       if (!nisn || !nama || !email || !jurusan || !kelas) {
         return NextResponse.json({ error: 'Lengkapi seluruh data wajib (NISN, Nama, Email, Jurusan, Kelas)' }, { status: 400 });

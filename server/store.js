@@ -2459,6 +2459,7 @@ class Store {
     this.favorites = {
       1: [9, 11]
     };
+    this.printLogs = [];
 
     this.nextStudentId = Math.max(...this.students.map(s => s.id), 0) + 1;
     this.nextCompanyId = Math.max(...this.companies.map(c => c.id), 0) + 1;
@@ -3120,6 +3121,61 @@ class Store {
       isFavorited = true;
     }
     return { is_favorited: isFavorited, favorites: [...this.favorites[sId]] };
+  }
+
+  // --- PRINT LOGS & RATE LIMIT (1 MINGGU 1X UNTUK SISWA) ---
+  getStudentPrintStatus(studentId, type = 'surat') {
+    const sId = Number(studentId);
+    if (!this.printLogs) this.printLogs = [];
+    const logs = this.printLogs.filter(l => l.student_id === sId && l.type === type);
+    if (logs.length === 0) {
+      return {
+        can_print: true,
+        last_printed_at: null,
+        next_eligible_date: null,
+        days_remaining: 0,
+        hours_remaining: 0,
+        total_prints: 0
+      };
+    }
+    const lastLog = logs[logs.length - 1];
+    const lastTime = new Date(lastLog.printed_at).getTime();
+    const ONE_WEEK_MS = 7 * 24 * 60 * 60 * 1000;
+    const now = Date.now();
+    const diff = now - lastTime;
+    const canPrint = diff >= ONE_WEEK_MS;
+    const msRemaining = Math.max(0, ONE_WEEK_MS - diff);
+    const daysRemaining = Math.ceil(msRemaining / (24 * 60 * 60 * 1000));
+    const hoursRemaining = Math.ceil(msRemaining / (60 * 60 * 1000));
+    const nextEligibleDate = new Date(lastTime + ONE_WEEK_MS).toISOString();
+
+    return {
+      can_print: canPrint,
+      last_printed_at: lastLog.printed_at,
+      next_eligible_date: nextEligibleDate,
+      days_remaining: daysRemaining,
+      hours_remaining: hoursRemaining,
+      total_prints: logs.length
+    };
+  }
+
+  recordStudentPrint(studentId, { type = 'surat', reference_id = null, document_name = '' } = {}) {
+    const sId = Number(studentId);
+    if (!this.printLogs) this.printLogs = [];
+    const newLog = {
+      id: this.printLogs.length + 1,
+      student_id: sId,
+      type,
+      reference_id,
+      document_name,
+      printed_at: new Date().toISOString()
+    };
+    this.printLogs.push(newLog);
+    return {
+      success: true,
+      log: newLog,
+      status: this.getStudentPrintStatus(sId, type)
+    };
   }
 }
 
