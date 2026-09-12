@@ -212,57 +212,59 @@ Object.assign(window.App, {
               <div id="mkt-tags-list" style="display: flex; align-items: center; gap: 6px; flex-wrap: nowrap;">
                 <!-- Tag chips rendered here -->
               </div>
-              <input type="text" id="mkt-input-keyword" class="mkt-search-input" placeholder="Tambah kata kunci..." />
+              <input type="text" id="mkt-input-keyword" class="mkt-search-input" placeholder="Cari posisi, keahlian, mitra DUDI..." />
             </div>
 
-            <div class="mkt-seg-divider"></div>
+            <div class="mkt-search-filters-row">
+              <div class="mkt-seg-divider"></div>
 
-            <div class="mkt-search-seg" style="max-width: 220px;">
-              <span class="mkt-seg-icon">
-                <svg width="17" height="17" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M21 10c0 7-9 13-9 13s-9-6-9-13a9 9 0 0 1 18 0z"/><circle cx="12" cy="10" r="3"/></svg>
-              </span>
-              <select id="mkt-select-location" class="mkt-search-select">
-                <option value="Semua" ${selectedLocation === 'Semua' ? 'selected' : ''}>Semua Kota</option>
-                <option value="Bekasi" ${selectedLocation === 'Bekasi' ? 'selected' : ''}>Kota Bekasi & Cikarang</option>
-                <option value="Jakarta" ${selectedLocation === 'Jakarta' ? 'selected' : ''}>DKI Jakarta</option>
-                <option value="Bandung" ${selectedLocation === 'Bandung' ? 'selected' : ''}>Bandung, Jawa Barat</option>
-                <option value="Malang" ${selectedLocation === 'Malang' ? 'selected' : ''}>Malang & Surabaya, Jatim</option>
-                <option value="Yogyakarta" ${selectedLocation === 'Yogyakarta' ? 'selected' : ''}>Yogyakarta, DIY</option>
-              </select>
-            </div>
+              <div class="mkt-search-seg mkt-search-seg-location">
+                <span class="mkt-seg-icon">
+                  <svg width="17" height="17" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M21 10c0 7-9 13-9 13s-9-6-9-13a9 9 0 0 1 18 0z"/><circle cx="12" cy="10" r="3"/></svg>
+                </span>
+                <select id="mkt-select-location" class="mkt-search-select" title="Pilih Kota Penempatan">
+                  <option value="Semua" ${selectedLocation === 'Semua' ? 'selected' : ''}>Semua Kota</option>
+                  <option value="Bekasi" ${selectedLocation === 'Bekasi' ? 'selected' : ''}>Kota Bekasi & Cikarang</option>
+                  <option value="Jakarta" ${selectedLocation === 'Jakarta' ? 'selected' : ''}>DKI Jakarta</option>
+                  <option value="Bandung" ${selectedLocation === 'Bandung' ? 'selected' : ''}>Bandung, Jawa Barat</option>
+                  <option value="Malang" ${selectedLocation === 'Malang' ? 'selected' : ''}>Malang & Surabaya, Jatim</option>
+                  <option value="Yogyakarta" ${selectedLocation === 'Yogyakarta' ? 'selected' : ''}>Yogyakarta, DIY</option>
+                </select>
+              </div>
 
-            <div class="mkt-seg-divider"></div>
+              <div class="mkt-seg-divider"></div>
 
-            <div class="mkt-search-seg" style="max-width: 200px;">
-              <span class="mkt-seg-icon">
-                <svg width="17" height="17" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M4 19.5A2.5 2.5 0 0 1 6.5 17H20"/><path d="M6.5 2H20v20H6.5A2.5 2.5 0 0 1 4 19.5v-15A2.5 2.5 0 0 1 6.5 2z"/></svg>
-              </span>
-              <select id="mkt-select-jurusan" class="mkt-search-select">
-                <option value="Semua" ${selectedJurusan === 'Semua' ? 'selected' : ''}>Semua Jurusan</option>
-                <option value="RPL" ${selectedJurusan === 'RPL' ? 'selected' : ''}>Rekayasa Perangkat Lunak (RPL)</option>
-                <option value="TAV" ${selectedJurusan === 'TAV' ? 'selected' : ''}>Teknik Audio Video (TAV)</option>
-                <option value="TITL" ${selectedJurusan === 'TITL' ? 'selected' : ''}>Teknik Instalasi Tenaga Listrik (TITL)</option>
-                <option value="TKRO" ${selectedJurusan === 'TKRO' ? 'selected' : ''}>Teknik Kendaraan Ringan Otomotif (TKRO)</option>
-              </select>
-            </div>
+              <div class="mkt-search-seg mkt-search-seg-jurusan">
+                <span class="mkt-seg-icon">
+                  <svg width="17" height="17" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M4 19.5A2.5 2.5 0 0 1 6.5 17H20"/><path d="M6.5 2H20v20H6.5A2.5 2.5 0 0 1 4 19.5v-15A2.5 2.5 0 0 1 6.5 2z"/></svg>
+                </span>
+                <select id="mkt-select-jurusan" class="mkt-search-select" title="Pilih Jurusan SMK">
+                  <option value="Semua" ${selectedJurusan === 'Semua' ? 'selected' : ''}>Semua Jurusan</option>
+                  <option value="RPL" ${selectedJurusan === 'RPL' ? 'selected' : ''}>Rekayasa Perangkat Lunak (RPL)</option>
+                  <option value="TAV" ${selectedJurusan === 'TAV' ? 'selected' : ''}>Teknik Audio Video (TAV)</option>
+                  <option value="TITL" ${selectedJurusan === 'TITL' ? 'selected' : ''}>Teknik Instalasi Tenaga Listrik (TITL)</option>
+                  <option value="TKRO" ${selectedJurusan === 'TKRO' ? 'selected' : ''}>Teknik Kendaraan Ringan Otomotif (TKRO)</option>
+                </select>
+              </div>
 
-            <div class="mkt-seg-divider"></div>
+              <div class="mkt-seg-divider"></div>
 
-            <div class="mkt-search-seg" style="max-width: 170px;">
-              <span class="mkt-seg-icon">
-                <svg width="17" height="17" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><rect x="2" y="7" width="20" height="14" rx="2" ry="2"/><path d="M16 21V5a2 2 0 0 0-2-2h-4a2 2 0 0 0-2 2v16"/></svg>
-              </span>
-              <select id="mkt-select-sistem" class="mkt-search-select">
-                <option value="Semua" ${selectedSistem === 'Semua' ? 'selected' : ''}>Semua Sistem</option>
-                <option value="WFO" ${selectedSistem === 'WFO' ? 'selected' : ''}>On-site kantor</option>
-                <option value="Hybrid" ${selectedSistem === 'Hybrid' ? 'selected' : ''}>Hybrid schedule</option>
-                <option value="WFH" ${selectedSistem === 'WFH' ? 'selected' : ''}>WFH (Remote)</option>
-              </select>
+              <div class="mkt-search-seg mkt-search-seg-sistem">
+                <span class="mkt-seg-icon">
+                  <svg width="17" height="17" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><rect x="2" y="7" width="20" height="14" rx="2" ry="2"/><path d="M16 21V5a2 2 0 0 0-2-2h-4a2 2 0 0 0-2 2v16"/></svg>
+                </span>
+                <select id="mkt-select-sistem" class="mkt-search-select" title="Pilih Sistem Kerja">
+                  <option value="Semua" ${selectedSistem === 'Semua' ? 'selected' : ''}>Semua Sistem</option>
+                  <option value="WFO" ${selectedSistem === 'WFO' ? 'selected' : ''}>On-site kantor</option>
+                  <option value="Hybrid" ${selectedSistem === 'Hybrid' ? 'selected' : ''}>Hybrid schedule</option>
+                  <option value="WFH" ${selectedSistem === 'WFH' ? 'selected' : ''}>WFH (Remote)</option>
+                </select>
+              </div>
             </div>
 
             <button type="button" id="mkt-btn-search" class="btn-mkt-search">
               <svg width="15" height="15" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5"><circle cx="11" cy="11" r="8"/><line x1="21" y1="21" x2="16.65" y2="16.65"/></svg>
-              Cari
+              <span>Cari Lowongan</span>
             </button>
           </div>
         </div>
@@ -1074,6 +1076,14 @@ Object.assign(window.App, {
     renderTags();
 
     document.getElementById('mkt-btn-search').addEventListener('click', () => {
+      if (addTagInput) {
+        const val = addTagInput.value.trim();
+        if (val && !searchTags.includes(val)) {
+          searchTags.push(val);
+          addTagInput.value = '';
+          renderTags();
+        }
+      }
       currentPage = 1;
       applyFiltersAndRender();
     });
