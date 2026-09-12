@@ -247,28 +247,10 @@ Object.assign(window.App, {
               <h3 style="font-size: 17px; font-weight: 700; color: var(--slate-900);">Jurnal / Logbook Kegiatan Harian PKL</h3>
               <p style="font-size: 13px; color: var(--slate-500);">Wajib diisi setiap hari kerja untuk pemantauan oleh Guru Pembimbing & Mentor DUDI.</p>
             </div>
-            <div style="display: flex; gap: 10px; align-items: center; flex-wrap: wrap;">
-              ${(() => {
-                const logbookPrintStatus = (typeof App.getStudentPrintStatus === 'function')
-                  ? App.getStudentPrintStatus(student.id, 'logbook')
-                  : { canPrint: true, daysLeft: 0 };
-                return `
-                  <button class="btn btn-secondary btn-sm" onclick="App.openLogbookWeeklyPrintModal(${p.id})" style="display: flex; align-items: center; gap: 6px;">
-                    <svg width="15" height="15" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><polyline points="6 9 6 2 18 2 18 9"/><path d="M6 18H4a2 2 0 0 1-2-2v-5a2 2 0 0 1 2-2h16a2 2 0 0 1 2 2v5a2 2 0 0 1-2 2h-2"/><rect x="6" y="14" width="12" height="8"/></svg>
-                    <span>Cetak Jurnal Mingguan (A4)</span>
-                    ${logbookPrintStatus.canPrint ? `
-                      <span class="print-quota-badge badge-available" style="font-size: 10px; padding: 1px 6px;">1x / Minggu</span>
-                    ` : `
-                      <span class="print-quota-badge badge-cooldown" style="font-size: 10px; padding: 1px 6px;">${logbookPrintStatus.daysLeft}h lagi</span>
-                    `}
-                  </button>
-                `;
-              })()}
-              <button class="btn btn-primary btn-sm" onclick="App.showAddLogbookModal(${p.id})">
-                <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><line x1="12" y1="5" x2="12" y2="19"/><line x1="5" y1="12" x2="19" y2="12"/></svg>
-                Tulis Logbook Baru
-              </button>
-            </div>
+            <button class="btn btn-primary btn-sm" onclick="App.showAddLogbookModal(${p.id})">
+              <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><line x1="12" y1="5" x2="12" y2="19"/><line x1="5" y1="12" x2="19" y2="12"/></svg>
+              Tulis Logbook Baru
+            </button>
           </div>
 
           ${logbooks.length === 0 ? `
