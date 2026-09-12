@@ -1717,59 +1717,6 @@ Object.assign(window.App, {
               </button>
             `}
           </div>
-
-          <!-- CONFIRMATION VALIDATION OVERLAY -->
-          <div id="apply-confirmation-overlay" class="apply-confirmation-overlay" style="display: none;">
-            <div class="apply-confirmation-card">
-              <div class="apply-conf-icon-wrap">
-                <div class="apply-conf-icon">
-                  <svg width="28" height="28" viewBox="0 0 24 24" fill="none" stroke="#059669" stroke-width="2.2" stroke-linecap="round" stroke-linejoin="round">
-                    <circle cx="12" cy="12" r="10"/>
-                    <path d="M9.09 9a3 3 0 0 1 5.83 1c0 2-3 3-3 3"/>
-                    <line x1="12" y1="17" x2="12.01" y2="17"/>
-                  </svg>
-                </div>
-              </div>
-              <div class="apply-conf-school-badge">SMK TARUNA BANGSA KOTA BEKASI</div>
-              <h3 class="apply-conf-title">
-                Apakah kamu yakin ingin mengajukan PKL di tempat ini?
-              </h3>
-              <p class="apply-conf-desc">
-                Pastikan posisi dan perusahaan yang Anda tuju sudah sesuai dengan kejuruan serta minat Anda di <strong>SMK Taruna Bangsa</strong>.
-              </p>
-
-              <div class="apply-conf-target-box">
-                <div class="apply-conf-target-header">
-                  <span class="apply-conf-company-badge">${companyName}</span>
-                  <span class="apply-conf-location">📍 ${cleanCity}</span>
-                </div>
-                <div class="apply-conf-target-title">${job.judul || 'Lowongan PKL'}</div>
-                <div class="apply-conf-target-meta">
-                  <span>👤 Pemohon: <strong>${student ? student.nama : 'Siswa'}</strong> (${student ? student.kelas : 'XII'})</span>
-                  <span>📑 Kuota: <strong>${job.sisa_kuota || 2} Siswa</strong></span>
-                </div>
-              </div>
-
-              <div class="apply-conf-notice">
-                <svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="#d97706" stroke-width="2" style="flex-shrink: 0; margin-top: 1px;"><path d="M10.29 3.86L1.82 18a2 2 0 0 0 1.71 3h16.94a2 2 0 0 0 1.71-3L13.71 3.86a2 2 0 0 0-3.42 0z"/><line x1="12" y1="9" x2="12" y2="13"/><line x1="12" y1="17" x2="12.01" y2="17"/></svg>
-                <div>
-                  <strong>Aturan BKK &amp; HUBIN:</strong>
-                  <div style="font-size: 11.5px; margin-top: 2px;">
-                    Siswa hanya dapat mengajukan <strong>1 lamaran aktif per minggu</strong>. Berkas permohonan akan langsung masuk ke antrean verifikasi tim HUBIN sekolah.
-                  </div>
-                </div>
-              </div>
-
-              <div class="apply-conf-actions">
-                <button type="button" class="btn-conf-cancel" onclick="App.closeApplyConfirmation()">
-                  Batal / Periksa Lagi
-                </button>
-                <button type="button" class="btn-conf-submit" onclick="App.executeApplyLoker(${job.id}, true)">
-                  Ya, Ajukan Sekarang &rarr;
-                </button>
-              </div>
-            </div>
-          </div>
         </div>
       `;
     } else {
@@ -1837,7 +1784,7 @@ Object.assign(window.App, {
     }
   },
 
-  promptApplyConfirmation(jobId) {
+  async promptApplyConfirmation(jobId) {
     if (this.isSubmittingApply) return;
 
     if (!this.currentStudent || this.currentRole !== 'SISWA') {
@@ -1849,7 +1796,7 @@ Object.assign(window.App, {
     const student = this.currentStudent;
     if (student.status_verifikasi !== 'Terverifikasi') {
       Modal.close();
-      this.handleDaftarPklClick(jobId);
+      await this.handleDaftarPklClick(jobId);
       return;
     }
 
@@ -1864,77 +1811,131 @@ Object.assign(window.App, {
       return;
     }
 
-    const overlay = document.getElementById('apply-confirmation-overlay');
-    if (overlay) {
-      overlay.style.display = 'flex';
-      const body = document.querySelector('.modal-loker-body');
-      if (body) body.scrollTop = 0;
-    } else {
-      this.showStandaloneApplyConfirmation(jobId);
-    }
+    await this.showApplyConfirmationModal(jobId);
   },
 
-  closeApplyConfirmation() {
-    const overlay = document.getElementById('apply-confirmation-overlay');
-    if (overlay) {
-      overlay.style.display = 'none';
+  closeApplyConfirmation(jobId) {
+    if (jobId) {
+      this.showJobDetailModal(jobId);
+    } else {
+      Modal.close();
     }
   },
 
   async showStandaloneApplyConfirmation(jobId) {
+    await this.showApplyConfirmationModal(jobId);
+  },
+
+  async confirmStandaloneApply(jobId) {
+    await this.executeApplyLoker(jobId, true);
+  },
+
+  async showApplyConfirmationModal(jobId) {
     const job = (this.activeLokerModalJob && Number(this.activeLokerModalJob.id) === Number(jobId))
       ? this.activeLokerModalJob
       : await API.getJobById(jobId);
     const student = this.currentStudent;
     if (!job || !student) return;
 
+    const companyName = job.company_nama || 'PT Mitra Industri';
+    const cleanCity = (job.lokasi_kota || 'Kota Bekasi').split(',')[0].replace(/Kota\s*/i, 'Kota ').trim();
+    const jobTitle = job.judul || 'Lowongan PKL';
+    const sisaKuota = job.sisa_kuota !== undefined ? job.sisa_kuota : 2;
+
     const html = `
-      <div style="text-align: center; padding: 10px 4px;">
-        <div style="width: 56px; height: 56px; border-radius: 50%; background: #ecfdf5; border: 2px solid #a7f3d0; display: flex; align-items: center; justify-content: center; margin: 0 auto 16px; font-size: 26px;">
-          ❓
+      <div style="font-family: 'Plus Jakarta Sans', system-ui, -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, sans-serif; background: #ffffff; border-radius: 20px; padding: 28px 24px 22px; position: relative; max-width: 520px; margin: 0 auto; box-sizing: border-box; text-align: center;">
+
+        <!-- Close Button (Kembali ke detail loker) -->
+        <button type="button" onclick="App.showJobDetailModal(${job.id})" style="position: absolute; top: 16px; right: 16px; width: 34px; height: 34px; border-radius: 50%; border: 1.5px solid #E2E8F0; background: #F8FAFC; color: #64748B; font-size: 20px; line-height: 1; cursor: pointer; display: flex; align-items: center; justify-content: center; transition: all 0.2s; padding: 0;" title="Kembali ke detail loker" aria-label="Tutup">&times;</button>
+
+        <!-- Icon Header Badge -->
+        <div style="margin-bottom: 14px; display: flex; justify-content: center;">
+          <div style="width: 62px; height: 62px; border-radius: 50%; background: linear-gradient(135deg, #ECFDF5 0%, #D1FAE5 100%); border: 3px solid #A7F3D0; display: flex; align-items: center; justify-content: center; box-shadow: 0 8px 18px -4px rgba(5, 150, 105, 0.22);">
+            <svg width="30" height="30" viewBox="0 0 24 24" fill="none" stroke="#059669" stroke-width="2.3" stroke-linecap="round" stroke-linejoin="round">
+              <circle cx="12" cy="12" r="10"></circle>
+              <path d="M9.09 9a3 3 0 0 1 5.83 1c0 2-3 3-3 3"></path>
+              <line x1="12" y1="17" x2="12.01" y2="17"></line>
+            </svg>
+          </div>
         </div>
-        <div style="font-size: 10px; font-weight: 800; letter-spacing: 0.8px; color: #059669; text-transform: uppercase; margin-bottom: 6px;">SMK TARUNA BANGSA KOTA BEKASI</div>
-        <h4 style="font-size: 18px; font-weight: 800; color: #0f172a; margin-bottom: 8px; line-height: 1.35;">
+
+        <!-- School Pill Badge -->
+        <div style="display: inline-flex; align-items: center; gap: 6px; background: #ECFDF5; border: 1px solid #A7F3D0; color: #047857; font-size: 11px; font-weight: 800; letter-spacing: 0.6px; text-transform: uppercase; padding: 4px 14px; border-radius: 9999px; margin-bottom: 12px;">
+          <span>🏢</span>
+          <span>HUBIN &amp; BKK &bull; SMK TARUNA BANGSA</span>
+        </div>
+
+        <!-- Main Question -->
+        <h3 style="font-size: 19px; font-weight: 800; color: #0F172A; margin: 0 0 8px; line-height: 1.35; padding: 0 8px;">
           Apakah kamu yakin ingin mengajukan PKL di tempat ini?
-        </h4>
-        <p style="font-size: 13px; color: #64748b; line-height: 1.5; max-width: 440px; margin: 0 auto 16px;">
-          Pastikan posisi dan perusahaan yang Anda pilih sudah sesuai dengan kompetensi keahlian Anda di <strong>SMK Taruna Bangsa</strong>.
+        </h3>
+
+        <!-- Explanation -->
+        <p style="font-size: 13px; color: #64748B; margin: 0 auto 16px; max-width: 440px; line-height: 1.55;">
+          Pastikan posisi dan perusahaan mitra industri ini sudah sesuai dengan kejuruan serta kesiapan Anda di <strong>SMK Taruna Bangsa</strong>.
         </p>
 
-        <div style="background: #f8fafc; border: 1px solid #e2e8f0; border-radius: 12px; padding: 14px; text-align: left; margin-bottom: 16px;">
-          <div style="font-weight: 700; font-size: 12px; color: #059669; margin-bottom: 2px;">${job.company_nama || 'Mitra PKL'}</div>
-          <div style="font-size: 14.5px; font-weight: 800; color: #0f172a; margin-bottom: 6px;">${job.judul || 'Lowongan PKL'}</div>
-          <div style="font-size: 12px; color: #64748b;">📍 ${(job.lokasi_kota || 'Kota Bekasi').split(',')[0]} &bull; Kuota: ${job.sisa_kuota || 2} Siswa</div>
+        <!-- Loker Target Summary Card -->
+        <div style="background: #F8FAFC; border: 1.5px solid #E2E8F0; border-radius: 14px; padding: 14px 16px; text-align: left; margin-bottom: 16px;">
+          <div style="display: flex; align-items: center; justify-content: space-between; gap: 10px; margin-bottom: 6px; flex-wrap: wrap;">
+            <span style="font-size: 12px; font-weight: 800; color: #059669; text-transform: uppercase; letter-spacing: 0.5px; display: inline-flex; align-items: center; gap: 5px;">
+              🏢 ${companyName}
+            </span>
+            <span style="font-size: 11.5px; color: #475569; font-weight: 600; background: #E2E8F0; padding: 2px 8px; border-radius: 6px;">
+              📍 ${cleanCity}
+            </span>
+          </div>
+
+          <div style="font-size: 15px; font-weight: 800; color: #0F172A; margin-bottom: 8px;">
+            ${jobTitle}
+          </div>
+
+          <div style="display: flex; align-items: center; justify-content: space-between; gap: 8px; font-size: 12px; color: #64748B; border-top: 1px dashed #CBD5E1; padding-top: 8px; flex-wrap: wrap;">
+            <span>👤 Pemohon: <strong style="color: #0F172A;">${student ? student.nama : 'Siswa'}</strong> (${student ? student.kelas : 'XII'})</span>
+            <span style="font-weight: 700; color: #059669; background: #ECFDF5; border: 1px solid #A7F3D0; padding: 2px 8px; border-radius: 6px;">
+              Kuota: ${sisaKuota} Siswa
+            </span>
+          </div>
         </div>
 
-        <div style="background: #fffbeb; border: 1px solid #fde68a; border-radius: 10px; padding: 10px 14px; text-align: left; margin-bottom: 20px; font-size: 12px; color: #92400e;">
-          ⚠️ <strong>Aturan BKK &amp; HUBIN:</strong> Siswa hanya dapat mengajukan <strong>1 lamaran per minggu</strong>.
+        <!-- BKK / HUBIN Rule Box (Amber Warning) -->
+        <div style="background: #FFFBEB; border: 1.5px solid #FCD34D; border-radius: 12px; padding: 12px 14px; text-align: left; margin-bottom: 22px; display: flex; align-items: flex-start; gap: 10px;">
+          <div style="font-size: 18px; line-height: 1; flex-shrink: 0; margin-top: 2px;">⚠️</div>
+          <div style="flex: 1;">
+            <div style="font-size: 12.5px; font-weight: 800; color: #92400E; margin-bottom: 2px;">
+              Aturan Kebijakan BKK &amp; HUBIN:
+            </div>
+            <div style="font-size: 12px; color: #B45309; line-height: 1.5;">
+              Siswa hanya diperkenankan mengajukan <strong>1 lamaran aktif dalam 1 minggu</strong>. Berkas ini akan langsung masuk ke antrean verifikasi tim HUBIN sekolah sebelum diproses ke industri.
+            </div>
+          </div>
         </div>
 
-        <div style="display: flex; gap: 10px; justify-content: center;">
-          <button class="btn btn-secondary" onclick="Modal.close();">
+        <!-- Action Buttons -->
+        <div style="display: flex; gap: 12px; justify-content: center; align-items: center; flex-wrap: wrap;">
+          <button type="button" class="btn btn-secondary" onclick="App.showJobDetailModal(${job.id})" style="flex: 1; min-width: 140px; padding: 12px 20px; font-size: 13.5px; font-weight: 700; color: #475569; background: #FFFFFF; border: 1.5px solid #CBD5E1; border-radius: 12px; cursor: pointer; display: flex; align-items: center; justify-content: center; gap: 6px; box-sizing: border-box; transition: all 0.2s;">
             Batal / Periksa Lagi
           </button>
-          <button class="btn btn-primary" style="background: #059669; border-color: #059669;" onclick="App.confirmStandaloneApply(${job.id});">
-            Ya, Ajukan Sekarang &rarr;
+          <button type="button" id="btn-confirm-apply-submit" class="btn btn-primary" onclick="App.executeApplyLoker(${job.id}, true)" style="flex: 1.2; min-width: 180px; padding: 12px 22px; font-size: 13.5px; font-weight: 700; color: #FFFFFF; background: linear-gradient(135deg, #059669 0%, #047857 100%); border: 1.5px solid #059669; border-radius: 12px; cursor: pointer; display: flex; align-items: center; justify-content: center; gap: 8px; box-shadow: 0 4px 12px rgba(5, 150, 105, 0.28); box-sizing: border-box; transition: all 0.2s;">
+            <span>Ya, Ajukan Sekarang</span>
+            <span style="font-size: 15px;">&rarr;</span>
           </button>
         </div>
+
       </div>
     `;
-    Modal.open(html, 'Konfirmasi Pengajuan PKL', 'md');
-  },
 
-  async confirmStandaloneApply(jobId) {
-    Modal.close();
-    await this.showJobDetailModal(jobId);
-    await this.executeApplyLoker(jobId, true);
+    Modal.open(html, null, 'md', { hideHeader: true });
+    if (typeof window !== 'undefined' && window.lenis) {
+      try { window.lenis.resize(); } catch (e) {}
+    }
   },
 
   async executeApplyLoker(jobId, isConfirmed = false) {
     if (this.isSubmittingApply) return;
 
     if (!isConfirmed) {
-      this.promptApplyConfirmation(jobId);
+      await this.promptApplyConfirmation(jobId);
       return;
     }
 
@@ -1962,30 +1963,12 @@ Object.assign(window.App, {
       return;
     }
 
-    let portofolio_url = (document.getElementById('apply-portofolio-input')?.value || student.cv_url || '').trim();
-    if (portofolio_url && !/^https?:\/\//i.test(portofolio_url)) {
-      portofolio_url = 'https://' + portofolio_url;
-    }
-    const domAlasan = (document.getElementById('apply-alasan-input')?.value || '').trim();
-    const alasan_melamar = domAlasan || 'Pengajuan langsung melalui katalog lowongan terverifikasi FindMyPKL.';
+    const portofolio_url = (student.cv_url || '').trim();
+    const alasan_melamar = 'Pengajuan langsung melalui katalog lowongan terverifikasi FindMyPKL SMK Taruna Bangsa.';
 
     // Double submit prevention & loading state
     this.isSubmittingApply = true;
-    const submitBtn = document.querySelector('.modal-loker-footer .btn-loker-primary');
-    const origBtnHtml = submitBtn ? submitBtn.innerHTML : 'Kirim Pengajuan Lamaran &rarr;';
-    if (submitBtn) {
-      submitBtn.disabled = true;
-      submitBtn.style.opacity = '0.75';
-      submitBtn.style.cursor = 'not-allowed';
-      submitBtn.innerHTML = `
-        <span style="display: inline-flex; align-items: center; gap: 8px;">
-          <svg style="animation: spin 1s linear infinite;" width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5"><path d="M21 12a9 9 0 1 1-6.219-8.56"/></svg>
-          Mengirim Pengajuan...
-        </span>
-      `;
-    }
-
-    const confSubmitBtn = document.querySelector('.apply-conf-actions .btn-conf-submit');
+    const confSubmitBtn = document.getElementById('btn-confirm-apply-submit') || document.querySelector('.modal-loker-footer .btn-loker-primary');
     const origConfBtnHtml = confSubmitBtn ? confSubmitBtn.innerHTML : 'Ya, Ajukan Sekarang &rarr;';
     if (confSubmitBtn) {
       confSubmitBtn.disabled = true;
@@ -2030,12 +2013,6 @@ Object.assign(window.App, {
       this.renderLokerModalStep(jobId, 2);
     } catch (err) {
       Toast.show('Gagal Mengajukan Lamaran', err.message, 'error');
-      if (submitBtn) {
-        submitBtn.disabled = false;
-        submitBtn.style.opacity = '1';
-        submitBtn.style.cursor = 'pointer';
-        submitBtn.innerHTML = origBtnHtml;
-      }
       if (confSubmitBtn) {
         confSubmitBtn.disabled = false;
         confSubmitBtn.style.opacity = '1';

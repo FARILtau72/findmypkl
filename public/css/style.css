@@ -4,12 +4,12 @@
    Modular architecture - each feature has its own dedicated stylesheet
    ========================================================================== */
 
-@import url('base.css');
-@import url('dashboard.css');
-@import url('nav.css');
-@import url('homepage.css');
-@import url('catalog.css');
-@import url('portal-pages.css');
-@import url('auth.css');
-@import url('responsive.css');
-@import url('surat.css');
+@import url('base.css?v=2.7');
+@import url('dashboard.css?v=2.7');
+@import url('nav.css?v=2.7');
+@import url('homepage.css?v=2.7');
+@import url('catalog.css?v=2.7');
+@import url('portal-pages.css?v=2.7');
+@import url('auth.css?v=2.7');
+@import url('responsive.css?v=2.7');
+@import url('surat.css?v=2.7');
