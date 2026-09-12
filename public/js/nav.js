@@ -106,7 +106,7 @@ Object.assign(window.App, {
     const isSiswaLoggedIn = this.currentRole === 'SISWA' && Boolean(this.currentStudent);
     const student = isSiswaLoggedIn ? this.currentStudent : null;
     const initials = student ? student.nama.split(' ').map(w => w[0]).slice(0, 2).join('') : 'SA';
-    const schoolSub = student ? `${student.sekolah || 'SMK Taruna Bangsa'} • ${student.jurusan_short || student.kelas || 'RPL'}` : 'SMK Taruna Bangsa';
+    const schoolSub = student ? `${student.kelas || 'XII RPL 1'} &bull; ${student.status_verifikasi === 'Terverifikasi' ? 'Siswa Aktif' : (student.status_verifikasi || 'Siswa')}` : 'Siswa Aktif';
     const favCount = (isSiswaLoggedIn && this.bookmarkedJobs) ? this.bookmarkedJobs.size : 0;
     const favBadge = favCount > 0 ? `<span class="nav-fav-badge">${favCount}</span>` : '';
     const isTransparent = activeTab === 'beranda';
@@ -121,7 +121,7 @@ Object.assign(window.App, {
             </div>
             <div>
               <div class="brand-logo-text" style="line-height: 1.1;">FindMy<span style="color: #059669;">PKL</span></div>
-              <div style="font-size: 9px; font-weight: 800; letter-spacing: 0.8px; color: #94A3B8; text-transform: uppercase;">SMK TARUNA BANGSA BEKASI</div>
+              <div style="font-size: 8.5px; font-weight: 700; letter-spacing: 0.5px; color: #64748B; text-transform: uppercase;">SMK TARUNA BANGSA</div>
             </div>
           </div>
 
@@ -186,6 +186,10 @@ Object.assign(window.App, {
                     <a class="mkt-dropdown-item" onclick="App.showSwitchStudentModal()">
                       <svg width="15" height="15" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M17 1l4 4-4 4"/><path d="M3 11V9a4 4 0 0 1 4-4h14"/><path d="M7 23l-4-4 4-4"/><path d="M21 13v2a4 4 0 0 1-4 4H3"/></svg>
                       <span>Ganti Akun Siswa (Demo)</span>
+                    </a>
+                    <a class="mkt-dropdown-item" onclick="App.setRole('LOGIN', 'hubin')">
+                      <svg width="15" height="15" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><rect x="3" y="3" width="18" height="18" rx="2"/><path d="M9 3v18"/></svg>
+                      <span>Masuk ke Portal HUBIN</span>
                     </a>
                     <a class="mkt-dropdown-item mkt-item-danger" onclick="App.logout()">
                       <svg width="15" height="15" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M9 21H5a2 2 0 0 1-2-2V5a2 2 0 0 1 2-2h4"/><polyline points="16 17 21 12 16 7"/><line x1="21" y1="12" x2="9" y2="12"/></svg>

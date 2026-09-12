@@ -905,16 +905,18 @@
 .btn-nav-hubin-pill {
   background: #ffffff;
   border: 1px solid #E2E8F0;
-  border-radius: 8px;
-  padding: 7px 14px;
-  font-size: 12.5px;
+  border-radius: 9999px;
+  padding: 5.5px 12px;
+  font-size: 12px;
   font-weight: 600;
   color: #334155;
   display: inline-flex;
   align-items: center;
-  gap: 8px;
+  gap: 6px;
   cursor: pointer;
   transition: all 0.15s ease;
+  white-space: nowrap;
+  flex-shrink: 0;
 }
 
 .btn-nav-hubin-pill:hover {
@@ -927,15 +929,15 @@
   background: #ffffff;
   border: 1px solid #E2E8F0;
   border-radius: 9999px;
-  padding: 4px 12px 4px 5px;
+  padding: 3.5px 12px 3.5px 4px;
   display: inline-flex;
   align-items: center;
-  gap: 8px;
+  gap: 7px;
   cursor: pointer;
   transition: all 0.2s cubic-bezier(0.4, 0, 0.2, 1);
   position: relative;
   user-select: none;
-  max-width: 240px;
+  flex-shrink: 0;
 }
 
 .mkt-user-profile-pill:hover {
@@ -949,13 +951,13 @@
 }
 
 .mkt-user-avatar {
-  width: 34px;
-  height: 34px;
+  width: 32px;
+  height: 32px;
   border-radius: 50%;
   background: linear-gradient(135deg, #10B981, #059669);
   color: #ffffff;
   font-weight: 800;
-  font-size: 13px;
+  font-size: 12.5px;
   display: flex;
   align-items: center;
   justify-content: center;
@@ -969,11 +971,11 @@
   text-align: left;
   line-height: 1.25;
   min-width: 0;
-  max-width: 150px;
+  max-width: 140px;
 }
 
 .mkt-user-name {
-  font-size: 13px;
+  font-size: 12.5px;
   font-weight: 700;
   color: #0F172A;
   white-space: nowrap;
@@ -983,8 +985,8 @@
 
 .mkt-user-sub {
   font-size: 10.5px;
-  color: #64748B;
-  font-weight: 500;
+  color: #059669;
+  font-weight: 600;
   white-space: nowrap;
   overflow: hidden;
   text-overflow: ellipsis;
@@ -994,6 +996,7 @@
   color: #64748B;
   margin-left: 2px;
   flex-shrink: 0;
+  display: inline-block;
   transition: transform 0.2s cubic-bezier(0.4, 0, 0.2, 1);
 }
 
