@@ -2817,6 +2817,62 @@ class Store {
     return list.find(a => a.id === Number(id)) || null;
   }
 
+  // Aturan BKK/HUBIN: 1 siswa hanya boleh melamar 1 perusahaan dalam 1 minggu (7 hari cooldown)
+  getStudentApplicationCooldown(studentId) {
+    const sId = Number(studentId);
+    const ONE_WEEK_MS = 7 * 24 * 60 * 60 * 1000;
+    const now = Date.now();
+
+    const studentApps = (this.applications || [])
+      .filter(a => a.student_id === sId)
+      .map(a => {
+        const t = new Date(a.created_at || a.tanggal_daftar).getTime();
+        return { ...a, timestamp: t };
+      })
+      .sort((a, b) => b.timestamp - a.timestamp);
+
+    if (studentApps.length === 0) {
+      return {
+        can_apply: true,
+        last_applied_at: null,
+        last_applied_date_formatted: null,
+        next_eligible_date: null,
+        next_eligible_date_formatted: null,
+        days_remaining: 0,
+        hours_remaining: 0,
+        last_company_nama: null,
+        last_job_judul: null,
+        total_applications: 0
+      };
+    }
+
+    const lastApp = studentApps[0];
+    const diff = now - lastApp.timestamp;
+    const canApply = diff >= ONE_WEEK_MS;
+    const msRemaining = Math.max(0, ONE_WEEK_MS - diff);
+    const daysRemaining = Math.ceil(msRemaining / (24 * 60 * 60 * 1000));
+    const hoursRemaining = Math.ceil(msRemaining / (60 * 60 * 1000));
+    const nextEligibleDate = new Date(lastApp.timestamp + ONE_WEEK_MS);
+
+    const job = this.getJobById(lastApp.job_id);
+    const comp = job ? this.getCompanyById(job.company_id) : null;
+    const companyNama = (comp && comp.nama) || (job && job.company_nama) || 'Mitra Industri';
+
+    return {
+      can_apply: canApply,
+      last_applied_at: lastApp.created_at || lastApp.tanggal_daftar,
+      last_applied_date_formatted: new Date(lastApp.timestamp).toLocaleDateString('id-ID', { day: 'numeric', month: 'long', year: 'numeric' }),
+      next_eligible_date: nextEligibleDate.toISOString(),
+      next_eligible_date_formatted: nextEligibleDate.toLocaleDateString('id-ID', { day: 'numeric', month: 'long', year: 'numeric' }),
+      days_remaining: daysRemaining,
+      hours_remaining: hoursRemaining,
+      last_job_id: lastApp.job_id,
+      last_job_judul: job ? job.judul : 'Lowongan PKL',
+      last_company_nama: companyNama,
+      total_applications: studentApps.length
+    };
+  }
+
   addApplication({ student_id, job_id, portofolio_url, alasan_melamar }) {
     const student = this.getStudentById(student_id);
     if (!student) throw new Error('Siswa tidak ditemukan');
@@ -2832,6 +2888,12 @@ class Store {
     const existing = this.applications.find(a => a.student_id === Number(student_id) && a.job_id === Number(job_id));
     if (existing) {
       throw new Error(`Anda sudah pernah mengajukan lamaran untuk posisi ini (Status: ${existing.status}).`);
+    }
+
+    // Aturan BKK/HUBIN: 1 siswa hanya boleh melamar 1 perusahaan dalam 1 minggu
+    const cooldown = this.getStudentApplicationCooldown(student_id);
+    if (!cooldown.can_apply) {
+      throw new Error(`Kebijakan BKK/HUBIN: 1 siswa hanya diperbolehkan melamar 1 perusahaan dalam 1 minggu. Anda telah melamar ke ${cooldown.last_company_nama} pada ${cooldown.last_applied_date_formatted}. Silakan tunggu ${cooldown.days_remaining} hari lagi (hingga ${cooldown.next_eligible_date_formatted}) untuk mengajukan lamaran baru.`);
     }
 
     const today = new Date().toISOString().split('T')[0];

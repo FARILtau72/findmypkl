@@ -61,6 +61,10 @@ const API = {
     return this.request(`/students/${id}/print-status?type=${encodeURIComponent(type)}`);
   },
 
+  getStudentApplicationCooldown(id) {
+    return this.request(`/students/${id}/cooldown`);
+  },
+
   recordStudentPrint(id, data = {}) {
     return this.request(`/students/${id}/print-log`, {
       method: 'POST',

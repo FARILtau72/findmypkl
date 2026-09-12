@@ -42,6 +42,9 @@ export async function GET(request, { params }) {
         if (subResource === 'print-status') {
           return NextResponse.json(store.getStudentPrintStatus(id, query.type || 'surat'));
         }
+        if (subResource === 'cooldown' || subResource === 'apply-status') {
+          return NextResponse.json(store.getStudentApplicationCooldown(id));
+        }
         const student = store.getStudentById(id);
         if (!student) return NextResponse.json({ error: 'Siswa tidak ditemukan' }, { status: 404 });
         return NextResponse.json(student);

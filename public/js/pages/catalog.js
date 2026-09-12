@@ -1383,15 +1383,20 @@ Object.assign(window.App, {
     this.activeLokerModalJob = job;
 
     this.activeLokerUserApplication = null;
+    this.activeLokerCooldown = null;
     if (this.currentStudent && this.currentRole === 'SISWA') {
       try {
-        const apps = await API.getApplications({ student_id: this.currentStudent.id });
+        const [apps, cooldown] = await Promise.all([
+          API.getApplications({ student_id: this.currentStudent.id }),
+          API.getStudentApplicationCooldown(this.currentStudent.id).catch(() => null)
+        ]);
         const existing = (apps || []).find(a => Number(a.job_id) === Number(jobId));
         if (existing) {
           this.activeLokerUserApplication = existing;
         }
+        this.activeLokerCooldown = cooldown;
       } catch (e) {
-        console.warn('Could not check existing application:', e);
+        console.warn('Could not check existing application or cooldown:', e);
       }
     }
 
@@ -1407,6 +1412,8 @@ Object.assign(window.App, {
     const isPaid = this.isJobPaid(job);
     const userApp = this.activeLokerUserApplication || null;
     const isApplied = Boolean(userApp);
+    const cooldown = this.activeLokerCooldown || null;
+    const isCooldownActive = Boolean(cooldown && !cooldown.can_apply && !isApplied);
 
     // Helpers
     const companyName = job.company_nama || 'PT Media Kreatif Nusantara';
@@ -1531,6 +1538,23 @@ Object.assign(window.App, {
                   Lihat Status &rarr;
                 </button>
               </div>
+            ` : isCooldownActive ? `
+              <!-- Cooldown 1 Minggu 1 Perusahaan Banner -->
+              <div style="background: #FFFBEB; border: 1.5px solid #FCD34D; border-radius: 12px; padding: 14px 16px; margin-bottom: 16px; display: flex; align-items: flex-start; gap: 12px;">
+                <span style="font-size: 22px; line-height: 1;">⏳</span>
+                <div style="flex: 1;">
+                  <div style="font-size: 13.5px; font-weight: 700; color: #92400E; margin-bottom: 4px;">
+                    Batas Lamaran Mingguan (1 Siswa 1 Perusahaan / Minggu)
+                  </div>
+                  <div style="font-size: 12.5px; color: #B45309; line-height: 1.5;">
+                    Berdasarkan kebijakan BKK &amp; HUBIN, Anda hanya dapat melamar ke <strong>1 perusahaan dalam 1 minggu</strong>. Anda telah mengajukan lamaran ke <strong>${cooldown.last_company_nama}</strong> (${cooldown.last_job_judul}) pada ${cooldown.last_applied_date_formatted}.
+                  </div>
+                  <div style="margin-top: 8px; font-size: 12px; font-weight: 700; color: #78350F; display: flex; align-items: center; gap: 8px; flex-wrap: wrap;">
+                    <span>🗓 Anda dapat melamar lowongan baru dalam:</span>
+                    <span class="badge badge-amber" style="font-weight: 800; font-size: 12px; padding: 3px 10px;">${cooldown.days_remaining} Hari Lagi (Mulai ${cooldown.next_eligible_date_formatted})</span>
+                  </div>
+                </div>
+              </div>
             ` : ''}
 
             <!-- Sub-tracker -->
@@ -1639,6 +1663,10 @@ Object.assign(window.App, {
               <button type="button" class="btn-loker-primary" style="background: #059669;" onclick="Modal.close(); App.setRole('SISWA', 'lamaran');">
                 Lihat Status Lamaran Saya &rarr;
               </button>
+            ` : isCooldownActive ? `
+              <button type="button" class="btn-loker-primary" style="background: #94A3B8; cursor: not-allowed; opacity: 0.85;" disabled title="1 siswa hanya boleh melamar 1 perusahaan dalam 1 minggu">
+                ⏳ Batas Mingguan (${cooldown.days_remaining} Hari Lagi)
+              </button>
             ` : isPublic ? `
               <button type="button" class="btn-loker-primary" onclick="App.handleDaftarPklClick(${job.id})">
                 Masuk untuk Melamar &rarr;
@@ -1736,6 +1764,17 @@ Object.assign(window.App, {
       return;
     }
 
+    // Aturan 1 siswa hanya boleh melamar 1 perusahaan dalam 1 minggu
+    if (this.activeLokerCooldown && !this.activeLokerCooldown.can_apply) {
+      const cd = this.activeLokerCooldown;
+      Toast.show(
+        'Batas Lamaran Mingguan',
+        `1 siswa hanya diperbolehkan melamar 1 perusahaan dalam 1 minggu. Anda telah melamar ke ${cd.last_company_nama}. Silakan tunggu ${cd.days_remaining} hari lagi.`,
+        'warning'
+      );
+      return;
+    }
+
     let portofolio_url = (document.getElementById('apply-portofolio-input')?.value || student.cv_url || '').trim();
     if (portofolio_url && !/^https?:\/\//i.test(portofolio_url)) {
       portofolio_url = 'https://' + portofolio_url;
@@ -1771,6 +1810,19 @@ Object.assign(window.App, {
         job_id: Number(jobId),
         status: 'Menunggu Verifikasi HUBIN',
         tanggal_daftar: new Date().toISOString().split('T')[0]
+      };
+
+      // Set cooldown 7 hari
+      const ONE_WEEK_MS = 7 * 24 * 60 * 60 * 1000;
+      const nextDate = new Date(Date.now() + ONE_WEEK_MS);
+      this.activeLokerCooldown = {
+        can_apply: false,
+        days_remaining: 7,
+        hours_remaining: 168,
+        last_company_nama: (this.activeLokerModalJob && this.activeLokerModalJob.company_nama) || 'Mitra Industri',
+        last_job_judul: (this.activeLokerModalJob && this.activeLokerModalJob.judul) || 'Lowongan PKL',
+        last_applied_date_formatted: 'Hari ini',
+        next_eligible_date_formatted: nextDate.toLocaleDateString('id-ID', { day: 'numeric', month: 'long', year: 'numeric' })
       };
 
       Toast.show('Lamaran Berhasil Diajukan', 'Berkas telah masuk ke antrean persetujuan HUBIN.', 'success');
