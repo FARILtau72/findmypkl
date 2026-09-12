@@ -1242,26 +1242,34 @@ Object.assign(window.App, {
     // 1. If not logged in as student / guest mode
     if (!student || this.currentRole !== 'SISWA') {
       const html = `
-        <div style="text-align: center; padding: 10px 0;">
-          <div style="width: 56px; height: 56px; border-radius: 50%; background: #eff6ff; color: #2563eb; display: flex; align-items: center; justify-content: center; margin: 0 auto 16px; font-size: 26px;">
+        <div style="text-align: center; padding: 6px 0;">
+          <div style="width: 58px; height: 58px; border-radius: 50%; background: linear-gradient(135deg, #EFF6FF 0%, #DBEAFE 100%); border: 3px solid #BFDBFE; color: #2563EB; display: flex; align-items: center; justify-content: center; margin: 0 auto 14px; font-size: 26px; box-shadow: 0 4px 12px rgba(37, 99, 235, 0.15);">
             🔒
           </div>
-          <h4 style="font-size: 17px; font-weight: 800; color: #0f172a; margin-bottom: 8px;">
+          <div style="display: inline-flex; align-items: center; gap: 6px; background: #EFF6FF; border: 1px solid #BFDBFE; color: #1D4ED8; font-size: 11px; font-weight: 800; letter-spacing: 0.6px; text-transform: uppercase; padding: 3px 12px; border-radius: 9999px; margin-bottom: 12px;">
+            <span>🏢</span>
+            <span>PORTAL SISWA &bull; SMK TARUNA BANGSA</span>
+          </div>
+          <h4 style="font-size: 18px; font-weight: 800; color: #0f172a; margin-bottom: 8px; line-height: 1.35;">
             Pendaftaran Siswa Diperlukan
           </h4>
-          <p style="font-size: 13.5px; color: #64748b; line-height: 1.6; max-width: 440px; margin: 0 auto 18px;">
-            Untuk dapat mengajukan permohonan PKL ke mitra <strong>${job ? job.company_nama : 'Industri'}</strong>, Anda harus terdaftar sebagai siswa aktif SMK Taruna Bangsa Kota Bekasi dan akun telah diverifikasi oleh tim HUBIN.
+          <p style="font-size: 13px; color: #64748b; line-height: 1.55; max-width: 440px; margin: 0 auto 16px;">
+            Untuk dapat mengajukan permohonan PKL ke mitra <strong>${job ? job.company_nama : 'Industri'}</strong>, Anda harus terdaftar sebagai siswa aktif <strong>SMK Taruna Bangsa Kota Bekasi</strong> dan akun telah diverifikasi oleh tim HUBIN.
           </p>
-          <div style="background: #f8fafc; border: 1px solid #e2e8f0; border-radius: 12px; padding: 14px; text-align: left; margin-bottom: 20px;">
-            <div style="font-weight: 700; font-size: 12.5px; color: #334155; margin-bottom: 4px;">Lowongan yang Dituju:</div>
-            <div style="font-size: 14px; font-weight: 800; color: #0f172a;">${job ? job.judul : 'Lowongan PKL'}</div>
-            <div style="font-size: 12px; color: #64748b;">${job ? job.company_nama : ''} &bull; ${job ? job.lokasi_kota : ''}</div>
+          <div style="background: #f8fafc; border: 1.5px solid #e2e8f0; border-radius: 14px; padding: 14px 16px; text-align: left; margin-bottom: 18px;">
+            <div style="font-weight: 700; font-size: 11.5px; color: #059669; text-transform: uppercase; letter-spacing: 0.5px; margin-bottom: 4px;">Lowongan yang Dituju:</div>
+            <div style="font-size: 15px; font-weight: 800; color: #0f172a; margin-bottom: 4px;">${job ? job.judul : 'Lowongan PKL'}</div>
+            <div style="font-size: 12px; color: #64748b; display: flex; align-items: center; gap: 6px; flex-wrap: wrap;">
+              <span>🏢 ${job ? job.company_nama : 'Mitra DUDI'}</span>
+              <span>&bull;</span>
+              <span>📍 ${job ? (job.lokasi_kota || 'Kota Bekasi').split(',')[0] : 'Kota Bekasi'}</span>
+            </div>
           </div>
-          <div style="display: flex; gap: 10px; justify-content: center;">
-            <button class="btn btn-primary" onclick="Modal.close(); App.setRole('REGISTER');">
-              Daftar Akun Siswa Baru
+          <div style="display: flex; flex-direction: column; gap: 10px; width: 100%;">
+            <button type="button" class="btn btn-primary" style="width: 100%; justify-content: center; padding: 12px 18px; font-size: 14px; font-weight: 700; border-radius: 12px; background: linear-gradient(135deg, #059669 0%, #047857 100%); border: none; box-shadow: 0 4px 14px rgba(5, 150, 105, 0.25); cursor: pointer;" onclick="Modal.close(); App.setRole('REGISTER');">
+              Daftar Akun Siswa Baru &rarr;
             </button>
-            <button class="btn btn-secondary" onclick="Modal.close(); App.setRole('LOGIN');">
+            <button type="button" class="btn btn-secondary" style="width: 100%; justify-content: center; padding: 11px 18px; font-size: 13.5px; font-weight: 600; border-radius: 12px; background: #ffffff; border: 1.5px solid #CBD5E1; color: #334155; cursor: pointer;" onclick="Modal.close(); App.setRole('LOGIN');">
               Sudah Punya Akun? Masuk
             </button>
           </div>
@@ -1274,8 +1282,8 @@ Object.assign(window.App, {
     // 2. Account State: MENUNGGU VERIFIKASI
     if (student.status_verifikasi === 'Menunggu Verifikasi') {
       const html = `
-        <div style="text-align: center; padding: 10px 0;">
-          <div style="width: 56px; height: 56px; border-radius: 50%; background: #fef3c7; color: #d97706; display: flex; align-items: center; justify-content: center; margin: 0 auto 14px; font-size: 26px;">
+        <div style="text-align: center; padding: 6px 0;">
+          <div style="width: 58px; height: 58px; border-radius: 50%; background: #fef3c7; color: #d97706; display: flex; align-items: center; justify-content: center; margin: 0 auto 14px; font-size: 26px; border: 3px solid #fde68a;">
             ⏳
           </div>
           <span class="badge badge-amber" style="font-size: 11px; padding: 4px 10px; margin-bottom: 8px;">
@@ -1284,18 +1292,18 @@ Object.assign(window.App, {
           <h4 style="font-size: 18px; font-weight: 800; color: #0f172a; margin: 8px 0 6px;">
             "Data kamu sedang diperiksa oleh HUBIN."
           </h4>
-          <p style="font-size: 13.5px; color: #64748b; line-height: 1.6; max-width: 440px; margin: 0 auto 18px;">
+          <p style="font-size: 13px; color: #64748b; line-height: 1.55; max-width: 440px; margin: 0 auto 16px;">
             Pendaftaran akun kamu atas nama <strong>${student.nama}</strong> (${student.kelas} &bull; NISN: ${student.nisn}) sedang ditinjau dan divalidasi oleh Koordinator HUBIN. Setelah disetujui, kamu dapat langsung mengirimkan lamaran ke <strong>${job ? job.company_nama : 'mitra'}</strong>.
           </p>
-          <div style="background: #fffbeb; border: 1px solid #fde68a; border-radius: 12px; padding: 12px 16px; text-align: left; margin-bottom: 20px; font-size: 12.5px; color: #92400e;">
+          <div style="background: #fffbeb; border: 1px solid #fde68a; border-radius: 12px; padding: 12px 16px; text-align: left; margin-bottom: 18px; font-size: 12.5px; color: #92400e;">
             <strong>ℹ Info untuk Siswa:</strong> Verifikasi HUBIN memerlukan pencocokan data buku induk Dapodik sekolah. Pastikan data kontak WhatsApp kamu aktif.
           </div>
-          <div style="display: flex; gap: 10px; justify-content: center;">
-            <button class="btn btn-secondary" onclick="Modal.close();">
-              Tutup
-            </button>
-            <button class="btn btn-primary" onclick="Modal.close(); App.setTab('profil');">
+          <div style="display: flex; flex-direction: column; gap: 10px; width: 100%;">
+            <button type="button" class="btn btn-primary" style="width: 100%; justify-content: center; padding: 12px 18px; font-size: 14px; font-weight: 700; border-radius: 12px; background: linear-gradient(135deg, #059669 0%, #047857 100%); border: none; box-shadow: 0 4px 14px rgba(5, 150, 105, 0.25);" onclick="Modal.close(); App.setTab('profil');">
               Lihat Detail di Profil Saya &rarr;
+            </button>
+            <button type="button" class="btn btn-secondary" style="width: 100%; justify-content: center; padding: 11px 18px; font-size: 13.5px; font-weight: 600; border-radius: 12px; background: #ffffff; border: 1.5px solid #CBD5E1; color: #334155;" onclick="Modal.close();">
+              Tutup
             </button>
           </div>
         </div>
@@ -1307,8 +1315,8 @@ Object.assign(window.App, {
     // 3. Account State: PERLU PERBAIKAN
     if (student.status_verifikasi === 'Perlu Perbaikan') {
       const html = `
-        <div style="text-align: center; padding: 10px 0;">
-          <div style="width: 56px; height: 56px; border-radius: 50%; background: #ffedd5; color: #ea580c; display: flex; align-items: center; justify-content: center; margin: 0 auto 14px; font-size: 26px;">
+        <div style="text-align: center; padding: 6px 0;">
+          <div style="width: 58px; height: 58px; border-radius: 50%; background: #ffedd5; color: #ea580c; display: flex; align-items: center; justify-content: center; margin: 0 auto 14px; font-size: 26px; border: 3px solid #fed7aa;">
             ✍
           </div>
           <span class="badge badge-amber" style="font-size: 11px; padding: 4px 10px; margin-bottom: 8px;">
@@ -1317,19 +1325,21 @@ Object.assign(window.App, {
           <h4 style="font-size: 18px; font-weight: 800; color: #0f172a; margin: 8px 0 6px;">
             "HUBIN meminta kamu memperbaiki beberapa data."
           </h4>
-          <p style="font-size: 13.5px; color: #64748b; line-height: 1.6; max-width: 440px; margin: 0 auto 16px;">
+          <p style="font-size: 13px; color: #64748b; line-height: 1.55; max-width: 440px; margin: 0 auto 16px;">
             Terdapat data pendaftaran yang perlu dilengkapi atau dikoreksi sebelum kamu dapat mengajukan lamaran PKL.
           </p>
-          <div style="background: #fff7ed; border: 1.5px solid #fed7aa; border-radius: 12px; padding: 14px; text-align: left; margin-bottom: 20px;">
+          <div style="background: #fff7ed; border: 1.5px solid #fed7aa; border-radius: 12px; padding: 14px; text-align: left; margin-bottom: 18px;">
             <div style="font-size: 12px; font-weight: 700; color: #9a3412; margin-bottom: 4px;">Catatan dari Koordinator HUBIN:</div>
-            <div style="font-size: 13.5px; color: #7c2d12; font-weight: 600; line-height: 1.5;">
+            <div style="font-size: 13px; color: #7c2d12; font-weight: 600; line-height: 1.5;">
               "${student.catatan_verifikasi || 'Periksa kembali nomor kontak WhatsApp dan tautan berkas CV Anda.'}"
             </div>
           </div>
-          <div style="display: flex; gap: 10px; justify-content: center;">
-            <button class="btn btn-secondary" onclick="Modal.close();">Tutup</button>
-            <button class="btn btn-primary" style="background: #ea580c; border-color: #ea580c;" onclick="Modal.close(); App.showStudentEditModal(${student.id});">
+          <div style="display: flex; flex-direction: column; gap: 10px; width: 100%;">
+            <button type="button" class="btn btn-primary" style="width: 100%; justify-content: center; padding: 12px 18px; font-size: 14px; font-weight: 700; border-radius: 12px; background: #ea580c; border: none; box-shadow: 0 4px 14px rgba(234, 88, 12, 0.25);" onclick="Modal.close(); App.showStudentEditModal(${student.id});">
               Perbaiki Data Sekarang ✍
+            </button>
+            <button type="button" class="btn btn-secondary" style="width: 100%; justify-content: center; padding: 11px 18px; font-size: 13.5px; font-weight: 600; border-radius: 12px; background: #ffffff; border: 1.5px solid #CBD5E1; color: #334155;" onclick="Modal.close();">
+              Tutup
             </button>
           </div>
         </div>
@@ -1360,7 +1370,7 @@ Object.assign(window.App, {
           <p style="font-size: 12.5px; color: #64748b; line-height: 1.5; margin-bottom: 20px;">
             Silakan bawa Kartu Pelajar Anda dan hubungi ruang BKK/HUBIN sekolah secara langsung untuk konfirmasi data Dapodik.
           </p>
-          <button class="btn btn-secondary" onclick="Modal.close();">Tutup</button>
+          <button type="button" class="btn btn-secondary" style="width: 100%; justify-content: center; padding: 11px 18px; font-weight: 600; border-radius: 12px; background: #ffffff; border: 1.5px solid #CBD5E1; color: #334155;" onclick="Modal.close();">Tutup</button>
         </div>
       `;
       Modal.open(html, 'Verifikasi Akun Ditolak', 'md');

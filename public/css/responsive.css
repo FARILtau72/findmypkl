@@ -863,6 +863,13 @@
     grid-template-columns: 1fr !important;
     gap: 10px !important;
   }
+  .modal-body [style*="display: flex"] {
+    flex-wrap: wrap !important;
+  }
+  .modal-body .btn {
+    white-space: normal !important;
+    text-align: center !important;
+  }
 
 
   /* Rekomendasi Lowongan PKL Mobile Horizontal Carousel Slider */
