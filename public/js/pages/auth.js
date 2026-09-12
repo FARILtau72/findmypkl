@@ -576,10 +576,13 @@ Object.assign(window.App, {
           </div>
 
           <div style="display: flex; gap: 12px; justify-content: center; flex-wrap: wrap;">
-            <button class="btn btn-primary" onclick="App.setRole('SISWA', 'profil', ${student.id})" style="padding: 12px 24px; font-weight: 700;">
+            <button class="btn btn-primary" onclick="App.setRole('SISWA', 'profil', ${student.id})" style="padding: 12px 22px; font-weight: 700;">
               Lihat Status Akun Saya &rarr;
             </button>
-            <button class="btn btn-secondary" onclick="App.setRole('PUBLIC')" style="padding: 12px 24px;">
+            <button class="btn btn-success" onclick="App.setRole('HUBIN', 'verifikasi')" style="padding: 12px 22px; font-weight: 700; background: #059669; border-color: #059669; color: #ffffff; display: inline-flex; align-items: center; gap: 6px;" title="Langsung masuk ke halaman verifikasi HUBIN sekolah">
+              <span>Buka Halaman HUBIN (Verifikasi Akun) &rarr;</span>
+            </button>
+            <button class="btn btn-secondary" onclick="App.setRole('PUBLIC')" style="padding: 12px 20px;">
               Kembali ke Beranda
             </button>
           </div>

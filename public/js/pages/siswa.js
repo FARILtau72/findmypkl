@@ -404,6 +404,11 @@ Object.assign(window.App, {
               <div class="state-tl-text">3. Akses Pelamaran PKL</div>
             </div>
           </div>
+          <div style="margin-top: 14px; display: flex; justify-content: flex-end;">
+            <button class="btn btn-sm btn-secondary" onclick="App.setRole('HUBIN', 'verifikasi')" style="font-size: 12px; font-weight: 700; color: #92400E; background: #FEF3C7; border: 1px solid #FCD34D; display: inline-flex; align-items: center; gap: 6px;">
+              <span>Buka Halaman HUBIN (Verifikasi Akun) &rarr;</span>
+            </button>
+          </div>
         </div>
       `;
     } else if (student.status_verifikasi === 'Terverifikasi') {
