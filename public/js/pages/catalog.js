@@ -1381,6 +1381,20 @@ Object.assign(window.App, {
   async showJobDetailModal(jobId) {
     const job = await API.getJobById(jobId);
     this.activeLokerModalJob = job;
+
+    this.activeLokerUserApplication = null;
+    if (this.currentStudent && this.currentRole === 'SISWA') {
+      try {
+        const apps = await API.getApplications({ student_id: this.currentStudent.id });
+        const existing = (apps || []).find(a => Number(a.job_id) === Number(jobId));
+        if (existing) {
+          this.activeLokerUserApplication = existing;
+        }
+      } catch (e) {
+        console.warn('Could not check existing application:', e);
+      }
+    }
+
     this.renderLokerModalStep(jobId, 1);
   },
 
@@ -1391,6 +1405,8 @@ Object.assign(window.App, {
     const isVerified = student && student.status_verifikasi === 'Terverifikasi';
     const isPublic = !isSiswaLoggedIn || !student;
     const isPaid = this.isJobPaid(job);
+    const userApp = this.activeLokerUserApplication || null;
+    const isApplied = Boolean(userApp);
 
     // Helpers
     const companyName = job.company_nama || 'PT Media Kreatif Nusantara';
@@ -1477,8 +1493,6 @@ Object.assign(window.App, {
       </li>
     `).join('');
 
-    const reviewQuote = 'Supervisor sangat membimbing, task terstruktur dengan baik, dan lingkungan kerjanya ramah untuk pemula.';
-
     let stepHtml = '';
 
     if (step === 1) {
@@ -1495,11 +1509,6 @@ Object.assign(window.App, {
               <span class="loker-step-sep"><svg width="10" height="10" viewBox="0 0 24 24" fill="none" stroke="#94A3B8" stroke-width="2.8" stroke-linecap="round" stroke-linejoin="round"><polyline points="9 18 15 12 9 6"/></svg></span>
               <div class="loker-step-item">
                 <span class="loker-step-badge">2</span>
-                <span class="loker-step-text">Form Pengajuan</span>
-              </div>
-              <span class="loker-step-sep"><svg width="10" height="10" viewBox="0 0 24 24" fill="none" stroke="#94A3B8" stroke-width="2.8" stroke-linecap="round" stroke-linejoin="round"><polyline points="9 18 15 12 9 6"/></svg></span>
-              <div class="loker-step-item">
-                <span class="loker-step-badge">3</span>
                 <span class="loker-step-text">Selesai</span>
               </div>
             </div>
@@ -1508,6 +1517,22 @@ Object.assign(window.App, {
 
           <!-- 2. Scrollable Body -->
           <div class="modal-loker-body job-detail-left-col">
+            ${isApplied ? `
+              <!-- Status Lamaran Telah Diajukan Banner -->
+              <div style="background: #ECFDF5; border: 1.5px solid #A7F3D0; border-radius: 12px; padding: 12px 16px; margin-bottom: 16px; display: flex; align-items: center; justify-content: space-between; gap: 12px; flex-wrap: wrap;">
+                <div style="display: flex; align-items: center; gap: 10px;">
+                  <span style="font-size: 20px;">✅</span>
+                  <div>
+                    <div style="font-size: 13px; font-weight: 700; color: #065F46;">Anda Sudah Mengajukan Lamaran ke Posisi Ini</div>
+                    <div style="font-size: 12px; color: #047857;">Status: <strong>${userApp.status}</strong> &bull; Diajukan pada: ${userApp.tanggal_daftar || 'Hari ini'}</div>
+                  </div>
+                </div>
+                <button type="button" class="btn btn-sm btn-primary" style="background: #059669; border: none; font-size: 12px;" onclick="Modal.close(); App.setRole('SISWA', 'lamaran');">
+                  Lihat Status &rarr;
+                </button>
+              </div>
+            ` : ''}
+
             <!-- Sub-tracker -->
             <div class="modal-loker-subtracker">
               <span class="subtracker-label" style="font-size: 13px; font-weight: 600; color: #64748B;">Informasi &amp; Syarat Penempatan</span>
@@ -1592,7 +1617,6 @@ Object.assign(window.App, {
               </ul>
             </div>
 
-            <!-- Review / Rating Card -->
             <!-- Review / Rating Card (Modern Mockup Design) -->
             ${renderModernReviewCard({
               student_nama: 'Arga Kurniawan',
@@ -1609,16 +1633,30 @@ Object.assign(window.App, {
           <!-- 3. Footer Bar -->
           <div class="modal-loker-footer">
             <button type="button" class="btn-loker-ghost" onclick="Modal.close()">
-              Batal
+              ${isApplied ? 'Tutup' : 'Batal'}
             </button>
-            <button type="button" class="btn-loker-primary" onclick="App.renderLokerModalStep(${job.id}, 2)">
-              Lanjut ke Pengajuan &rarr;
-            </button>
+            ${isApplied ? `
+              <button type="button" class="btn-loker-primary" style="background: #059669;" onclick="Modal.close(); App.setRole('SISWA', 'lamaran');">
+                Lihat Status Lamaran Saya &rarr;
+              </button>
+            ` : isPublic ? `
+              <button type="button" class="btn-loker-primary" onclick="App.handleDaftarPklClick(${job.id})">
+                Masuk untuk Melamar &rarr;
+              </button>
+            ` : !isVerified ? `
+              <button type="button" class="btn-loker-primary" onclick="App.handleDaftarPklClick(${job.id})">
+                Kirim Pengajuan Lamaran &rarr;
+              </button>
+            ` : `
+              <button type="button" class="btn-loker-primary" onclick="App.executeApplyLoker(${job.id})">
+                Kirim Pengajuan Lamaran &rarr;
+              </button>
+            `}
           </div>
         </div>
       `;
-    } else if (step === 2) {
-      // STEP 2: Form Pengajuan
+    } else {
+      // STEP 2 / Selesai: Bukti Pengajuan Berhasil Terkirim
       stepHtml = `
         <div class="modal-loker-container job-detail-container">
           <!-- Stepper Header -->
@@ -1627,141 +1665,6 @@ Object.assign(window.App, {
               <div class="loker-step-item completed" onclick="App.renderLokerModalStep(${job.id}, 1)">
                 <span class="loker-step-badge">✓</span>
                 <span class="loker-step-text">Detail &amp; Kualifikasi</span>
-              </div>
-              <span class="loker-step-sep"><svg width="10" height="10" viewBox="0 0 24 24" fill="none" stroke="#94A3B8" stroke-width="2.8" stroke-linecap="round" stroke-linejoin="round"><polyline points="9 18 15 12 9 6"/></svg></span>
-              <div class="loker-step-item active">
-                <span class="loker-step-badge">2</span>
-                <span class="loker-step-text">Form Pengajuan</span>
-              </div>
-              <span class="loker-step-sep"><svg width="10" height="10" viewBox="0 0 24 24" fill="none" stroke="#94A3B8" stroke-width="2.8" stroke-linecap="round" stroke-linejoin="round"><polyline points="9 18 15 12 9 6"/></svg></span>
-              <div class="loker-step-item">
-                <span class="loker-step-badge">3</span>
-                <span class="loker-step-text">Selesai</span>
-              </div>
-            </div>
-            <button type="button" class="btn-modal-loker-close" onclick="Modal.close()" aria-label="Tutup modal">&times;</button>
-          </div>
-
-          <!-- Body -->
-          <div class="modal-loker-body job-detail-right-col">
-            <div class="modal-loker-subtracker">
-              <span class="subtracker-pill">Langkah 2 dari 2</span>
-              <span class="subtracker-label">&bull; Formulir Pengajuan & Kelengkapan Berkas Siswa</span>
-            </div>
-
-            <!-- Position Summary Banner -->
-            <div class="modal-loker-summary-banner">
-              <div>
-                <div style="font-size: 11px; font-weight: 700; color: #64748B; text-transform: uppercase; margin-bottom: 2px;">Posisi yang Dilamar</div>
-                <h4 style="font-size: 15.5px; font-weight: 800; color: #0F172A; margin: 0;">${job.judul}</h4>
-                <div style="font-size: 12.5px; color: #059669; font-weight: 600; margin-top: 2px;">${job.company_nama} &bull; Sisa Kuota: ${job.kuota - job.kuota_terisi} siswa</div>
-              </div>
-              <span class="mkt-badge-comp ${isPaid ? 'paid' : 'unpaid'}">
-                ${isPaid ? 'Paid' : 'Unpaid'}
-              </span>
-            </div>
-
-            <!-- Informasi Mitra DUDI & MoU -->
-            <div style="background: #F8FAFC; border: 1px solid #E2E8F0; border-radius: 12px; padding: 12px 16px; font-size: 12px; color: #64748B; display: flex; justify-content: space-between; align-items: center; flex-wrap: wrap; gap: 8px;">
-              <div>
-                <strong style="color: #1E293B;">Informasi Mitra DUDI & MoU:</strong> ${job.no_mou || 'MOU/SMK-TB/2026'} &bull; PIC: ${job.pic_nama || 'Koordinator HRD'}
-              </div>
-              <span class="badge badge-emerald">MoU Aktif</span>
-            </div>
-
-            ${isPublic ? `
-              <!-- Guest Notice -->
-              <div style="background: #F8FAFC; border: 1.5px dashed #CBD5E1; border-radius: 14px; padding: 28px 20px; text-align: center;">
-                <div style="font-size: 38px; margin-bottom: 8px;">🔐</div>
-                <h4 style="font-size: 16px; font-weight: 800; color: #0F172A; margin-bottom: 6px;">Masuk Akun Siswa Diperlukan</h4>
-                <p style="font-size: 13px; color: #64748B; max-width: 440px; margin: 0 auto 20px; line-height: 1.5;">
-                  Pengajuan lamaran PKL terintegrasi dengan database Dapodik siswa SMK Taruna Bangsa. Silakan masuk atau daftarkan akun baru Anda.
-                </p>
-                <div style="display: flex; gap: 10px; justify-content: center; flex-wrap: wrap;">
-                  <button type="button" class="btn btn-primary" onclick="Modal.close(); App.setRole('LOGIN');">
-                    Masuk Akun Siswa
-                  </button>
-                  <button type="button" class="btn btn-secondary" onclick="Modal.close(); App.setRole('REGISTER');">
-                    Daftar Akun Baru
-                  </button>
-                </div>
-              </div>
-            ` : !isVerified ? `
-              <!-- Verification Pending -->
-              <div class="account-state-banner ${student.status_verifikasi === 'Perlu Perbaikan' ? 'state-revision' : student.status_verifikasi === 'Ditolak' ? 'state-rejected' : 'state-pending'}" style="padding: 22px; text-align: center; border-radius: 14px;">
-                <h4 style="font-size: 15px; font-weight: 800; margin-bottom: 6px;">
-                  ${student.status_verifikasi === 'Perlu Perbaikan' ? 'Perlu Perbaikan Berkas HUBIN' : student.status_verifikasi === 'Ditolak' ? 'Verifikasi Akun Ditolak' : 'Akun Sedang Menunggu Verifikasi HUBIN'}
-                </h4>
-                <p style="font-size: 12.5px; line-height: 1.5; margin-bottom: 14px;">
-                  ${student.status_verifikasi === 'Perlu Perbaikan' ? (student.catatan_verifikasi || 'Perbaiki data profil Anda sebelum mengajukan lamaran.') : 'Pengajuan hanya dapat dilakukan setelah akun disahkan oleh Koordinator HUBIN.'}
-                </p>
-                <button type="button" class="btn btn-secondary btn-sm" onclick="Modal.close(); App.setRole('SISWA', 'profil');">
-                  Buka Halaman Profil &rarr;
-                </button>
-              </div>
-            ` : `
-              <!-- Student Form -->
-              <div class="modal-loker-student-box">
-                <div style="font-size: 11px; font-weight: 700; color: #1D4ED8; text-transform: uppercase; margin-bottom: 4px;">Identitas Siswa Terdaftar</div>
-                <div style="display: flex; justify-content: space-between; flex-wrap: wrap; gap: 8px; align-items: center;">
-                  <div>
-                    <strong style="color: #0F172A; font-size: 14px;">${student.nama}</strong>
-                    <div style="font-size: 12px; color: #64748B; margin-top: 1px;">NISN: ${student.nisn} &bull; ${student.jurusan || 'SMK'} (${student.kelas || 'Tingkat Akhir'})</div>
-                  </div>
-                  <span class="badge badge-emerald">Terverifikasi HUBIN</span>
-                </div>
-              </div>
-
-              <div class="form-group" style="margin-bottom: 12px;">
-                <label class="form-label" style="font-size: 12.5px; font-weight: 700;">Tautan Portofolio / Berkas CV Siswa <span style="color: #EF4444;">*</span></label>
-                <input type="url" id="apply-portofolio-input" class="form-input" value="${student.cv_url || ''}" placeholder="https://drive.google.com/... atau https://github.com/..." style="font-size: 13px; padding: 10px 14px; border-radius: 10px;" />
-                <div class="form-help" style="font-size: 11px; color: #94A3B8; margin-top: 4px;">Akses link Google Drive/GitHub disetel Publik agar dapat diperiksa kurator HUBIN.</div>
-              </div>
-
-              <div class="form-group" style="margin-bottom: 14px;">
-                <label class="form-label" style="font-size: 12.5px; font-weight: 700;">Alasan & Motivasi Melamar <span style="color: #EF4444;">*</span></label>
-                <textarea id="apply-alasan-input" class="form-textarea" rows="3" placeholder="Jelaskan ketertarikan Anda, kesiapan mengikuti magang, dan keterampilan yang ingin diterapkan..." style="font-size: 13px; padding: 10px 14px; border-radius: 10px; resize: vertical;"></textarea>
-              </div>
-
-              <label class="loker-checkbox-label">
-                <input type="checkbox" id="apply-consent-check" checked />
-                <span>Saya menyatakan bersedia mematuhi tata tertib industri dan telah memperoleh izin dari orang tua/wali serta BKK SMK Taruna Bangsa.</span>
-              </label>
-            `}
-          </div>
-
-          <!-- Footer -->
-          <div class="modal-loker-footer">
-            <button type="button" class="btn-loker-ghost" onclick="App.renderLokerModalStep(${job.id}, 1)">
-              &larr; Kembali ke Detail
-            </button>
-            ${isVerified ? `
-              <button type="button" class="btn-loker-primary" onclick="App.executeApplyLoker(${job.id})">
-                Kirim Pengajuan Lamaran &rarr;
-              </button>
-            ` : `
-              <button type="button" class="btn-loker-ghost" onclick="Modal.close()">
-                Tutup
-              </button>
-            `}
-          </div>
-        </div>
-      `;
-    } else {
-      // STEP 3: Selesai
-      stepHtml = `
-        <div class="modal-loker-container job-detail-container">
-          <!-- Stepper Header -->
-          <div class="modal-loker-stepper">
-            <div class="modal-loker-stepper-nav">
-              <div class="loker-step-item completed">
-                <span class="loker-step-badge">✓</span>
-                <span class="loker-step-text">Detail &amp; Kualifikasi</span>
-              </div>
-              <span class="loker-step-sep"><svg width="10" height="10" viewBox="0 0 24 24" fill="none" stroke="#94A3B8" stroke-width="2.8" stroke-linecap="round" stroke-linejoin="round"><polyline points="9 18 15 12 9 6"/></svg></span>
-              <div class="loker-step-item completed">
-                <span class="loker-step-badge">✓</span>
-                <span class="loker-step-text">Form Pengajuan</span>
               </div>
               <span class="loker-step-sep"><svg width="10" height="10" viewBox="0 0 24 24" fill="none" stroke="#94A3B8" stroke-width="2.8" stroke-linecap="round" stroke-linejoin="round"><polyline points="9 18 15 12 9 6"/></svg></span>
               <div class="loker-step-item active">
@@ -1820,33 +1723,27 @@ Object.assign(window.App, {
   async executeApplyLoker(jobId) {
     if (this.isSubmittingApply) return;
 
-    if (!this.currentStudent) {
+    if (!this.currentStudent || this.currentRole !== 'SISWA') {
       Modal.close();
       this.setRole('LOGIN');
       return;
     }
-    let portofolio_url = (document.getElementById('apply-portofolio-input')?.value || '').trim();
-    const alasan_melamar = (document.getElementById('apply-alasan-input')?.value || '').trim();
-    const consentCheck = document.getElementById('apply-consent-check');
 
-    if (consentCheck && !consentCheck.checked) {
-      Toast.show('Persetujuan Diperlukan', 'Mohon centang pernyataan persetujuan tata tertib magang.', 'warning');
+    const student = this.currentStudent;
+    if (student.status_verifikasi !== 'Terverifikasi') {
+      Modal.close();
+      await this.handleDaftarPklClick(jobId);
       return;
     }
 
-    if (!alasan_melamar) {
-      Toast.show('Perhatian', 'Mohon isi alasan & motivasi melamar terlebih dahulu', 'error');
-      return;
-    }
-
-    // Bug 5 fix: auto-prefix https:// if protocol is omitted
+    let portofolio_url = (document.getElementById('apply-portofolio-input')?.value || student.cv_url || '').trim();
     if (portofolio_url && !/^https?:\/\//i.test(portofolio_url)) {
       portofolio_url = 'https://' + portofolio_url;
-      const portInput = document.getElementById('apply-portofolio-input');
-      if (portInput) portInput.value = portofolio_url;
     }
+    const domAlasan = (document.getElementById('apply-alasan-input')?.value || '').trim();
+    const alasan_melamar = domAlasan || 'Pengajuan langsung melalui katalog lowongan terverifikasi FindMyPKL.';
 
-    // Bug 3 fix: Loading state & double submit prevention
+    // Double submit prevention & loading state
     this.isSubmittingApply = true;
     const submitBtn = document.querySelector('.modal-loker-footer .btn-loker-primary');
     const origBtnHtml = submitBtn ? submitBtn.innerHTML : 'Kirim Pengajuan Lamaran &rarr;';
@@ -1863,15 +1760,21 @@ Object.assign(window.App, {
     }
 
     try {
-      await API.submitApplication({
-        student_id: this.currentStudent.id,
+      const newApp = await API.submitApplication({
+        student_id: student.id,
         job_id: jobId,
         portofolio_url,
         alasan_melamar
       });
 
+      this.activeLokerUserApplication = newApp || {
+        job_id: Number(jobId),
+        status: 'Menunggu Verifikasi HUBIN',
+        tanggal_daftar: new Date().toISOString().split('T')[0]
+      };
+
       Toast.show('Lamaran Berhasil Diajukan', 'Berkas telah masuk ke antrean persetujuan HUBIN.', 'success');
-      this.renderLokerModalStep(jobId, 3);
+      this.renderLokerModalStep(jobId, 2);
     } catch (err) {
       Toast.show('Gagal Mengajukan Lamaran', err.message, 'error');
       if (submitBtn) {
