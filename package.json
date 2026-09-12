@@ -1,7 +1,7 @@
 {
   "name": "findmypkl",
   "version": "1.0.0",
-  "description": "Platform Terpusat Penemuan dan Manajemen PKL SMK Indonesia",
+  "description": "Platform Terpusat Penemuan dan Manajemen PKL Khusus SMK Taruna Bangsa Kota Bekasi",
   "main": "server/index.js",
   "scripts": {
     "dev": "next dev",

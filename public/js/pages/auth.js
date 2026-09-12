@@ -32,7 +32,7 @@ Object.assign(window.App, {
               <div class="auth-tabs-row">
                 <button type="button" class="auth-tab-btn ${activeTab === 'siswa' ? 'active' : ''}" id="tab-btn-siswa">
                   <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M20 21v-2a4 4 0 0 0-4-4H8a4 4 0 0 0-4 4v2"/><circle cx="12" cy="7" r="4"/></svg>
-                  Siswa SMK
+                  Siswa Taruna Bangsa
                 </button>
                 <button type="button" class="auth-tab-btn ${activeTab === 'hubin' ? 'active' : ''}" id="tab-btn-hubin">
                   <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M16 21v-2a4 4 0 0 0-4-4H8a4 4 0 0 0-4 4v2"/><circle cx="12" cy="7" r="4"/><polyline points="16 11 18 13 22 9"/></svg>

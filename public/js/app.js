@@ -220,7 +220,7 @@ window.App = {
       <optgroup label="🌐 Halaman Pengunjung">
         <option value="PUBLIC">Beranda Publik (Homepage Pengunjung)</option>
       </optgroup>
-      <optgroup label="👤 Siswa SMK (Pengguna Siswa)">
+      <optgroup label="👤 Siswa SMK Taruna Bangsa">
         ${studentOptions}
       </optgroup>
       <optgroup label="🏫 HUBIN (Admin Hubungan Industri Sekolah)">
@@ -480,7 +480,7 @@ window.App = {
     const navList = document.getElementById('sidebar-nav-list');
 
     if (this.currentRole === 'SISWA') {
-      const s = this.currentStudent || { nama: 'Siswa SMK', kelas: 'XII RPL 1', status_verifikasi: 'Menunggu Verifikasi' };
+      const s = this.currentStudent || { nama: 'Siswa SMK Taruna Bangsa', kelas: 'XII RPL 1', status_verifikasi: 'Menunggu Verifikasi' };
       userAvatar.textContent = s.nama.split(' ').map(n => n[0]).slice(0, 2).join('').toUpperCase();
       userName.textContent = s.nama;
       userRoleTag.innerHTML = `${s.kelas} &bull; ${renderBadge(s.status_verifikasi)}`;

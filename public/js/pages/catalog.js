@@ -516,7 +516,7 @@ Object.assign(window.App, {
                       <path d="M16 21V5a2 2 0 0 0-2-2h-4a2 2 0 0 0-2 2v16"/>
                     </svg>
                   </div>
-                  <h3>Dapatkan Talenta SMK Terbaik Sesuai Kebutuhan</h3>
+                  <h3>Dapatkan Talenta Unggul Siswa SMK Taruna Bangsa</h3>
                 </div>
                 <p>Pasang lowongan magang gratis, seleksi portofolio siswa bersertifikat kompetensi keahlian, dan bangun talent pool muda berkualitas sejak bangku sekolah.</p>
               </div>
@@ -1240,7 +1240,7 @@ Object.assign(window.App, {
             Pendaftaran Siswa Diperlukan
           </h4>
           <p style="font-size: 13.5px; color: #64748b; line-height: 1.6; max-width: 440px; margin: 0 auto 18px;">
-            Untuk dapat mengajukan permohonan PKL ke mitra <strong>${job ? job.company_nama : 'Industri'}</strong>, kamu harus terdaftar sebagai siswa SMK dan akun telah diverifikasi oleh tim HUBIN.
+            Untuk dapat mengajukan permohonan PKL ke mitra <strong>${job ? job.company_nama : 'Industri'}</strong>, Anda harus terdaftar sebagai siswa aktif SMK Taruna Bangsa Kota Bekasi dan akun telah diverifikasi oleh tim HUBIN.
           </p>
           <div style="background: #f8fafc; border: 1px solid #e2e8f0; border-radius: 12px; padding: 14px; text-align: left; margin-bottom: 20px;">
             <div style="font-weight: 700; font-size: 12.5px; color: #334155; margin-bottom: 4px;">Lowongan yang Dituju:</div>

@@ -2,7 +2,7 @@ import Script from 'next/script';
 
 export const metadata = {
   title: 'Find My PKL - SMK Taruna Bangsa Kota Bekasi',
-  description: 'Platform Terpusat Penemuan dan Manajemen PKL SMK Indonesia',
+  description: 'Platform Terpusat Penemuan dan Manajemen PKL Khusus SMK Taruna Bangsa Kota Bekasi',
   icons: {
     icon: '/images/logo.png',
     apple: '/images/logo.png',
