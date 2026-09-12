@@ -9,71 +9,21 @@ Object.assign(window.App, {
     const student = this.currentStudent;
     if (!student) return;
 
-    const [applications, cooldown] = await Promise.all([
-      API.getApplications({ student_id: student.id }),
-      API.getStudentApplicationCooldown(student.id).catch(() => null)
-    ]);
+    const applications = await API.getApplications({ student_id: student.id });
     this.cachedStudentApplications = applications;
 
     if (applications.length === 0) {
-      container.innerHTML = `
-        <div style="display: flex; flex-direction: column; gap: 20px;">
-          <div style="background: #ECFDF5; border: 1.5px solid #A7F3D0; border-radius: 12px; padding: 14px 18px; display: flex; align-items: center; justify-content: space-between; gap: 14px; flex-wrap: wrap;">
-            <div style="display: flex; align-items: center; gap: 12px;">
-              <span style="font-size: 22px;">⚡</span>
-              <div>
-                <div style="font-size: 13.5px; font-weight: 700; color: #065F46;">Status Kuota Lamaran Mingguan</div>
-                <div style="font-size: 12.5px; color: #047857; margin-top: 2px;">
-                  Kuota lamaran minggu ini tersedia. Berdasarkan kebijakan sekolah, setiap siswa dapat mengajukan lamaran ke 1 perusahaan per minggu.
-                </div>
-              </div>
-            </div>
-            <button class="btn btn-sm btn-primary" style="font-size: 12px;" onclick="App.setTab('katalog')">Jelajahi Lowongan &rarr;</button>
-          </div>
-          ${renderEmptyState(
-            'Belum Ada Lamaran PKL yang Diajukan',
-            'Anda belum mengajukan lamaran ke perusahaan manapun. Jelajahi katalog lowongan untuk menemukan posisi yang sesuai.',
-            '',
-            `<button class="btn btn-primary" onclick="App.setTab('katalog')">Jelajahi Lowongan PKL</button>`
-          )}
-        </div>
-      `;
+      container.innerHTML = renderEmptyState(
+        'Belum Ada Lamaran PKL yang Diajukan',
+        'Anda belum mengajukan lamaran ke perusahaan manapun. Jelajahi katalog lowongan untuk menemukan posisi yang sesuai.',
+        '',
+        `<button class="btn btn-primary" onclick="App.setTab('katalog')">Jelajahi Lowongan PKL</button>`
+      );
       return;
     }
 
-    const quotaBannerHtml = cooldown && !cooldown.can_apply ? `
-      <div style="background: #FFFBEB; border: 1.5px solid #FCD34D; border-radius: 12px; padding: 14px 18px; display: flex; align-items: center; justify-content: space-between; gap: 14px; flex-wrap: wrap;">
-        <div style="display: flex; align-items: center; gap: 12px;">
-          <span style="font-size: 24px;">⏳</span>
-          <div>
-            <div style="font-size: 13.5px; font-weight: 700; color: #92400E;">Batas Lamaran Mingguan (1 Siswa 1 Perusahaan / Minggu)</div>
-            <div style="font-size: 12.5px; color: #B45309; margin-top: 2px;">
-              Anda telah melamar ke <strong>${cooldown.last_company_nama}</strong> pada ${cooldown.last_applied_date_formatted}. Anda dapat mengajukan lamaran baru dalam <strong>${cooldown.days_remaining} hari lagi</strong> (mulai ${cooldown.next_eligible_date_formatted}).
-            </div>
-          </div>
-        </div>
-        <span class="badge badge-amber" style="font-weight: 800; font-size: 12px; padding: 4px 12px;">
-          Cooldown: ${cooldown.days_remaining} Hari
-        </span>
-      </div>
-    ` : `
-      <div style="background: #ECFDF5; border: 1.5px solid #A7F3D0; border-radius: 12px; padding: 14px 18px; display: flex; align-items: center; justify-content: space-between; gap: 14px; flex-wrap: wrap;">
-        <div style="display: flex; align-items: center; gap: 12px;">
-          <span style="font-size: 22px;">⚡</span>
-          <div>
-            <div style="font-size: 13.5px; font-weight: 700; color: #065F46;">Status Kuota Lamaran Mingguan</div>
-            <div style="font-size: 12.5px; color: #047857; margin-top: 2px;">
-              Kuota lamaran minggu ini tersedia. Anda dapat mengajukan 1 lamaran lowongan PKL ke mitra industri minggu ini.
-            </div>
-          </div>
-        </div>
-        <button class="btn btn-sm btn-primary" style="font-size: 12px;" onclick="App.setTab('katalog')">Cari Lowongan &rarr;</button>
-      </div>
-    `;
-
     container.innerHTML = `
-      <div style="display: flex; flex-direction: column; gap: 20px;">
-        ${quotaBannerHtml}
+      <div style="display: flex; flex-direction: column; gap: 24px;">
         ${applications.map(app => {
           let step1Class = 'completed';
           let step2Class = '';

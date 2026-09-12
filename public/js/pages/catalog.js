@@ -1539,22 +1539,58 @@ Object.assign(window.App, {
                 </button>
               </div>
             ` : isCooldownActive ? `
-              <!-- Cooldown 1 Minggu 1 Perusahaan Banner -->
-              <div style="background: #FFFBEB; border: 1.5px solid #FCD34D; border-radius: 12px; padding: 14px 16px; margin-bottom: 16px; display: flex; align-items: flex-start; gap: 12px;">
-                <span style="font-size: 22px; line-height: 1;">⏳</span>
-                <div style="flex: 1;">
-                  <div style="font-size: 13.5px; font-weight: 700; color: #92400E; margin-bottom: 4px;">
-                    Batas Lamaran Mingguan (1 Siswa 1 Perusahaan / Minggu)
+              <!-- Cooldown / Placement Status Banner -->
+              ${(cooldown.status_type === 'active_placement' || cooldown.status_type === 'accepted') ? `
+                <div style="background: #F0FDF4; border: 1.5px solid #86EFAC; border-radius: 12px; padding: 14px 16px; margin-bottom: 16px; display: flex; align-items: center; justify-content: space-between; gap: 12px; flex-wrap: wrap;">
+                  <div style="display: flex; align-items: center; gap: 12px;">
+                    <span style="font-size: 22px;">🏢</span>
+                    <div>
+                      <div style="font-size: 13.5px; font-weight: 700; color: #166534; margin-bottom: 2px;">
+                        ${cooldown.status_type === 'active_placement' ? 'Penempatan PKL Sedang Aktif' : 'Lamaran PKL Sudah Diterima'}
+                      </div>
+                      <div style="font-size: 12.5px; color: #15803D; line-height: 1.4;">
+                        Anda telah diterima dan terdaftar di <strong>${cooldown.last_company_nama}</strong>. Sesuai aturan BKK/HUBIN, siswa yang sudah memiliki tempat PKL tidak diperkenankan melamar ke perusahaan lain.
+                      </div>
+                    </div>
                   </div>
-                  <div style="font-size: 12.5px; color: #B45309; line-height: 1.5;">
-                    Berdasarkan kebijakan BKK &amp; HUBIN, Anda hanya dapat melamar ke <strong>1 perusahaan dalam 1 minggu</strong>. Anda telah mengajukan lamaran ke <strong>${cooldown.last_company_nama}</strong> (${cooldown.last_job_judul}) pada ${cooldown.last_applied_date_formatted}.
+                  <button type="button" class="btn btn-sm btn-primary" style="background: #16A34A; border: none; font-size: 12px;" onclick="Modal.close(); App.setRole('SISWA', '${cooldown.status_type === 'active_placement' ? 'penempatan' : 'lamaran'}');">
+                    Lihat ${cooldown.status_type === 'active_placement' ? 'Penempatan' : 'Lamaran'} &rarr;
+                  </button>
+                </div>
+              ` : cooldown.status_type === 'pending_active' ? `
+                <div style="background: #FFFBEB; border: 1.5px solid #FCD34D; border-radius: 12px; padding: 14px 16px; margin-bottom: 16px; display: flex; align-items: flex-start; justify-content: space-between; gap: 12px; flex-wrap: wrap;">
+                  <div style="display: flex; align-items: flex-start; gap: 12px; flex: 1;">
+                    <span style="font-size: 22px; line-height: 1;">⏳</span>
+                    <div>
+                      <div style="font-size: 13.5px; font-weight: 700; color: #92400E; margin-bottom: 4px;">
+                        Batas Lamaran: 1 Siswa 1 Perusahaan / Minggu
+                      </div>
+                      <div style="font-size: 12.5px; color: #B45309; line-height: 1.5;">
+                        Sesuai kebijakan BKK &amp; HUBIN, Anda hanya dapat melamar ke <strong>1 perusahaan dalam 1 minggu</strong>. Saat ini berkas lamaran Anda di <strong>${cooldown.last_company_nama}</strong> (${cooldown.last_job_judul || 'Mitra PKL'}) sedang dalam proses verifikasi &amp; seleksi.
+                      </div>
+                    </div>
                   </div>
-                  <div style="margin-top: 8px; font-size: 12px; font-weight: 700; color: #78350F; display: flex; align-items: center; gap: 8px; flex-wrap: wrap;">
-                    <span>🗓 Anda dapat melamar lowongan baru dalam:</span>
-                    <span class="badge badge-amber" style="font-weight: 800; font-size: 12px; padding: 3px 10px;">${cooldown.days_remaining} Hari Lagi (Mulai ${cooldown.next_eligible_date_formatted})</span>
+                  <button type="button" class="btn btn-sm btn-secondary" style="font-size: 12px; white-space: nowrap;" onclick="Modal.close(); App.setRole('SISWA', 'lamaran');">
+                    Pantau Status &rarr;
+                  </button>
+                </div>
+              ` : `
+                <div style="background: #FFFBEB; border: 1.5px solid #FCD34D; border-radius: 12px; padding: 14px 16px; margin-bottom: 16px; display: flex; align-items: flex-start; gap: 12px;">
+                  <span style="font-size: 22px; line-height: 1;">⏳</span>
+                  <div style="flex: 1;">
+                    <div style="font-size: 13.5px; font-weight: 700; color: #92400E; margin-bottom: 4px;">
+                      Batas Lamaran Mingguan (1 Siswa 1 Perusahaan / Minggu)
+                    </div>
+                    <div style="font-size: 12.5px; color: #B45309; line-height: 1.5;">
+                      Berdasarkan kebijakan BKK &amp; HUBIN, Anda hanya dapat melamar ke <strong>1 perusahaan dalam 1 minggu</strong>. Anda telah mengajukan lamaran ke <strong>${cooldown.last_company_nama}</strong> (${cooldown.last_job_judul || 'Mitra PKL'}) pada ${cooldown.last_applied_date_formatted || 'minggu ini'}.
+                    </div>
+                    <div style="margin-top: 8px; font-size: 12px; font-weight: 700; color: #78350F; display: flex; align-items: center; gap: 8px; flex-wrap: wrap;">
+                      <span>🗓 Anda dapat melamar lowongan baru dalam:</span>
+                      <span class="badge badge-amber" style="font-weight: 800; font-size: 12px; padding: 3px 10px;">${cooldown.days_remaining} Hari Lagi (Mulai ${cooldown.next_eligible_date_formatted})</span>
+                    </div>
                   </div>
                 </div>
-              </div>
+              `}
             ` : ''}
 
             <!-- Sub-tracker -->
@@ -1664,8 +1700,8 @@ Object.assign(window.App, {
                 Lihat Status Lamaran Saya &rarr;
               </button>
             ` : isCooldownActive ? `
-              <button type="button" class="btn-loker-primary" style="background: #94A3B8; cursor: not-allowed; opacity: 0.85;" disabled title="1 siswa hanya boleh melamar 1 perusahaan dalam 1 minggu">
-                ⏳ Batas Mingguan (${cooldown.days_remaining} Hari Lagi)
+              <button type="button" class="btn-loker-primary" style="background: #94A3B8; cursor: not-allowed; opacity: 0.85;" disabled title="${(cooldown && cooldown.message) || '1 siswa hanya boleh melamar 1 perusahaan dalam 1 minggu'}">
+                ${(cooldown.status_type === 'active_placement' || cooldown.status_type === 'accepted') ? '✓ Sudah Diterima PKL' : cooldown.status_type === 'pending_active' ? '⏳ Lamaran Sedang Diproses' : `⏳ Batas Mingguan (${cooldown.days_remaining} Hari Lagi)`}
               </button>
             ` : isPublic ? `
               <button type="button" class="btn-loker-primary" onclick="App.handleDaftarPklClick(${job.id})">
@@ -1768,8 +1804,8 @@ Object.assign(window.App, {
     if (this.activeLokerCooldown && !this.activeLokerCooldown.can_apply) {
       const cd = this.activeLokerCooldown;
       Toast.show(
-        'Batas Lamaran Mingguan',
-        `1 siswa hanya diperbolehkan melamar 1 perusahaan dalam 1 minggu. Anda telah melamar ke ${cd.last_company_nama}. Silakan tunggu ${cd.days_remaining} hari lagi.`,
+        'Batas Lamaran',
+        cd.message || `1 siswa hanya diperbolehkan melamar 1 perusahaan dalam 1 minggu. Anda telah melamar ke ${cd.last_company_nama}. Silakan tunggu ${cd.days_remaining} hari lagi.`,
         'warning'
       );
       return;

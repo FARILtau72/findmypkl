@@ -2817,11 +2817,25 @@ class Store {
     return list.find(a => a.id === Number(id)) || null;
   }
 
-  // Aturan BKK/HUBIN: 1 siswa hanya boleh melamar 1 perusahaan dalam 1 minggu (7 hari cooldown)
+  // Aturan BKK/HUBIN: 1 siswa hanya boleh melamar 1 perusahaan dalam 1 minggu / 1 perusahaan aktif
   getStudentApplicationCooldown(studentId) {
     const sId = Number(studentId);
     const ONE_WEEK_MS = 7 * 24 * 60 * 60 * 1000;
     const now = Date.now();
+
+    // 1. Cek apakah siswa sudah memiliki penempatan PKL aktif
+    const activePlc = (this.placements || []).find(p => p.student_id === sId && p.status === 'Aktif');
+    if (activePlc) {
+      const comp = this.getCompanyById(activePlc.company_id);
+      const compName = (comp && comp.nama) || 'Mitra Industri';
+      return {
+        can_apply: false,
+        status_type: 'active_placement',
+        days_remaining: 0,
+        last_company_nama: compName,
+        message: `Anda telah memiliki penempatan PKL aktif di ${compName}. Siswa yang sedang magang tidak dapat melamar ke perusahaan lain.`
+      };
+    }
 
     const studentApps = (this.applications || [])
       .filter(a => a.student_id === sId)
@@ -2834,6 +2848,7 @@ class Store {
     if (studentApps.length === 0) {
       return {
         can_apply: true,
+        status_type: 'available',
         last_applied_at: null,
         last_applied_date_formatted: null,
         next_eligible_date: null,
@@ -2842,34 +2857,83 @@ class Store {
         hours_remaining: 0,
         last_company_nama: null,
         last_job_judul: null,
-        total_applications: 0
+        total_applications: 0,
+        message: 'Kuota lamaran tersedia. Setiap siswa diperbolehkan melamar ke 1 perusahaan per minggu.'
       };
     }
 
+    // 2. Cek apakah siswa sudah Diterima di salah satu perusahaan
+    const acceptedApp = studentApps.find(a => a.status === 'Diterima Perusahaan');
+    if (acceptedApp) {
+      const job = this.getJobById(acceptedApp.job_id);
+      const comp = job ? this.getCompanyById(job.company_id) : null;
+      const compName = (comp && comp.nama) || (job && job.company_nama) || 'Mitra Industri';
+      return {
+        can_apply: false,
+        status_type: 'accepted',
+        days_remaining: 0,
+        last_job_id: acceptedApp.job_id,
+        last_company_nama: compName,
+        last_job_judul: job ? job.judul : 'Lowongan PKL',
+        message: `Lamaran Anda telah diterima oleh ${compName}. Siswa yang sudah diterima tidak dapat melamar ke perusahaan lain.`
+      };
+    }
+
+    // 3. Cek apakah ada lamaran yang sedang berjalan (Menunggu Verifikasi HUBIN atau Disetujui HUBIN)
+    const pendingApp = studentApps.find(a => a.status === 'Menunggu Verifikasi HUBIN' || a.status === 'Disetujui HUBIN');
+    if (pendingApp) {
+      const job = this.getJobById(pendingApp.job_id);
+      const comp = job ? this.getCompanyById(job.company_id) : null;
+      const compName = (comp && comp.nama) || (job && job.company_nama) || 'Mitra Industri';
+      const appTime = pendingApp.timestamp;
+      const diff = now - appTime;
+      const msRemaining = Math.max(0, ONE_WEEK_MS - diff);
+      const daysRemaining = Math.ceil(msRemaining / (24 * 60 * 60 * 1000));
+      const nextDate = new Date(appTime + ONE_WEEK_MS);
+
+      return {
+        can_apply: false,
+        status_type: 'pending_active',
+        days_remaining: Math.max(1, daysRemaining),
+        last_job_id: pendingApp.job_id,
+        last_company_nama: compName,
+        last_job_judul: job ? job.judul : 'Lowongan PKL',
+        last_applied_at: pendingApp.created_at || pendingApp.tanggal_daftar,
+        last_applied_date_formatted: new Date(appTime).toLocaleDateString('id-ID', { day: 'numeric', month: 'long', year: 'numeric' }),
+        next_eligible_date: nextDate.toISOString(),
+        next_eligible_date_formatted: nextDate.toLocaleDateString('id-ID', { day: 'numeric', month: 'long', year: 'numeric' }),
+        message: `Aturan BKK/HUBIN: 1 siswa hanya boleh melamar 1 perusahaan dalam 1 minggu. Anda telah mengajukan lamaran ke ${compName}. Harap menunggu proses seleksi selesai sebelum melamar ke tempat lain.`
+      };
+    }
+
+    // 4. Jika semua lamaran sebelumnya berstatus Ditolak, terapkan cooldown 7 hari dari tanggal pengajuan terakhir
     const lastApp = studentApps[0];
     const diff = now - lastApp.timestamp;
     const canApply = diff >= ONE_WEEK_MS;
     const msRemaining = Math.max(0, ONE_WEEK_MS - diff);
     const daysRemaining = Math.ceil(msRemaining / (24 * 60 * 60 * 1000));
-    const hoursRemaining = Math.ceil(msRemaining / (60 * 60 * 1000));
     const nextEligibleDate = new Date(lastApp.timestamp + ONE_WEEK_MS);
 
     const job = this.getJobById(lastApp.job_id);
     const comp = job ? this.getCompanyById(job.company_id) : null;
-    const companyNama = (comp && comp.nama) || (job && job.company_nama) || 'Mitra Industri';
+    const compName = (comp && comp.nama) || (job && job.company_nama) || 'Mitra Industri';
 
     return {
       can_apply: canApply,
+      status_type: canApply ? 'available' : 'cooldown_rejected',
       last_applied_at: lastApp.created_at || lastApp.tanggal_daftar,
       last_applied_date_formatted: new Date(lastApp.timestamp).toLocaleDateString('id-ID', { day: 'numeric', month: 'long', year: 'numeric' }),
       next_eligible_date: nextEligibleDate.toISOString(),
       next_eligible_date_formatted: nextEligibleDate.toLocaleDateString('id-ID', { day: 'numeric', month: 'long', year: 'numeric' }),
       days_remaining: daysRemaining,
-      hours_remaining: hoursRemaining,
+      hours_remaining: Math.ceil(msRemaining / (60 * 60 * 1000)),
       last_job_id: lastApp.job_id,
       last_job_judul: job ? job.judul : 'Lowongan PKL',
-      last_company_nama: companyNama,
-      total_applications: studentApps.length
+      last_company_nama: compName,
+      total_applications: studentApps.length,
+      message: canApply 
+        ? 'Kuota lamaran minggu ini tersedia. Anda dapat mengajukan 1 lamaran baru.' 
+        : `Aturan BKK/HUBIN: 1 siswa hanya boleh melamar 1 perusahaan dalam 1 minggu. Silakan tunggu ${daysRemaining} hari lagi (hingga ${nextEligibleDate.toLocaleDateString('id-ID', { day: 'numeric', month: 'long', year: 'numeric' })}) untuk melamar ke perusahaan lain.`
     };
   }
 
@@ -2893,7 +2957,7 @@ class Store {
     // Aturan BKK/HUBIN: 1 siswa hanya boleh melamar 1 perusahaan dalam 1 minggu
     const cooldown = this.getStudentApplicationCooldown(student_id);
     if (!cooldown.can_apply) {
-      throw new Error(`Kebijakan BKK/HUBIN: 1 siswa hanya diperbolehkan melamar 1 perusahaan dalam 1 minggu. Anda telah melamar ke ${cooldown.last_company_nama} pada ${cooldown.last_applied_date_formatted}. Silakan tunggu ${cooldown.days_remaining} hari lagi (hingga ${cooldown.next_eligible_date_formatted}) untuk mengajukan lamaran baru.`);
+      throw new Error(cooldown.message || `Kebijakan BKK/HUBIN: 1 siswa hanya diperbolehkan melamar 1 perusahaan dalam 1 minggu.`);
     }
 
     const today = new Date().toISOString().split('T')[0];
