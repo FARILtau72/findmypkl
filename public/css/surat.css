@@ -318,7 +318,7 @@
     print-color-adjust: exact;
   }
 
-  /* Sembunyikan seluruh sidebar, header, navigation, dan panel kontrol */
+  /* Sembunyikan seluruh UI non-cetak */
   .no-print,
   .app-sidebar,
   .sidebar-backdrop,
@@ -329,18 +329,67 @@
   #menu-toggle-btn,
   .toast-container,
   .modal-close-btn,
-  .surat-control-panel {
+  .modal-header,
+  .modal-footer,
+  .surat-control-panel,
+  .print-quota-box,
+  .print-cooldown-alert {
     display: none !important;
   }
 
-  .app-main,
-  .content-body,
-  .app-layout {
+  /* Jika mencetak dari Modal: sembunyikan seluruh background app layout */
+  body.modal-open #app-layout,
+  body.modal-open .public-layout,
+  body.modal-open #public-landing-container,
+  body.modal-open .app-main,
+  body.modal-open .content-body {
+    display: none !important;
+  }
+
+  /* Jika mencetak langsung dari halaman (bukan modal): sembunyikan modal */
+  body:not(.modal-open) #global-modal-backdrop {
+    display: none !important;
+  }
+
+  body:not(.modal-open) .app-main,
+  body:not(.modal-open) .content-body,
+  body:not(.modal-open) .app-layout {
     display: block !important;
     margin: 0 !important;
     padding: 0 !important;
     width: 100% !important;
     max-width: none !important;
+  }
+
+  /* Modal print mode: tampilkan dialog body saja sebagai halaman A4 murni */
+  .modal-backdrop {
+    background: transparent !important;
+    position: static !important;
+    display: block !important;
+    padding: 0 !important;
+    margin: 0 !important;
+    width: 100% !important;
+    overflow: visible !important;
+  }
+
+  .modal-dialog {
+    box-shadow: none !important;
+    border: none !important;
+    padding: 0 !important;
+    max-width: none !important;
+    width: 100% !important;
+    margin: 0 !important;
+    max-height: none !important;
+    overflow: visible !important;
+    transform: none !important;
+    background: transparent !important;
+  }
+
+  .modal-body {
+    padding: 0 !important;
+    max-height: none !important;
+    overflow: visible !important;
+    background: transparent !important;
   }
 
   .paper-preview-container {
@@ -360,26 +409,6 @@
     min-height: 297mm !important;
     page-break-after: avoid;
     page-break-inside: avoid;
-  }
-
-  /* Modal print mode: tampilkan dialog body saja */
-  .modal-backdrop {
-    background: transparent !important;
-    position: static !important;
-    display: block !important;
-    padding: 0 !important;
-  }
-
-  .modal-dialog {
-    box-shadow: none !important;
-    border: none !important;
-    padding: 0 !important;
-    max-width: none !important;
-    width: 100% !important;
-    margin: 0 !important;
-  }
-
-  .modal-header {
-    display: none !important;
+    background: #ffffff !important;
   }
 }

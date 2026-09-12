@@ -187,6 +187,9 @@ Object.assign(window.App, {
 
     const p = placements[0];
     const logbooks = await API.getLogbooks(p.id);
+    const printStatus = (typeof App.getStudentPrintStatus === 'function')
+      ? App.getStudentPrintStatus(student.id, 'logbook')
+      : { canPrint: true, daysLeft: 0, lastPrintedAt: null };
 
     const start = new Date(p.tanggal_mulai);
     const end = new Date(p.tanggal_selesai);
@@ -242,14 +245,42 @@ Object.assign(window.App, {
         </div>
 
         <div class="card">
-          <div style="display: flex; justify-content: space-between; align-items: center; margin-bottom: 20px; flex-wrap: wrap; gap: 12px;">
+          <div style="display: flex; justify-content: space-between; align-items: center; margin-bottom: 16px; flex-wrap: wrap; gap: 12px;">
             <div>
               <h3 style="font-size: 17px; font-weight: 700; color: var(--slate-900);">Jurnal / Logbook Kegiatan Harian PKL</h3>
-              <p style="font-size: 13px; color: var(--slate-500);">Wajib diisi setiap hari kerja untuk pemantauan oleh Guru Pembimbing & Mentor DUDI.</p>
+              <p style="font-size: 13px; color: var(--slate-500);">Wajib diisi setiap hari kerja untuk pemantauan oleh Guru Pembimbing &amp; Mentor DUDI.</p>
             </div>
-            <button class="btn btn-primary btn-sm" onclick="App.showAddLogbookModal(${p.id})">
-              <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><line x1="12" y1="5" x2="12" y2="19"/><line x1="5" y1="12" x2="19" y2="12"/></svg>
-              Tulis Logbook Baru
+            <div style="display: flex; gap: 10px; align-items: center; flex-wrap: wrap;">
+              <button class="btn btn-secondary btn-sm" onclick="App.openLogbookWeeklyPrintModal(${p.id})" style="display: inline-flex; align-items: center; gap: 6px;" title="Cetak Lembar Rekapitulasi Jurnal Mingguan A4 (Ketentuan: Min 1x per minggu)">
+                <svg width="15" height="15" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><polyline points="6 9 6 2 18 2 18 9"/><path d="M6 18H4a2 2 0 0 1-2-2v-5a2 2 0 0 1 2-2h16a2 2 0 0 1 2 2v5a2 2 0 0 1-2 2h-2"/><rect x="6" y="14" width="12" height="8"/></svg>
+                <span>Cetak Rekap Mingguan (A4)</span>
+              </button>
+              <button class="btn btn-primary btn-sm" onclick="App.showAddLogbookModal(${p.id})" style="display: inline-flex; align-items: center; gap: 6px;">
+                <svg width="15" height="15" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><line x1="12" y1="5" x2="12" y2="19"/><line x1="5" y1="12" x2="19" y2="12"/></svg>
+                <span>Tulis Logbook Baru</span>
+              </button>
+            </div>
+          </div>
+
+          <!-- Banner Status Cetak Mingguan (Min. 1x / minggu) -->
+          <div class="print-quota-box ${printStatus.canPrint ? 'quota-available' : 'quota-cooldown'}" style="margin-bottom: 20px;">
+            <div style="display: flex; align-items: center; gap: 10px; flex: 1;">
+              <span style="font-size: 20px;">${printStatus.canPrint ? '📄' : '⏳'}</span>
+              <div>
+                <div style="font-size: 13px; font-weight: 700; color: ${printStatus.canPrint ? '#166534' : '#92400E'};">
+                  ${printStatus.canPrint ? 'Lembar Rekapitulasi Logbook Mingguan Siap Dicetak' : 'Batas Cetak Logbook Mingguan Aktif'}
+                </div>
+                <div style="font-size: 12px; color: ${printStatus.canPrint ? '#15803D' : '#B45309'}; margin-top: 2px;">
+                  ${printStatus.canPrint 
+                    ? 'Format resmi A4 siap diserahkan &amp; diparaf pembimbing DUDI serta guru pembimbing (Ketentuan sekolah: Min. 1x seminggu).'
+                    : `Telah dicetak pada ${new Date(printStatus.lastPrintedAt).toLocaleDateString('id-ID', { day: 'numeric', month: 'short', year: 'numeric' })}. Cetak fisik berikutnya tersedia ${printStatus.daysLeft} hari lagi. Anda tetap dapat membaca pratinjau dokumen di layar.`
+                  }
+                </div>
+              </div>
+            </div>
+            <button class="btn btn-sm ${printStatus.canPrint ? 'btn-primary' : 'btn-secondary'}" onclick="App.openLogbookWeeklyPrintModal(${p.id})" style="font-size: 12px; display: inline-flex; align-items: center; gap: 6px; white-space: nowrap;">
+              <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><polyline points="6 9 6 2 18 2 18 9"/><path d="M6 18H4a2 2 0 0 1-2-2v-5a2 2 0 0 1 2-2h16a2 2 0 0 1 2 2v5a2 2 0 0 1-2 2h-2"/><rect x="6" y="14" width="12" height="8"/></svg>
+              ${printStatus.canPrint ? 'Pratinjau &amp; Cetak A4' : 'Pratinjau Lembar A4'} &rarr;
             </button>
           </div>
 

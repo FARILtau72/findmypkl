@@ -2144,6 +2144,36 @@ function getInitialData() {
       kendala: 'Tidak ada kendala, kegiatan berjalan lancar.',
       status_verifikasi: 'Menunggu Review',
       created_at: '2026-09-09T14:00:00.000Z'
+    },
+    {
+      id: 4,
+      placement_id: 2,
+      tanggal: '2026-09-07',
+      judul_kegiatan: 'Pengenalan Pipeline Animasi 2D & Standard Operating Procedure Studio',
+      deskripsi_kegiatan: 'Mengikuti briefing alur produksi serial animasi bersama Art Director. Mempelajari pedoman clean-up line art, color script, dan manajemen file aset di server studio.',
+      kendala: 'Adaptasi awal dengan shortcut software Toon Boom Harmony.',
+      status_verifikasi: 'Disetujui Pembimbing',
+      created_at: '2026-09-07T15:30:00.000Z'
+    },
+    {
+      id: 5,
+      placement_id: 2,
+      tanggal: '2026-09-08',
+      judul_kegiatan: 'Pembuatan Rough In-between Frame Karakter Utama Scene 14',
+      deskripsi_kegiatan: 'Mengerjakan 24 frame gambar in-between gerakan lari karakter utama sesuai timing chart dari Key Animator. Menyesuaikan proporsi model sheet karakter.',
+      kendala: 'Konsistensi ketebalan garis pada drawing tablet.',
+      status_verifikasi: 'Disetujui Pembimbing',
+      created_at: '2026-09-08T16:00:00.000Z'
+    },
+    {
+      id: 6,
+      placement_id: 2,
+      tanggal: '2026-09-09',
+      judul_kegiatan: 'Coloring, Shading, dan Assembling Aset Background Episode 3',
+      deskripsi_kegiatan: 'Mewarnai flat color dan soft shading pada 6 cut adegan interior. Melakukan layering aset background untuk diserahkan ke tim compositing video.',
+      kendala: 'Tidak ada kendala teknis, file render disetujui lead animator.',
+      status_verifikasi: 'Menunggu Review',
+      created_at: '2026-09-09T15:00:00.000Z'
     }
   ];
 

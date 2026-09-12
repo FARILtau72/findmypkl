@@ -641,10 +641,14 @@ Object.assign(window.App, {
   generateLogbookWeeklyA4Html(placement, logbooks, student) {
     const st = student || this.currentStudent || {};
     const p = placement || {};
-    const logs = (logbooks && logbooks.length > 0) ? logbooks.slice(0, 6) : [];
+    
+    // Urutkan entri logbook secara kronologis (Senin ke Jumat)
+    const sorted = [...(logbooks || [])].sort((a, b) => new Date(a.tanggal) - new Date(b.tanggal));
+    // Ambil maksimal 5 hari kerja terakhir (minggu berjalan)
+    const recentLogs = sorted.slice(-5);
 
-    const displayLogs = [...logs];
-    const daysOfWeek = ['Senin', 'Selasa', 'Rabu', 'Kamis', 'Jumat'];
+    const displayLogs = [...recentLogs];
+    const defaultDays = ['Senin', 'Selasa', 'Rabu', 'Kamis', 'Jumat'];
     while (displayLogs.length < 5) {
       displayLogs.push({
         tanggal: '',
@@ -695,7 +699,7 @@ Object.assign(window.App, {
           </div>
           <div class="logbook-meta-item">
             <div class="logbook-meta-label">NISN / Kelas</div>
-            <div class="logbook-meta-val">: ${st.nisn || '202301048'} / ${st.kelas || 'XII RPL 1'}</div>
+            <div class="logbook-meta-val">: ${st.nisn || p.student_nisn || '202301048'} / ${st.kelas || p.student_kelas || 'XII RPL 1'}</div>
           </div>
           <div class="logbook-meta-item">
             <div class="logbook-meta-label">Pembimbing DUDI</div>
@@ -703,7 +707,7 @@ Object.assign(window.App, {
           </div>
           <div class="logbook-meta-item">
             <div class="logbook-meta-label">Kompetensi Keahlian</div>
-            <div class="logbook-meta-val">: ${st.jurusan || 'Rekayasa Perangkat Lunak'}</div>
+            <div class="logbook-meta-val">: ${st.jurusan || p.student_jurusan || 'Rekayasa Perangkat Lunak'}</div>
           </div>
           <div class="logbook-meta-item">
             <div class="logbook-meta-label">Guru Pembimbing</div>
@@ -716,22 +720,32 @@ Object.assign(window.App, {
           <thead>
             <tr>
               <th style="width: 32px;">No</th>
-              <th style="width: 105px;">Hari / Tanggal</th>
+              <th style="width: 110px;">Hari / Tanggal</th>
               <th>Uraian Kegiatan / Pekerjaan Praktik</th>
-              <th style="width: 130px;">Kendala &amp; Hasil</th>
-              <th style="width: 65px;">Paraf DUDI</th>
+              <th style="width: 140px;">Kendala &amp; Solusi</th>
+              <th style="width: 70px;">Paraf DUDI</th>
             </tr>
           </thead>
           <tbody>
             ${displayLogs.map((lg, idx) => {
-              const dayLabel = daysOfWeek[idx] || `Hari ke-${idx + 1}`;
-              const tglStr = lg.tanggal ? lg.tanggal.substring(0, 10) : '';
+              let dayLabel = defaultDays[idx] || `Hari ke-${idx + 1}`;
+              let formattedDate = '';
+              if (lg.tanggal) {
+                try {
+                  const d = new Date(lg.tanggal);
+                  const dName = d.toLocaleDateString('id-ID', { weekday: 'long' });
+                  if (dName && dName !== 'Invalid Date') dayLabel = dName;
+                  formattedDate = d.toLocaleDateString('id-ID', { day: 'numeric', month: 'short', year: 'numeric' });
+                } catch (e) {
+                  formattedDate = lg.tanggal.substring(0, 10);
+                }
+              }
               return `
-                <tr style="height: 38px;">
+                <tr style="height: 40px;">
                   <td style="text-align: center; vertical-align: middle;">${idx + 1}</td>
                   <td style="font-size: 11.5px; vertical-align: middle;">
                     <strong>${dayLabel}</strong><br>
-                    <span style="color: #334155;">${tglStr}</span>
+                    <span style="color: #334155;">${formattedDate}</span>
                   </td>
                   <td style="vertical-align: top; padding: 6px 8px;">
                     <div style="font-weight: 700; font-size: 12px; margin-bottom: 2px;">${lg.judul_kegiatan || ''}</div>
@@ -777,7 +791,7 @@ Object.assign(window.App, {
               </td>
               <td class="surat-sig-footer">
                 <div class="surat-sig-line">${st.nama || p.student_nama || '........................................'}</div>
-                <div style="font-size: 10.5px; font-weight: normal; color: #475569;">NISN: ${st.nisn || '....................'}</div>
+                <div style="font-size: 10.5px; font-weight: normal; color: #475569;">NISN: ${st.nisn || p.student_nisn || '....................'}</div>
               </td>
               <td class="surat-sig-footer">
                 <div class="surat-sig-line">${p.guru_pembimbing || '........................................'}</div>
@@ -792,14 +806,43 @@ Object.assign(window.App, {
 
   async openLogbookWeeklyPrintModal(placementId) {
     const student = this.currentStudent;
-    if (!student) return;
+    if (!student) {
+      Toast.show('Perhatian', 'Silakan masuk dengan akun siswa terlebih dahulu.', 'warning');
+      return;
+    }
 
     let placement = null;
     let logbooks = [];
     try {
       const placements = await API.getPlacements({ student_id: student.id, status: 'Aktif' });
-      placement = placements.find(p => p.id === Number(placementId)) || placements[0];
-      if (placement) {
+      placement = (placementId ? (placements || []).find(p => p.id === Number(placementId)) : null) || (placements && placements[0]);
+      
+      if (!placement) {
+        const allPlacements = await API.getPlacements({ student_id: student.id });
+        placement = allPlacements && allPlacements[0];
+      }
+
+      if (!placement) {
+        // Fallback jika siswa memiliki lamaran yang sudah diterima tapi placement belum ter-generate
+        const apps = await API.getApplications({ student_id: student.id });
+        const accepted = (apps || []).find(a => a.status === 'Diterima Perusahaan');
+        if (accepted) {
+          placement = {
+            id: 999,
+            student_id: student.id,
+            student_nama: student.nama,
+            student_nisn: student.nisn,
+            student_kelas: student.kelas,
+            student_jurusan: student.jurusan,
+            company_nama: accepted.company_nama || 'Mitra Industri',
+            pembimbing_industri: 'Pembimbing Lapangan DUDI',
+            guru_pembimbing: 'Koordinator Kejuruan SMK',
+            status: 'Aktif'
+          };
+        }
+      }
+
+      if (placement && placement.id && placement.id !== 999) {
         logbooks = await API.getLogbooks(placement.id);
       }
     } catch (e) {
@@ -822,11 +865,11 @@ Object.assign(window.App, {
             <div style="font-weight: 700; font-size: 15px; color: var(--slate-900);">Lembar Rekapitulasi Logbook Mingguan (A4)</div>
             <div style="font-size: 12.5px; color: var(--slate-500);">Format resmi jurnal mingguan PKL SMK Taruna Bangsa Kota Bekasi (Aturan: Min. 1 Minggu 1x Cetak).</div>
           </div>
-          <div style="display: flex; gap: 10px; align-items: center;">
+          <div style="display: flex; gap: 10px; align-items: center;" id="logbook-modal-action-btns">
             ${printStatus.canPrint ? `
-              <button class="btn btn-primary" onclick="App.executeLogbookPrint(${placement.id})" style="padding: 7px 14px; font-size: 13px;">
+              <button class="btn btn-primary" id="btn-logbook-print-execute" onclick="App.executeLogbookPrint(${placement.id})" style="padding: 7px 14px; font-size: 13px; display: inline-flex; align-items: center; gap: 6px;">
                 <svg width="15" height="15" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><polyline points="6 9 6 2 18 2 18 9"/><path d="M6 18H4a2 2 0 0 1-2-2v-5a2 2 0 0 1 2-2h16a2 2 0 0 1 2 2v5a2 2 0 0 1-2 2h-2"/><rect x="6" y="14" width="12" height="8"/></svg>
-                Cetak Lembar Logbook (A4)
+                <span>Cetak Lembar Logbook (A4)</span>
               </button>
             ` : `
               <button class="btn btn-secondary" disabled style="opacity: 0.65; cursor: not-allowed; padding: 7px 14px; font-size: 13px;" title="Batas cetak 1x seminggu. Tersedia dalam ${printStatus.daysLeft} hari lagi">
@@ -840,7 +883,7 @@ Object.assign(window.App, {
           <div class="print-cooldown-alert no-print">
             <strong>⏳ Cooldown Cetak Logbook Mingguan Aktif:</strong><br>
             Anda telah mencetak Lembar Rekapitulasi Logbook pada <strong>${new Date(printStatus.lastPrintedAt).toLocaleDateString('id-ID', { day: 'numeric', month: 'long', year: 'numeric', hour: '2-digit', minute: '2-digit' })} WIB</strong>.<br>
-            Sesuai jadwal sekolah, lembar rekapitulasi dicetak <strong>1 minggu 1 kali</strong> untuk evaluasi berkala. Kuota cetak berikutnya dibuka kembali dalam <strong>${printStatus.daysLeft} hari lagi (${printStatus.nextEligibleDate ? printStatus.nextEligibleDate.toLocaleDateString('id-ID', { day: 'numeric', month: 'long', year: 'numeric' }) : ''})</strong>. Anda tetap dapat membaca jurnal di layar ini.
+            Sesuai jadwal sekolah, lembar rekapitulasi dicetak <strong>1 minggu 1 kali</strong> untuk evaluasi berkala. Kuota cetak berikutnya dibuka kembali dalam <strong>${printStatus.daysLeft} hari lagi (${printStatus.nextEligibleDate ? printStatus.nextEligibleDate.toLocaleDateString('id-ID', { day: 'numeric', month: 'long', year: 'numeric' }) : ''})</strong>. Anda tetap dapat membaca pratinjau dokumen di layar ini.
           </div>
         ` : ''}
 
@@ -869,12 +912,22 @@ Object.assign(window.App, {
       await this.recordStudentPrint(this.currentStudent.id, 'logbook', placementId, 'Rekapitulasi Logbook Mingguan PKL');
       window.print();
       Toast.show(
-        'Logbook Diproses',
-        'Lembar logbook berhasil dicetak. Kuota cetak berikutnya tersedia dalam 7 hari.',
+        'Logbook Berhasil Dicetak',
+        'Lembar logbook siap diserahkan ke DUDI. Kuota cetak berikutnya tersedia dalam 7 hari.',
         'success'
       );
       if (this.renderContent) this.renderContent();
-      this.openLogbookWeeklyPrintModal(placementId);
+
+      // Update tombol cetak di modal menjadi disabled cooldown
+      const printBtn = document.getElementById('btn-logbook-print-execute');
+      if (printBtn) {
+        printBtn.className = 'btn btn-secondary';
+        printBtn.disabled = true;
+        printBtn.style.opacity = '0.65';
+        printBtn.style.cursor = 'not-allowed';
+        printBtn.innerHTML = '⏳ Cooldown (7 Hari Lagi)';
+        printBtn.title = 'Batas cetak 1x seminggu. Tersedia dalam 7 hari lagi';
+      }
     } else {
       window.print();
     }

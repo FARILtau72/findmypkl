@@ -507,10 +507,10 @@ window.App = {
             <span>Lamaran Saya</span>
           </div>
         </a>
-        <a class="nav-item ${this.currentTab === 'penempatan' ? 'active' : ''}" onclick="App.setTab('penempatan')">
+        <a class="nav-item ${this.currentTab === 'penempatan' || this.currentTab === 'jurnal' ? 'active' : ''}" onclick="App.setTab('penempatan')">
           <div class="nav-item-left">
-            <svg class="nav-icon" width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><rect x="2" y="7" width="20" height="14" rx="2" ry="2"/><path d="M16 21V5a2 2 0 0 0-2-2h-4a2 2 0 0 0-2 2v16"/></svg>
-            <span>Tempat PKL Aktif</span>
+            <svg class="nav-icon" width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M12 20h9"/><path d="M16.5 3.5a2.121 2.121 0 0 1 3 3L7 19l-4 1 1-4L16.5 3.5z"/></svg>
+            <span>Tempat & Jurnal PKL</span>
           </div>
         </a>
         <a class="nav-item ${this.currentTab === 'profil' ? 'active' : ''}" onclick="App.setTab('profil')">
@@ -666,9 +666,9 @@ window.App = {
       } else if (this.currentTab === 'lamaran') {
         titleEl.textContent = 'Pelacak Lamaran Saya';
         descEl.textContent = 'Pantau tahapan verifikasi berkas oleh HUBIN hingga persetujuan dari perusahaan mitra DUDI.';
-      } else if (this.currentTab === 'penempatan') {
-        titleEl.textContent = 'Tempat Penempatan PKL Aktif';
-        descEl.textContent = 'Informasi pembimbing, durasi magang, dan pengisian jurnal kegiatan (logbook) harian.';
+      } else if (this.currentTab === 'penempatan' || this.currentTab === 'jurnal') {
+        titleEl.textContent = 'Tempat Penempatan & Jurnal PKL';
+        descEl.textContent = 'Informasi pembimbing, durasi magang, pengisian jurnal kegiatan (logbook) harian, dan cetak lembar rekapitulasi mingguan.';
       } else if (this.currentTab === 'profil') {
         titleEl.textContent = 'Profil & Status Siswa';
         descEl.textContent = 'Informasi akun Dapodik siswa, kelengkapan berkas, dan status verifikasi dari pihak HUBIN.';
@@ -756,7 +756,7 @@ window.App = {
       if (this.currentRole === 'SISWA') {
         if (this.currentTab === 'katalog') await this.renderSiswaKatalog(container);
         else if (this.currentTab === 'lamaran') await this.renderSiswaLamaran(container);
-        else if (this.currentTab === 'penempatan') await this.renderSiswaPenempatan(container);
+        else if (this.currentTab === 'penempatan' || this.currentTab === 'jurnal') await this.renderSiswaPenempatan(container);
         else if (this.currentTab === 'profil') await this.renderSiswaProfil(container);
       } else if (this.currentRole === 'HUBIN') {
         if (this.currentTab === 'dashboard') await this.renderHubinDashboard(container);

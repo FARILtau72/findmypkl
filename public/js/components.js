@@ -56,8 +56,10 @@ const Modal = {
     if (!this.backdrop) return;
 
     const dialog = this.backdrop.querySelector('.modal-dialog');
-    dialog.classList.remove('modal-lg', 'modal-md', 'modal-loker');
-    if (size === 'lg') {
+    dialog.classList.remove('modal-lg', 'modal-md', 'modal-xl', 'modal-loker');
+    if (size === 'xl') {
+      dialog.classList.add('modal-xl');
+    } else if (size === 'lg') {
       dialog.classList.add('modal-lg');
     } else if (size === 'md') {
       dialog.classList.add('modal-md');

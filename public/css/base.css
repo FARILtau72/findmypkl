@@ -533,6 +533,11 @@ html.modal-open {
   overflow: hidden;
 }
 
+.modal-dialog.modal-xl {
+  max-width: 960px;
+  width: 96%;
+}
+
 .modal-dialog.modal-lg {
   max-width: 880px;
   width: 95%;
