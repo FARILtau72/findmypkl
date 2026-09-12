@@ -1712,10 +1712,63 @@ Object.assign(window.App, {
                 Kirim Pengajuan Lamaran &rarr;
               </button>
             ` : `
-              <button type="button" class="btn-loker-primary" onclick="App.executeApplyLoker(${job.id})">
+              <button type="button" class="btn-loker-primary" onclick="App.promptApplyConfirmation(${job.id})">
                 Kirim Pengajuan Lamaran &rarr;
               </button>
             `}
+          </div>
+
+          <!-- CONFIRMATION VALIDATION OVERLAY -->
+          <div id="apply-confirmation-overlay" class="apply-confirmation-overlay" style="display: none;">
+            <div class="apply-confirmation-card">
+              <div class="apply-conf-icon-wrap">
+                <div class="apply-conf-icon">
+                  <svg width="28" height="28" viewBox="0 0 24 24" fill="none" stroke="#059669" stroke-width="2.2" stroke-linecap="round" stroke-linejoin="round">
+                    <circle cx="12" cy="12" r="10"/>
+                    <path d="M9.09 9a3 3 0 0 1 5.83 1c0 2-3 3-3 3"/>
+                    <line x1="12" y1="17" x2="12.01" y2="17"/>
+                  </svg>
+                </div>
+              </div>
+              <div class="apply-conf-school-badge">SMK TARUNA BANGSA KOTA BEKASI</div>
+              <h3 class="apply-conf-title">
+                Apakah kamu yakin ingin mengajukan PKL di tempat ini?
+              </h3>
+              <p class="apply-conf-desc">
+                Pastikan posisi dan perusahaan yang Anda tuju sudah sesuai dengan kejuruan serta minat Anda di <strong>SMK Taruna Bangsa</strong>.
+              </p>
+
+              <div class="apply-conf-target-box">
+                <div class="apply-conf-target-header">
+                  <span class="apply-conf-company-badge">${companyName}</span>
+                  <span class="apply-conf-location">📍 ${cleanCity}</span>
+                </div>
+                <div class="apply-conf-target-title">${job.judul || 'Lowongan PKL'}</div>
+                <div class="apply-conf-target-meta">
+                  <span>👤 Pemohon: <strong>${student ? student.nama : 'Siswa'}</strong> (${student ? student.kelas : 'XII'})</span>
+                  <span>📑 Kuota: <strong>${job.sisa_kuota || 2} Siswa</strong></span>
+                </div>
+              </div>
+
+              <div class="apply-conf-notice">
+                <svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="#d97706" stroke-width="2" style="flex-shrink: 0; margin-top: 1px;"><path d="M10.29 3.86L1.82 18a2 2 0 0 0 1.71 3h16.94a2 2 0 0 0 1.71-3L13.71 3.86a2 2 0 0 0-3.42 0z"/><line x1="12" y1="9" x2="12" y2="13"/><line x1="12" y1="17" x2="12.01" y2="17"/></svg>
+                <div>
+                  <strong>Aturan BKK &amp; HUBIN:</strong>
+                  <div style="font-size: 11.5px; margin-top: 2px;">
+                    Siswa hanya dapat mengajukan <strong>1 lamaran aktif per minggu</strong>. Berkas permohonan akan langsung masuk ke antrean verifikasi tim HUBIN sekolah.
+                  </div>
+                </div>
+              </div>
+
+              <div class="apply-conf-actions">
+                <button type="button" class="btn-conf-cancel" onclick="App.closeApplyConfirmation()">
+                  Batal / Periksa Lagi
+                </button>
+                <button type="button" class="btn-conf-submit" onclick="App.executeApplyLoker(${job.id}, true)">
+                  Ya, Ajukan Sekarang &rarr;
+                </button>
+              </div>
+            </div>
           </div>
         </div>
       `;
@@ -1784,8 +1837,106 @@ Object.assign(window.App, {
     }
   },
 
-  async executeApplyLoker(jobId) {
+  promptApplyConfirmation(jobId) {
     if (this.isSubmittingApply) return;
+
+    if (!this.currentStudent || this.currentRole !== 'SISWA') {
+      Modal.close();
+      this.setRole('LOGIN');
+      return;
+    }
+
+    const student = this.currentStudent;
+    if (student.status_verifikasi !== 'Terverifikasi') {
+      Modal.close();
+      this.handleDaftarPklClick(jobId);
+      return;
+    }
+
+    // Aturan 1 siswa hanya boleh melamar 1 perusahaan dalam 1 minggu
+    if (this.activeLokerCooldown && !this.activeLokerCooldown.can_apply) {
+      const cd = this.activeLokerCooldown;
+      Toast.show(
+        'Batas Lamaran',
+        cd.message || `1 siswa hanya diperbolehkan melamar 1 perusahaan dalam 1 minggu. Anda telah melamar ke ${cd.last_company_nama}. Silakan tunggu ${cd.days_remaining} hari lagi.`,
+        'warning'
+      );
+      return;
+    }
+
+    const overlay = document.getElementById('apply-confirmation-overlay');
+    if (overlay) {
+      overlay.style.display = 'flex';
+      const body = document.querySelector('.modal-loker-body');
+      if (body) body.scrollTop = 0;
+    } else {
+      this.showStandaloneApplyConfirmation(jobId);
+    }
+  },
+
+  closeApplyConfirmation() {
+    const overlay = document.getElementById('apply-confirmation-overlay');
+    if (overlay) {
+      overlay.style.display = 'none';
+    }
+  },
+
+  async showStandaloneApplyConfirmation(jobId) {
+    const job = (this.activeLokerModalJob && Number(this.activeLokerModalJob.id) === Number(jobId))
+      ? this.activeLokerModalJob
+      : await API.getJobById(jobId);
+    const student = this.currentStudent;
+    if (!job || !student) return;
+
+    const html = `
+      <div style="text-align: center; padding: 10px 4px;">
+        <div style="width: 56px; height: 56px; border-radius: 50%; background: #ecfdf5; border: 2px solid #a7f3d0; display: flex; align-items: center; justify-content: center; margin: 0 auto 16px; font-size: 26px;">
+          ❓
+        </div>
+        <div style="font-size: 10px; font-weight: 800; letter-spacing: 0.8px; color: #059669; text-transform: uppercase; margin-bottom: 6px;">SMK TARUNA BANGSA KOTA BEKASI</div>
+        <h4 style="font-size: 18px; font-weight: 800; color: #0f172a; margin-bottom: 8px; line-height: 1.35;">
+          Apakah kamu yakin ingin mengajukan PKL di tempat ini?
+        </h4>
+        <p style="font-size: 13px; color: #64748b; line-height: 1.5; max-width: 440px; margin: 0 auto 16px;">
+          Pastikan posisi dan perusahaan yang Anda pilih sudah sesuai dengan kompetensi keahlian Anda di <strong>SMK Taruna Bangsa</strong>.
+        </p>
+
+        <div style="background: #f8fafc; border: 1px solid #e2e8f0; border-radius: 12px; padding: 14px; text-align: left; margin-bottom: 16px;">
+          <div style="font-weight: 700; font-size: 12px; color: #059669; margin-bottom: 2px;">${job.company_nama || 'Mitra PKL'}</div>
+          <div style="font-size: 14.5px; font-weight: 800; color: #0f172a; margin-bottom: 6px;">${job.judul || 'Lowongan PKL'}</div>
+          <div style="font-size: 12px; color: #64748b;">📍 ${(job.lokasi_kota || 'Kota Bekasi').split(',')[0]} &bull; Kuota: ${job.sisa_kuota || 2} Siswa</div>
+        </div>
+
+        <div style="background: #fffbeb; border: 1px solid #fde68a; border-radius: 10px; padding: 10px 14px; text-align: left; margin-bottom: 20px; font-size: 12px; color: #92400e;">
+          ⚠️ <strong>Aturan BKK &amp; HUBIN:</strong> Siswa hanya dapat mengajukan <strong>1 lamaran per minggu</strong>.
+        </div>
+
+        <div style="display: flex; gap: 10px; justify-content: center;">
+          <button class="btn btn-secondary" onclick="Modal.close();">
+            Batal / Periksa Lagi
+          </button>
+          <button class="btn btn-primary" style="background: #059669; border-color: #059669;" onclick="App.confirmStandaloneApply(${job.id});">
+            Ya, Ajukan Sekarang &rarr;
+          </button>
+        </div>
+      </div>
+    `;
+    Modal.open(html, 'Konfirmasi Pengajuan PKL', 'md');
+  },
+
+  async confirmStandaloneApply(jobId) {
+    Modal.close();
+    await this.showJobDetailModal(jobId);
+    await this.executeApplyLoker(jobId, true);
+  },
+
+  async executeApplyLoker(jobId, isConfirmed = false) {
+    if (this.isSubmittingApply) return;
+
+    if (!isConfirmed) {
+      this.promptApplyConfirmation(jobId);
+      return;
+    }
 
     if (!this.currentStudent || this.currentRole !== 'SISWA') {
       Modal.close();
@@ -1834,6 +1985,20 @@ Object.assign(window.App, {
       `;
     }
 
+    const confSubmitBtn = document.querySelector('.apply-conf-actions .btn-conf-submit');
+    const origConfBtnHtml = confSubmitBtn ? confSubmitBtn.innerHTML : 'Ya, Ajukan Sekarang &rarr;';
+    if (confSubmitBtn) {
+      confSubmitBtn.disabled = true;
+      confSubmitBtn.style.opacity = '0.75';
+      confSubmitBtn.style.cursor = 'not-allowed';
+      confSubmitBtn.innerHTML = `
+        <span style="display: inline-flex; align-items: center; gap: 8px;">
+          <svg style="animation: spin 1s linear infinite;" width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5"><path d="M21 12a9 9 0 1 1-6.219-8.56"/></svg>
+          Mengirim Pengajuan...
+        </span>
+      `;
+    }
+
     try {
       const newApp = await API.submitApplication({
         student_id: student.id,
@@ -1870,6 +2035,12 @@ Object.assign(window.App, {
         submitBtn.style.opacity = '1';
         submitBtn.style.cursor = 'pointer';
         submitBtn.innerHTML = origBtnHtml;
+      }
+      if (confSubmitBtn) {
+        confSubmitBtn.disabled = false;
+        confSubmitBtn.style.opacity = '1';
+        confSubmitBtn.style.cursor = 'pointer';
+        confSubmitBtn.innerHTML = origConfBtnHtml;
       }
     } finally {
       this.isSubmittingApply = false;

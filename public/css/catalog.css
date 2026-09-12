@@ -1401,6 +1401,7 @@
   border-radius: 20px;
   overflow: hidden;
   box-sizing: border-box;
+  position: relative;
 }
 
 /* 1. Stepper Navigation Header */
@@ -1911,6 +1912,216 @@
   background: #047857;
   box-shadow: 0 6px 16px rgba(5, 150, 105, 0.35);
   transform: translateY(-1px);
+}
+
+/* ==========================================================================
+   VALIDATION CONFIRMATION OVERLAY FOR PKL APPLICATION
+   "Apakah kamu yakin ingin mengajukan PKL di tempat ini?"
+   ========================================================================== */
+.apply-confirmation-overlay {
+  position: absolute;
+  inset: 0;
+  background: rgba(15, 23, 42, 0.72);
+  backdrop-filter: blur(4px);
+  -webkit-backdrop-filter: blur(4px);
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  z-index: 1050;
+  padding: 20px;
+  animation: fadeInConf 0.2s cubic-bezier(0.16, 1, 0.3, 1);
+  box-sizing: border-box;
+}
+
+@keyframes fadeInConf {
+  from { opacity: 0; }
+  to { opacity: 1; }
+}
+
+.apply-confirmation-card {
+  background: #ffffff;
+  border-radius: 20px;
+  box-shadow: 0 25px 50px -12px rgba(15, 23, 42, 0.25), 0 0 0 1px rgba(15, 23, 42, 0.05);
+  max-width: 480px;
+  width: 100%;
+  padding: 24px;
+  text-align: center;
+  position: relative;
+  animation: scaleUpConf 0.25s cubic-bezier(0.16, 1, 0.3, 1);
+  box-sizing: border-box;
+}
+
+@keyframes scaleUpConf {
+  from { opacity: 0; transform: scale(0.94) translateY(10px); }
+  to { opacity: 1; transform: scale(1) translateY(0); }
+}
+
+.apply-conf-icon-wrap {
+  margin-bottom: 12px;
+}
+
+.apply-conf-icon {
+  width: 54px;
+  height: 54px;
+  border-radius: 50%;
+  background: #ecfdf5;
+  border: 2px solid #a7f3d0;
+  color: #059669;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  margin: 0 auto;
+}
+
+.apply-conf-school-badge {
+  display: inline-block;
+  font-size: 10px;
+  font-weight: 800;
+  letter-spacing: 0.8px;
+  color: #059669;
+  text-transform: uppercase;
+  background: #ecfdf5;
+  padding: 3px 10px;
+  border-radius: 9999px;
+  margin-bottom: 10px;
+}
+
+.apply-conf-title {
+  font-size: 18px;
+  font-weight: 800;
+  color: #0f172a;
+  line-height: 1.35;
+  margin: 0 0 8px;
+}
+
+.apply-conf-desc {
+  font-size: 13px;
+  color: #64748b;
+  line-height: 1.5;
+  margin: 0 0 16px;
+}
+
+.apply-conf-target-box {
+  background: #f8fafc;
+  border: 1px solid #e2e8f0;
+  border-radius: 14px;
+  padding: 14px 16px;
+  text-align: left;
+  margin-bottom: 14px;
+}
+
+.apply-conf-target-header {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  margin-bottom: 4px;
+}
+
+.apply-conf-company-badge {
+  font-weight: 700;
+  font-size: 12px;
+  color: #059669;
+}
+
+.apply-conf-location {
+  color: #64748b;
+  font-size: 11.5px;
+}
+
+.apply-conf-target-title {
+  font-size: 15px;
+  font-weight: 800;
+  color: #0f172a;
+  margin-bottom: 8px;
+}
+
+.apply-conf-target-meta {
+  display: flex;
+  justify-content: space-between;
+  font-size: 11.5px;
+  color: #64748b;
+  border-top: 1px dashed #e2e8f0;
+  padding-top: 8px;
+}
+
+.apply-conf-notice {
+  background: #fffbeb;
+  border: 1px solid #fde68a;
+  border-radius: 12px;
+  padding: 10px 14px;
+  display: flex;
+  gap: 10px;
+  align-items: flex-start;
+  text-align: left;
+  color: #92400e;
+  font-size: 12px;
+  margin-bottom: 18px;
+  line-height: 1.45;
+}
+
+.apply-conf-actions {
+  display: flex;
+  gap: 10px;
+  justify-content: flex-end;
+}
+
+.btn-conf-cancel {
+  flex: 1;
+  background: #ffffff;
+  border: 1.5px solid #e2e8f0;
+  color: #475569;
+  padding: 10px 16px;
+  border-radius: 10px;
+  font-size: 13.5px;
+  font-weight: 700;
+  cursor: pointer;
+  transition: all 0.15s ease;
+}
+
+.btn-conf-cancel:hover {
+  background: #f8fafc;
+  color: #0f172a;
+  border-color: #cbd5e1;
+}
+
+.btn-conf-submit {
+  flex: 1.3;
+  background: #059669;
+  border: 1.5px solid #059669;
+  color: #ffffff;
+  padding: 10px 18px;
+  border-radius: 10px;
+  font-size: 13.5px;
+  font-weight: 700;
+  cursor: pointer;
+  transition: all 0.15s ease;
+  box-shadow: 0 2px 8px rgba(5, 150, 105, 0.25);
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  gap: 6px;
+}
+
+.btn-conf-submit:hover {
+  background: #047857;
+  border-color: #047857;
+  box-shadow: 0 4px 12px rgba(5, 150, 105, 0.35);
+}
+
+@media (max-width: 480px) {
+  .apply-confirmation-card {
+    padding: 18px 14px;
+  }
+  .apply-conf-title {
+    font-size: 16px;
+  }
+  .apply-conf-actions {
+    flex-direction: column-reverse;
+  }
+  .btn-conf-cancel,
+  .btn-conf-submit {
+    width: 100%;
+  }
 }
 
 /* ==========================================================================
